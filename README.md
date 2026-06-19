@@ -1,1 +1,1 @@
-# SuperNatural_All_Relegions
+# SuperNatural_All_Religions
