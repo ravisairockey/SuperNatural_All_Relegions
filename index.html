@@ -1,2010 +1,1502 @@
-<!doctype html>
-<html lang="en" data-theme="dark">
+<!DOCTYPE html>
+<html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>The Supernatural Across World Religions</title>
-
-  <style>
-    :root {
-      --bg: #050713;
-      --bg2: #090d22;
-      --panel: rgba(255, 255, 255, 0.08);
-      --panel2: rgba(255, 255, 255, 0.12);
-      --text: #f7f7fb;
-      --muted: #aeb5d1;
-      --line: rgba(255, 255, 255, 0.15);
-      --accent: #8b5cf6;
-      --accent2: #06b6d4;
-      --gold: #fbbf24;
-      --danger: #fb7185;
-      --green: #34d399;
-      --shadow: 0 24px 90px rgba(0, 0, 0, 0.38);
-      --radius: 24px;
-      --radius2: 16px;
-      --max: 1240px;
-    }
-
-    [data-theme="light"] {
-      --bg: #f5f7ff;
-      --bg2: #eaf0ff;
-      --panel: rgba(255, 255, 255, 0.78);
-      --panel2: rgba(255, 255, 255, 0.92);
-      --text: #101426;
-      --muted: #4e5877;
-      --line: rgba(15, 23, 42, 0.13);
-      --shadow: 0 20px 70px rgba(47, 60, 120, 0.16);
-    }
-
-    * {
-      box-sizing: border-box;
-    }
-
-    html {
-      scroll-behavior: smooth;
-    }
-
-    body {
-      margin: 0;
-      color: var(--text);
-      background:
-        radial-gradient(circle at top left, rgba(139, 92, 246, 0.38), transparent 34rem),
-        radial-gradient(circle at 80% 10%, rgba(6, 182, 212, 0.28), transparent 30rem),
-        linear-gradient(145deg, var(--bg), var(--bg2));
-      font-family:
-        Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
-        "Segoe UI", sans-serif;
-      min-height: 100vh;
-      overflow-x: hidden;
-    }
-
-    .orb {
-      position: fixed;
-      border-radius: 999px;
-      filter: blur(34px);
-      opacity: 0.45;
-      pointer-events: none;
-      z-index: -1;
-      animation: float 14s ease-in-out infinite alternate;
-    }
-
-    .orb.one {
-      width: 260px;
-      height: 260px;
-      background: #8b5cf6;
-      left: -60px;
-      top: 140px;
-    }
-
-    .orb.two {
-      width: 320px;
-      height: 320px;
-      background: #06b6d4;
-      right: -120px;
-      top: 40px;
-      animation-delay: -5s;
-    }
-
-    .orb.three {
-      width: 240px;
-      height: 240px;
-      background: #f43f5e;
-      right: 14%;
-      bottom: -120px;
-      animation-delay: -8s;
-    }
-
-    @keyframes float {
-      from {
-        transform: translate3d(0, 0, 0) scale(1);
-      }
-      to {
-        transform: translate3d(28px, -24px, 0) scale(1.08);
-      }
-    }
-
-    .app {
-      display: grid;
-      grid-template-columns: 300px minmax(0, 1fr);
-      gap: 22px;
-      max-width: 1540px;
-      margin: 0 auto;
-      padding: 22px;
-    }
-
-    .sidebar {
-      position: sticky;
-      top: 22px;
-      height: calc(100vh - 44px);
-      overflow: auto;
-      padding: 20px;
-      background: var(--panel);
-      border: 1px solid var(--line);
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
-      backdrop-filter: blur(18px);
-    }
-
-    .brand {
-      display: flex;
-      gap: 12px;
-      align-items: center;
-      margin-bottom: 18px;
-    }
-
-    .brand-mark {
-      width: 48px;
-      height: 48px;
-      border-radius: 16px;
-      display: grid;
-      place-items: center;
-      background:
-        linear-gradient(135deg, rgba(139, 92, 246, 0.95), rgba(6, 182, 212, 0.88));
-      box-shadow: 0 14px 32px rgba(139, 92, 246, 0.32);
-      font-size: 25px;
-    }
-
-    .brand h1 {
-      font-size: 1rem;
-      line-height: 1.15;
-      margin: 0;
-    }
-
-    .brand p {
-      margin: 4px 0 0;
-      color: var(--muted);
-      font-size: 0.78rem;
-    }
-
-    .side-label {
-      margin: 22px 0 10px;
-      color: var(--muted);
-      font-size: 0.72rem;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      font-weight: 800;
-    }
-
-    .topic-list {
-      display: grid;
-      gap: 8px;
-    }
-
-    .topic-btn {
-      width: 100%;
-      border: 1px solid var(--line);
-      color: var(--text);
-      background: rgba(255, 255, 255, 0.055);
-      border-radius: 14px;
-      padding: 11px 12px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 8px;
-      cursor: pointer;
-      text-align: left;
-      transition: 0.22s ease;
-    }
-
-    .topic-btn:hover,
-    .topic-btn.active {
-      transform: translateY(-1px);
-      background: var(--panel2);
-      border-color: rgba(139, 92, 246, 0.5);
-    }
-
-    .topic-left {
-      display: flex;
-      gap: 9px;
-      align-items: center;
-      min-width: 0;
-    }
-
-    .topic-name {
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      font-weight: 750;
-      font-size: 0.88rem;
-    }
-
-    .badge {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      min-width: 26px;
-      height: 22px;
-      padding: 0 8px;
-      border-radius: 999px;
-      background: rgba(255, 255, 255, 0.12);
-      color: var(--muted);
-      font-size: 0.72rem;
-      font-weight: 800;
-    }
-
-    .stats-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 9px;
-    }
-
-    .stat {
-      border: 1px solid var(--line);
-      background: rgba(255, 255, 255, 0.055);
-      border-radius: 16px;
-      padding: 12px;
-    }
-
-    .stat strong {
-      display: block;
-      font-size: 1.05rem;
-    }
-
-    .stat span {
-      display: block;
-      margin-top: 3px;
-      color: var(--muted);
-      font-size: 0.72rem;
-    }
-
-    main {
-      min-width: 0;
-    }
-
-    .hero {
-      position: relative;
-      overflow: hidden;
-      padding: clamp(22px, 4vw, 44px);
-      background:
-        linear-gradient(135deg, rgba(139, 92, 246, 0.22), rgba(6, 182, 212, 0.13)),
-        var(--panel);
-      border: 1px solid var(--line);
-      border-radius: calc(var(--radius) + 6px);
-      box-shadow: var(--shadow);
-      backdrop-filter: blur(18px);
-    }
-
-    .hero::after {
-      content: "";
-      position: absolute;
-      inset: auto -90px -120px auto;
-      width: 280px;
-      height: 280px;
-      border-radius: 999px;
-      background: radial-gradient(circle, rgba(251, 191, 36, 0.18), transparent 68%);
-    }
-
-    .eyebrow {
-      display: inline-flex;
-      gap: 8px;
-      align-items: center;
-      padding: 7px 11px;
-      border: 1px solid var(--line);
-      border-radius: 999px;
-      color: var(--muted);
-      background: rgba(255, 255, 255, 0.06);
-      font-size: 0.78rem;
-      font-weight: 750;
-    }
-
-    .hero h2 {
-      margin: 18px 0 12px;
-      font-size: clamp(2.3rem, 5.4vw, 5.6rem);
-      line-height: 0.92;
-      letter-spacing: -0.075em;
-    }
-
-    .gradient-text {
-      background: linear-gradient(90deg, #fff, #c4b5fd, #67e8f9, #fde68a);
-      background-clip: text;
-      -webkit-background-clip: text;
-      color: transparent;
-    }
-
-    [data-theme="light"] .gradient-text {
-      background: linear-gradient(90deg, #111827, #7c3aed, #0891b2, #b45309);
-      background-clip: text;
-      -webkit-background-clip: text;
-      color: transparent;
-    }
-
-    .hero-copy {
-      max-width: 860px;
-      color: var(--muted);
-      font-size: 1.05rem;
-      line-height: 1.75;
-    }
-
-    .top-actions {
-      margin-top: 24px;
-      display: grid;
-      grid-template-columns: minmax(220px, 1fr) auto auto auto;
-      gap: 10px;
-      align-items: center;
-    }
-
-    .search {
-      position: relative;
-    }
-
-    .search input {
-      width: 100%;
-      height: 48px;
-      border-radius: 16px;
-      border: 1px solid var(--line);
-      outline: none;
-      padding: 0 16px 0 44px;
-      color: var(--text);
-      background: rgba(255, 255, 255, 0.08);
-      font-size: 0.94rem;
-    }
-
-    .search span {
-      position: absolute;
-      left: 15px;
-      top: 50%;
-      transform: translateY(-50%);
-      color: var(--muted);
-    }
-
-    .btn {
-      border: 1px solid var(--line);
-      color: var(--text);
-      background: rgba(255, 255, 255, 0.08);
-      border-radius: 16px;
-      height: 48px;
-      padding: 0 14px;
-      font-weight: 800;
-      cursor: pointer;
-      transition: 0.2s ease;
-    }
-
-    .btn:hover {
-      transform: translateY(-1px);
-      background: var(--panel2);
-    }
-
-    .tabs {
-      position: sticky;
-      top: 12px;
-      z-index: 20;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      margin: 18px 0;
-      padding: 10px;
-      border: 1px solid var(--line);
-      background: rgba(5, 7, 19, 0.55);
-      backdrop-filter: blur(16px);
-      border-radius: 20px;
-      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.18);
-    }
-
-    [data-theme="light"] .tabs {
-      background: rgba(255, 255, 255, 0.58);
-    }
-
-    .tab {
-      border: 1px solid transparent;
-      background: transparent;
-      color: var(--muted);
-      border-radius: 14px;
-      padding: 11px 14px;
-      font-weight: 850;
-      cursor: pointer;
-    }
-
-    .tab.active {
-      color: var(--text);
-      border-color: rgba(139, 92, 246, 0.45);
-      background: linear-gradient(135deg, rgba(139, 92, 246, 0.24), rgba(6, 182, 212, 0.13));
-    }
-
-    .view {
-      display: none;
-      animation: rise 0.35s ease both;
-    }
-
-    .view.active {
-      display: block;
-    }
-
-    @keyframes rise {
-      from {
-        opacity: 0;
-        transform: translateY(10px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    .section-head {
-      display: flex;
-      justify-content: space-between;
-      align-items: end;
-      gap: 16px;
-      margin: 28px 0 14px;
-    }
-
-    .section-head h3 {
-      margin: 0;
-      font-size: clamp(1.55rem, 3vw, 2.45rem);
-      letter-spacing: -0.04em;
-    }
-
-    .section-head p {
-      margin: 6px 0 0;
-      color: var(--muted);
-      line-height: 1.55;
-      max-width: 820px;
-    }
-
-    .grid {
-      display: grid;
-      gap: 14px;
-    }
-
-    .reader-grid {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
-
-    .card {
-      position: relative;
-      overflow: hidden;
-      border: 1px solid var(--line);
-      background: var(--panel);
-      backdrop-filter: blur(18px);
-      border-radius: var(--radius);
-      padding: 18px;
-      box-shadow: var(--shadow);
-    }
-
-    .card::before {
-      content: "";
-      position: absolute;
-      inset: 0 0 auto;
-      height: 3px;
-      background: linear-gradient(90deg, var(--card-color, var(--accent)), transparent);
-      opacity: 0.9;
-    }
-
-    .card-top {
-      display: flex;
-      justify-content: space-between;
-      gap: 12px;
-      align-items: start;
-    }
-
-    .icon-title {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-
-    .icon {
-      width: 40px;
-      height: 40px;
-      border-radius: 14px;
-      display: grid;
-      place-items: center;
-      background: color-mix(in srgb, var(--card-color, var(--accent)) 24%, transparent);
-      border: 1px solid color-mix(in srgb, var(--card-color, var(--accent)) 45%, transparent);
-      flex: 0 0 auto;
-    }
-
-    .card h4 {
-      margin: 0;
-      font-size: 1.03rem;
-      letter-spacing: -0.02em;
-    }
-
-    .card small {
-      display: block;
-      color: var(--muted);
-      margin-top: 3px;
-      font-weight: 700;
-    }
-
-    .tags {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 6px;
-      margin: 14px 0;
-    }
-
-    .tag {
-      padding: 5px 8px;
-      border-radius: 999px;
-      border: 1px solid var(--line);
-      color: var(--muted);
-      background: rgba(255, 255, 255, 0.05);
-      font-size: 0.72rem;
-      font-weight: 800;
-    }
-
-    .bullets {
-      margin: 12px 0 0;
-      padding: 0;
-      list-style: none;
-      display: grid;
-      gap: 9px;
-      color: var(--muted);
-      line-height: 1.55;
-    }
-
-    .bullets li {
-      position: relative;
-      padding-left: 18px;
-    }
-
-    .bullets li::before {
-      content: "";
-      position: absolute;
-      width: 7px;
-      height: 7px;
-      border-radius: 999px;
-      left: 0;
-      top: 0.62em;
-      background: var(--card-color, var(--accent));
-      box-shadow: 0 0 18px var(--card-color, var(--accent));
-    }
-
-    .note {
-      margin-top: 14px;
-      padding: 12px;
-      border-radius: 16px;
-      border: 1px solid var(--line);
-      background: rgba(251, 191, 36, 0.08);
-      color: color-mix(in srgb, var(--text) 72%, #fbbf24);
-      line-height: 1.55;
-      font-size: 0.92rem;
-    }
-
-    .kanban {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(260px, 1fr));
-      gap: 14px;
-      align-items: start;
-    }
-
-    .column {
-      border: 1px solid var(--line);
-      border-radius: var(--radius);
-      background: rgba(255, 255, 255, 0.055);
-      padding: 14px;
-      min-height: 240px;
-    }
-
-    .column h4 {
-      margin: 0 0 12px;
-      display: flex;
-      justify-content: space-between;
-      gap: 10px;
-      align-items: center;
-    }
-
-    .mini-card {
-      border: 1px solid var(--line);
-      background: var(--panel);
-      border-radius: 18px;
-      padding: 14px;
-      margin-bottom: 10px;
-      transition: 0.2s ease;
-    }
-
-    .mini-card:hover {
-      transform: translateY(-2px);
-      background: var(--panel2);
-    }
-
-    .mini-card strong {
-      display: block;
-    }
-
-    .mini-card p {
-      color: var(--muted);
-      margin: 8px 0 0;
-      font-size: 0.88rem;
-      line-height: 1.45;
-    }
-
-    .network-shell {
-      position: relative;
-      overflow: hidden;
-      min-height: 720px;
-      border: 1px solid var(--line);
-      background:
-        radial-gradient(circle at 40% 30%, rgba(139, 92, 246, 0.18), transparent 26rem),
-        radial-gradient(circle at 70% 60%, rgba(6, 182, 212, 0.14), transparent 25rem),
-        var(--panel);
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
-    }
-
-    #networkSvg {
-      width: 100%;
-      height: 720px;
-      display: block;
-    }
-
-    .link {
-      stroke: rgba(255, 255, 255, 0.2);
-      stroke-width: 1.25;
-    }
-
-    [data-theme="light"] .link {
-      stroke: rgba(15, 23, 42, 0.16);
-    }
-
-    .node {
-      cursor: pointer;
-    }
-
-    .node circle {
-      stroke: rgba(255, 255, 255, 0.72);
-      stroke-width: 1.2;
-      filter: drop-shadow(0 12px 16px rgba(0, 0, 0, 0.24));
-      transition: 0.2s ease;
-    }
-
-    .node:hover circle {
-      transform: scale(1.07);
-    }
-
-    .node text {
-      fill: var(--text);
-      font-weight: 850;
-      font-size: 12px;
-      text-anchor: middle;
-      paint-order: stroke;
-      stroke: rgba(0, 0, 0, 0.45);
-      stroke-width: 3px;
-      stroke-linejoin: round;
-    }
-
-    [data-theme="light"] .node text {
-      stroke: rgba(255, 255, 255, 0.75);
-    }
-
-    .network-panel {
-      position: absolute;
-      right: 16px;
-      top: 16px;
-      width: min(360px, calc(100% - 32px));
-      max-height: calc(100% - 32px);
-      overflow: auto;
-      border: 1px solid var(--line);
-      background: rgba(5, 7, 19, 0.72);
-      backdrop-filter: blur(18px);
-      border-radius: 22px;
-      padding: 16px;
-      box-shadow: var(--shadow);
-    }
-
-    [data-theme="light"] .network-panel {
-      background: rgba(255, 255, 255, 0.8);
-    }
-
-    .network-panel h4 {
-      margin: 0 0 8px;
-    }
-
-    .network-panel p {
-      color: var(--muted);
-      line-height: 1.55;
-    }
-
-    .mindmap {
-      border: 1px solid var(--line);
-      background: var(--panel);
-      border-radius: var(--radius);
-      padding: 20px;
-      box-shadow: var(--shadow);
-      overflow: auto;
-    }
-
-    .tree {
-      min-width: 860px;
-    }
-
-    .tree-root {
-      display: inline-block;
-      padding: 14px 18px;
-      border-radius: 18px;
-      background: linear-gradient(135deg, rgba(139, 92, 246, 0.28), rgba(6, 182, 212, 0.18));
-      border: 1px solid var(--line);
-      font-weight: 900;
-      margin-bottom: 14px;
-    }
-
-    .branch {
-      margin-left: 24px;
-      padding-left: 22px;
-      border-left: 1px solid var(--line);
-    }
-
-    details {
-      margin: 10px 0;
-    }
-
-    summary {
-      cursor: pointer;
-      list-style: none;
-      padding: 12px 14px;
-      border: 1px solid var(--line);
-      border-radius: 16px;
-      background: rgba(255, 255, 255, 0.055);
-      font-weight: 850;
-    }
-
-    summary::-webkit-details-marker {
-      display: none;
-    }
-
-    summary::before {
-      content: "▸";
-      display: inline-block;
-      margin-right: 8px;
-      transition: 0.2s ease;
-    }
-
-    details[open] > summary::before {
-      transform: rotate(90deg);
-    }
-
-    .leaf {
-      margin: 8px 0 8px 26px;
-      padding: 12px;
-      border-radius: 14px;
-      background: rgba(255, 255, 255, 0.045);
-      border: 1px solid var(--line);
-      color: var(--muted);
-      line-height: 1.5;
-    }
-
-    .table-card {
-      overflow: auto;
-    }
-
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      min-width: 760px;
-    }
-
-    th,
-    td {
-      text-align: left;
-      vertical-align: top;
-      border-bottom: 1px solid var(--line);
-      padding: 13px 12px;
-      line-height: 1.5;
-    }
-
-    th {
-      color: var(--text);
-      font-size: 0.78rem;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      background: rgba(255, 255, 255, 0.06);
-    }
-
-    td {
-      color: var(--muted);
-    }
-
-    .empty {
-      padding: 42px;
-      text-align: center;
-      color: var(--muted);
-      border: 1px dashed var(--line);
-      border-radius: var(--radius);
-      background: rgba(255, 255, 255, 0.045);
-    }
-
-    .quality-box {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 12px;
-      margin-top: 18px;
-    }
-
-    .quality-box .card {
-      padding: 16px;
-    }
-
-    footer {
-      color: var(--muted);
-      text-align: center;
-      padding: 30px 0 8px;
-      font-size: 0.85rem;
-    }
-
-    mark {
-      background: rgba(251, 191, 36, 0.35);
-      color: inherit;
-      border-radius: 4px;
-      padding: 0 2px;
-    }
-
-    @media (max-width: 1100px) {
-      .reader-grid,
-      .quality-box {
-        grid-template-columns: 1fr;
-      }
-
-      .kanban {
-        grid-template-columns: 1fr 1fr;
-      }
-    }
-
-    @media (max-width: 900px) {
-      .app {
-        display: block;
-        padding: 14px;
-      }
-
-      .sidebar {
-        position: relative;
-        top: 0;
-        height: auto;
-        margin-bottom: 14px;
-      }
-
-      .top-actions {
-        grid-template-columns: 1fr 1fr;
-      }
-
-      .top-actions .search {
-        grid-column: 1 / -1;
-      }
-
-      .kanban {
-        grid-template-columns: 1fr;
-      }
-
-      .tabs {
-        position: relative;
-        top: 0;
-      }
-    }
-
-    @media print {
-      body {
-        background: white;
-        color: #111827;
-      }
-
-      .sidebar,
-      .tabs,
-      .top-actions,
-      .network-shell,
-      .orb {
-        display: none !important;
-      }
-
-      .app {
-        display: block;
-        max-width: 100%;
-      }
-
-      .hero,
-      .card,
-      .column,
-      .mindmap {
-        box-shadow: none;
-        border-color: #d1d5db;
-        background: white;
-      }
-
-      .view {
-        display: block !important;
-      }
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Supernatural Across World Religions — Interactive Research Deep Dive</title>
+<style>
+  :root {
+    --bg-deep: #0a0a0f;
+    --bg-surface: #11111a;
+    --bg-elevated: #1a1a25;
+    --bg-card: #161620;
+    --text-primary: #e8e6e3;
+    --text-secondary: #a09d98;
+    --text-muted: #6e6b66;
+    --accent-gold: #d4a853;
+    --accent-amber: #f0b04a;
+    --accent-crimson: #c94a4a;
+    --accent-indigo: #6b7fd7;
+    --accent-teal: #4ecdc4;
+    --accent-purple: #a855f7;
+    --border-subtle: rgba(255,255,255,0.06);
+    --border-accent: rgba(212,168,83,0.3);
+    --shadow-glow: rgba(212,168,83,0.08);
+    --font-heading: 'Georgia', 'Times New Roman', serif;
+    --font-body: 'Inter', system-ui, -apple-system, sans-serif;
+    --radius: 12px;
+    --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: var(--font-body);
+    background: var(--bg-deep);
+    color: var(--text-primary);
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  /* Custom Scrollbar */
+  ::-webkit-scrollbar { width: 8px; }
+  ::-webkit-scrollbar-track { background: var(--bg-deep); }
+  ::-webkit-scrollbar-thumb { background: #333; border-radius: 4px; }
+  ::-webkit-scrollbar-thumb:hover { background: var(--accent-gold); }
+
+  /* Background ambient */
+  .ambient-bg {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    background:
+      radial-gradient(ellipse 80% 50% at 20% 40%, rgba(212,168,83,0.03) 0%, transparent 70%),
+      radial-gradient(ellipse 60% 40% at 80% 60%, rgba(107,127,215,0.03) 0%, transparent 70%);
+  }
+
+  /* Header / Hero */
+  .hero {
+    position: relative;
+    z-index: 1;
+    padding: 80px 20px 60px;
+    text-align: center;
+    border-bottom: 1px solid var(--border-subtle);
+    background: linear-gradient(180deg, rgba(212,168,83,0.05) 0%, transparent 100%);
+  }
+
+  .hero h1 {
+    font-family: var(--font-heading);
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    font-weight: 400;
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+    margin-bottom: 16px;
+    background: linear-gradient(135deg, var(--text-primary) 0%, var(--accent-gold) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .hero .subtitle {
+    font-size: 1.1rem;
+    color: var(--text-secondary);
+    max-width: 700px;
+    margin: 0 auto 32px;
+  }
+
+  .meta-badges {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--text-muted);
+  }
+
+  .meta-badges span {
+    border: 1px solid var(--border-subtle);
+    padding: 4px 12px;
+    border-radius: 100px;
+  }
+
+  /* View Switcher */
+  .controls {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(10,10,15,0.85);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border-subtle);
+    padding: 16px 20px;
+  }
+
+  .controls-inner {
+    max-width: 1400px;
+    margin: 0 auto;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    justify-content: center;
+  }
+
+  .view-btn {
+    background: transparent;
+    border: 1px solid var(--border-subtle);
+    color: var(--text-secondary);
+    padding: 8px 20px;
+    border-radius: 100px;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 0.85rem;
+    font-weight: 500;
+    transition: all var(--transition);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .view-btn:hover {
+    border-color: var(--border-accent);
+    color: var(--text-primary);
+  }
+
+  .view-btn.active {
+    background: var(--accent-gold);
+    color: var(--bg-deep);
+    border-color: var(--accent-gold);
+    font-weight: 600;
+  }
+
+  /* Content Area */
+  .content-area {
+    position: relative;
+    z-index: 1;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 40px 20px 100px;
+  }
+
+  /* --- DOCUMENT VIEW --- */
+  .doc-view section {
+    margin-bottom: 60px;
+  }
+
+  .doc-view h2 {
+    font-family: var(--font-heading);
+    font-size: 1.8rem;
+    font-weight: 400;
+    color: var(--accent-gold);
+    margin-bottom: 24px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--border-subtle);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .doc-view h3 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin: 32px 0 16px;
+    padding-left: 16px;
+    border-left: 3px solid var(--accent-indigo);
+  }
+
+  .doc-view h4 {
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: var(--accent-teal);
+    margin: 24px 0 12px;
+  }
+
+  .doc-view p {
+    margin-bottom: 16px;
+    color: var(--text-secondary);
+  }
+
+  .doc-view blockquote {
+    border-left: 3px solid var(--accent-gold);
+    padding: 12px 20px;
+    margin: 20px 0;
+    background: var(--bg-surface);
+    border-radius: 0 var(--radius) var(--radius) 0;
+    font-style: italic;
+    color: var(--text-primary);
+  }
+
+  .annotation {
+    background: linear-gradient(135deg, rgba(212,168,83,0.08), rgba(107,127,215,0.05));
+    border: 1px solid var(--border-accent);
+    border-radius: var(--radius);
+    padding: 20px;
+    margin: 24px 0;
+    position: relative;
+  }
+
+  .annotation::before {
+    content: "📌 Annotation";
+    display: block;
+    font-weight: 700;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--accent-gold);
+    margin-bottom: 8px;
+  }
+
+  /* Tables */
+  .table-wrap {
+    overflow-x: auto;
+    margin: 24px 0;
+    border-radius: var(--radius);
+    border: 1px solid var(--border-subtle);
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9rem;
+  }
+
+  th {
+    background: var(--bg-elevated);
+    color: var(--accent-gold);
+    font-weight: 600;
+    text-align: left;
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--border-subtle);
+    white-space: nowrap;
+  }
+
+  td {
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--border-subtle);
+    color: var(--text-secondary);
+    vertical-align: top;
+  }
+
+  tr:last-child td { border-bottom: none; }
+
+  tr:hover td { background: rgba(255,255,255,0.02); }
+
+  /* Diagrams in doc */
+  .ascii-art {
+    background: var(--bg-surface);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius);
+    padding: 20px;
+    font-family: 'Courier New', monospace;
+    font-size: 0.85rem;
+    line-height: 1.5;
+    color: var(--accent-teal);
+    overflow-x: auto;
+    margin: 20px 0;
+  }
+
+  /* Lists */
+  .doc-view ul, .doc-view ol {
+    margin: 16px 0 16px 24px;
+    color: var(--text-secondary);
+  }
+
+  .doc-view li { margin-bottom: 8px; }
+
+  /* Religion Headers */
+  .religion-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 16px;
+  }
+
+  .religion-icon {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    font-size: 1.25rem;
+    background: var(--bg-elevated);
+    border: 1px solid var(--border-subtle);
+  }
+
+  /* --- NETWORK VIEW --- */
+  #networkCanvas {
+    width: 100%;
+    height: 700px;
+    background: var(--bg-surface);
+    border-radius: var(--radius);
+    border: 1px solid var(--border-subtle);
+    cursor: grab;
+  }
+
+  #networkCanvas:active { cursor: grabbing; }
+
+  .network-legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    margin: 16px 0;
+    justify-content: center;
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+  }
+
+  .legend-item { display: flex; align-items: center; gap: 8px; }
+  .legend-dot { width: 12px; height: 12px; border-radius: 50%; }
+
+  .network-info {
+    background: var(--bg-card);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius);
+    padding: 20px;
+    margin-top: 20px;
+    min-height: 100px;
+  }
+
+  .network-info h4 { margin: 0 0 8px; color: var(--accent-gold); }
+  .network-info p { color: var(--text-secondary); font-size: 0.9rem; margin: 0; }
+
+  /* --- BOARD VIEW --- */
+  .board-view {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 20px;
+  }
+
+  .board-column {
+    background: var(--bg-surface);
+    border-radius: var(--radius);
+    border: 1px solid var(--border-subtle);
+    padding: 16px;
+  }
+
+  .board-column-header {
+    font-size: 0.85rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--accent-gold);
+    margin-bottom: 16px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--border-subtle);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .board-column-header .count {
+    background: var(--bg-elevated);
+    padding: 2px 8px;
+    border-radius: 100px;
+    font-size: 0.75rem;
+    color: var(--text-muted);
+  }
+
+  .board-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-subtle);
+    border-radius: 10px;
+    padding: 16px;
+    margin-bottom: 12px;
+    transition: all var(--transition);
+    cursor: pointer;
+  }
+
+  .board-card:hover {
+    border-color: var(--border-accent);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+  }
+
+  .board-card-title {
+    font-weight: 600;
+    font-size: 0.95rem;
+    margin-bottom: 6px;
+    color: var(--text-primary);
+  }
+
+  .board-card-meta {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    margin-bottom: 8px;
+  }
+
+  .board-card-body {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    line-height: 1.5;
+  }
+
+  .tag {
+    display: inline-block;
+    font-size: 0.7rem;
+    padding: 2px 8px;
+    border-radius: 100px;
+    background: rgba(212,168,83,0.1);
+    color: var(--accent-gold);
+    margin-top: 8px;
+    margin-right: 4px;
+    border: 1px solid rgba(212,168,83,0.2);
+  }
+
+  .tag.blue { background: rgba(107,127,215,0.1); color: var(--accent-indigo); border-color: rgba(107,127,215,0.2); }
+  .tag.red { background: rgba(201,74,74,0.1); color: var(--accent-crimson); border-color: rgba(201,74,74,0.2); }
+  .tag.teal { background: rgba(78,205,196,0.1); color: var(--accent-teal); border-color: rgba(78,205,196,0.2); }
+  .tag.purple { background: rgba(168,85,247,0.1); color: var(--accent-purple); border-color: rgba(168,85,247,0.2); }
+
+  /* --- MIND MAP VIEW --- */
+  .mindmap-container {
+    background: var(--bg-surface);
+    border-radius: var(--radius);
+    border: 1px solid var(--border-subtle);
+    padding: 30px;
+    overflow: auto;
+  }
+
+  .mindmap-svg {
+    width: 100%;
+    min-height: 800px;
+  }
+
+  .mm-node {
+    cursor: pointer;
+    transition: opacity 0.2s;
+  }
+  .mm-node:hover { opacity: 0.9; }
+  .mm-node rect, .mm-node circle {
+    transition: all 0.2s;
+  }
+  .mm-node:hover rect {
+    filter: brightness(1.2);
+  }
+  .mm-text {
+    font-family: var(--font-body);
+    font-size: 13px;
+    fill: var(--text-primary);
+    pointer-events: none;
+  }
+  .mm-link {
+    stroke: var(--border-subtle);
+    stroke-width: 2;
+    fill: none;
+  }
+  .mm-link.highlight {
+    stroke: var(--accent-gold);
+    stroke-width: 3;
+  }
+
+  /* Utility */
+  .hidden { display: none !important; }
+
+  .section-intro {
+    font-size: 1.1rem;
+    color: var(--text-muted);
+    max-width: 800px;
+    margin-bottom: 32px;
+    line-height: 1.6;
+  }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    .hero { padding: 40px 20px 30px; }
+    .content-area { padding: 20px 16px 60px; }
+    #networkCanvas { height: 400px; }
+    .board-view { grid-template-columns: 1fr; }
+    .doc-view h2 { font-size: 1.4rem; }
+    .table-wrap { font-size: 0.8rem; }
+  }
+
+  /* Animations */
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .animate-in { animation: fadeIn 0.5s ease forwards; }
+
+</style>
 </head>
-
 <body>
-  <div class="orb one"></div>
-  <div class="orb two"></div>
-  <div class="orb three"></div>
+<div class="ambient-bg"></div>
 
-  <div class="app">
-    <aside class="sidebar">
-      <div class="brand">
-        <div class="brand-mark">🔮</div>
-        <div>
-          <h1>The Supernatural Across World Religions</h1>
-          <p>Comparative eschatology, demonology, and cognitive science</p>
-        </div>
+<!-- Hero -->
+<header class="hero">
+  <h1>🔮 The Supernatural Across World Religions</h1>
+  <p class="subtitle">A comprehensive research deep dive: Demons, Doomsdays, Divine Judgment &amp; Scientific Analysis across Abrahamic faiths, Hinduism, Zoroastrianism, Buddhism, and folklore traditions.</p>
+  <div class="meta-badges">
+    <span>Comparative Religion</span>
+    <span>Eschatology</span>
+    <span>Demonology</span>
+    <span>Cognitive Science</span>
+    <span>Neurotheology</span>
+  </div>
+</header>
+
+<!-- Controls -->
+<nav class="controls">
+  <div class="controls-inner">
+    <button class="view-btn active" onclick="switchView('doc')" data-view="doc">📄 Document</button>
+    <button class="view-btn" onclick="switchView('network')" data-view="network">🕸️ Network</button>
+    <button class="view-btn" onclick="switchView('board')" data-view="board">🗂️ Board</button>
+    <button class="view-btn" onclick="switchView('mindmap')" data-view="mindmap">🧠 Mind Map</button>
+  </div>
+</nav>
+
+<!-- Content -->
+<main class="content-area">
+
+  <!-- DOCUMENT VIEW -->
+  <div id="view-doc" class="doc-view">
+
+    <section>
+      <h2><span>1</span> Eschatology: The End of All Things</h2>
+      <p class="section-intro">Most major religions possess an End Times concept, but the architecture varies dramatically between linear one-time events and eternal cyclical dissolution.</p>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>Framework</th><th>Religions</th><th>Core Idea</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>🔵 Linear (One-time)</td><td>Christianity, Islam, Judaism</td><td>Clear beginning, singular Judgment Day, eternal afterlife</td></tr>
+            <tr><td>🟢 Cyclical (Eternal)</td><td>Hinduism, Buddhism</td><td>Cosmic cycles of birth, death, and rebirth; no final judgment</td></tr>
+          </tbody>
+        </table>
       </div>
 
-      <div class="side-label">Topic Filter</div>
-      <div id="topicNav" class="topic-list"></div>
-
-      <div class="side-label">Document Metrics</div>
-      <div id="stats" class="stats-grid"></div>
-
-      <div class="side-label">Editorial Optimization</div>
-      <div class="note">
-        Strong claims have been reframed as <b>comparative arguments</b> or
-        <b>scholarly hypotheses</b>. For publication, replace placeholder source
-        notes with verified academic citations.
+      <h3>✝️ Christianity — The Second Coming &amp; Final Judgment</h3>
+      <p>The Bible describes the <strong>Parousia</strong> (Second Coming) as the trigger for the resurrection of the dead and universal judgment. No date is specified — a deliberate theological design to sustain moral vigilance.</p>
+      <div class="annotation">
+        <p>Christianity's eschatology is notably <em>incomplete by design</em>. The absence of a date creates perpetual anticipation, functioning as a disciplinary mechanism rather than a predictive calendar.</p>
       </div>
-    </aside>
 
-    <main>
-      <header class="hero">
-        <div class="eyebrow">Academic Comparative Reference · Optimized Interactive Edition</div>
-        <h2>
-          <span class="gradient-text">Demons, Doomsdays, Divine Judgment</span>
-          <br />
-          & Scientific Explanations
-        </h2>
-        <p class="hero-copy">
-          Explore how world religions and folklore traditions describe the end of time,
-          supernatural adversaries, jinn, ifrit, asuras, rakshasas, cosmic judgment,
-          karma, resurrection, and the cognitive mechanisms that may shape religious experience.
-        </p>
+      <h3>☪️ Islam — Yawm al-Qiyāmah</h3>
+      <p>Judgment Day is the "dominant message" of the Qur'an and one of the six articles of faith. Islam uniquely asserts a <strong>dual-phase</strong> accountability: the <em>ʿadhāb al-qabr</em> (punishment of the grave) begins immediately after death, while the final judgment is the second phase.</p>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Arabic Name</th><th>Translation</th></tr></thead>
+          <tbody>
+            <tr><td>Yawm al-Qiyāmah</td><td>Day of Resurrection</td></tr>
+            <tr><td>Yawm al-Ḥisāb</td><td>Day of Reckoning</td></tr>
+            <tr><td>Yawm al-Dīn</td><td>Day of Judgment</td></tr>
+            <tr><td>Yawm al-Wāqi'ah</td><td>Day of the Inevitable Event</td></tr>
+            <tr><td>Yawm al-Zalzalah</td><td>Day of the Earthquake</td></tr>
+          </tbody>
+        </table>
+      </div>
 
-        <div class="top-actions">
-          <label class="search">
-            <span>⌕</span>
-            <input id="searchInput" type="search" placeholder="Search: jinn, Satan, Kali Yuga, Zoroastrianism, sleep paralysis..." />
-          </label>
-          <button id="themeBtn" class="btn" type="button">☀️ Theme</button>
-          <button id="exportBtn" class="btn" type="button">⬇ Export</button>
-          <button id="printBtn" class="btn" type="button">🖨 Print</button>
-        </div>
-      </header>
+      <h3>✡️ Judaism — Yom HaDin</h3>
+      <p>The Hebrew Bible contains scattered allusions to divine judgment. Post-biblical texts (Talmud, mystical writings) elaborate on resurrection and the weighing of deeds, but the focus remains on <strong>collective national redemption</strong> rather than individual afterlife judgment.</p>
 
-      <nav class="tabs" aria-label="View switcher">
-        <button class="tab active" data-view="reader">📖 Reader</button>
-        <button class="tab" data-view="board">🧩 Board</button>
-        <button class="tab" data-view="network">🕸 Network</button>
-        <button class="tab" data-view="mindmap">🧠 Mind Map</button>
-        <button class="tab" data-view="compare">📊 Compare</button>
-      </nav>
+      <h3>🕉️ Hinduism &amp; ☸️ Buddhism — Karma, Not Judgment</h3>
+      <p>Both traditions emphasize moral accountability through <em>karma</em>, where actions have consequences across lifetimes. The path to liberation involves virtue, Dharma, and spiritual discipline.</p>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Yuga</th><th>Duration</th><th>Character</th></tr></thead>
+          <tbody>
+            <tr><td>🟡 Satya Yuga</td><td>1,728,000 years</td><td>Golden Age — 100% virtue</td></tr>
+            <tr><td>🟠 Treta Yuga</td><td>1,296,000 years</td><td>75% virtue</td></tr>
+            <tr><td>🔴 Dvapara Yuga</td><td>864,000 years</td><td>50% virtue</td></tr>
+            <tr><td>⚫ Kali Yuga</td><td>432,000 years</td><td>Dark Age — current era</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>At the end of a full Mahayuga cycle, <strong>Pralaya</strong> (cosmic dissolution) destroys and re-creates the universe. This is not a moral judgment — it is a cosmic reset.</p>
 
-      <section id="reader" class="view active"></section>
-      <section id="board" class="view"></section>
-      <section id="network" class="view"></section>
-      <section id="mindmap" class="view"></section>
-      <section id="compare" class="view"></section>
+      <h3>🔥 Zoroastrianism — The Original Blueprint</h3>
+      <p>Zoroastrianism introduced <strong>Frashokereti</strong>: the final renovation, resurrection of the dead, and judgment by molten metal. Predating Christianity by 400–600 years, this is arguably the <strong>most important finding</strong> in comparative eschatology.</p>
+      <div class="annotation">
+        <p><strong>Critical finding:</strong> Jewish exile in Persia (6th century BCE) transmitted Zoroastrian concepts into Judaism, which then flowed into Christianity and Islam. The chain of influence is documented historical consensus, not speculation.</p>
+      </div>
+    </section>
 
-      <footer>
-        Interactive document version 2.0 · Built as a single-file HTML research viewer
-      </footer>
-    </main>
+    <section>
+      <h2><span>2</span> Satan &amp; The Adversary Across Faiths</h2>
+
+      <h3>🧬 Etymological Origins</h3>
+      <p>In Hebrew, <em>satan</em> means "adversary." The satan of the Hebrew Bible is a <strong>description, not a proper name</strong>. The definite article <em>ha-satan</em> ("the accuser") appears in the Book of Job as a title — a divine prosecutor operating within God's court.</p>
+      <div class="annotation">
+        <p>The original Hebrew "satan" is NOT a proper noun. The transformation into a cosmic enemy happened later through cross-cultural influence during the Persian exile.</p>
+      </div>
+
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Religion</th><th>Figure</th><th>Origin</th><th>Nature</th><th>Power</th></tr></thead>
+          <tbody>
+            <tr><td>✡️ Judaism</td><td>Ha-Satan</td><td>God's court</td><td>Prosecutor / Tester</td><td>Fully subordinate</td></tr>
+            <tr><td>✝️ Christianity</td><td>Satan / Lucifer</td><td>Fallen angel</td><td>Cosmic rebel</td><td>High, but defeated</td></tr>
+            <tr><td>☪️ Islam</td><td>Iblīs / Shayṭān</td><td>Fallen Jinn</td><td>Refuser / Whisperer</td><td>Limited by God's will</td></tr>
+            <tr><td>🔥 Zoroastrianism</td><td>Angra Mainyu</td><td>Co-eternal</td><td>Anti-God</td><td>EQUAL to God</td></tr>
+            <tr><td>🕉️ Hinduism</td><td>No equivalent</td><td>—</td><td>Distributed evil</td><td>Varies</td></tr>
+            <tr><td>☸️ Buddhism</td><td>Māra</td><td>Internal/External</td><td>Tempter</td><td>Psychological</td></tr>
+            <tr><td>🏛️ Egypt</td><td>Set / Apophis</td><td>Divine realm</td><td>Chaos deity</td><td>Variable</td></tr>
+            <tr><td>🕊️ Yazidism</td><td>Melek Taus</td><td>Angel</td><td>Benevolent leader</td><td>High (redeemed)</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>Evolution of the Adversary</h3>
+      <div class="ascii-art">
+~1500 BCE  Zoroastrianism: Angra Mainyu (co-equal enemy)
+    │
+~600 BCE   Judaism absorbs Persian dualism during Exile
+    │       ha-satan: courtroom accuser (Book of Job)
+    │
+~30-100 CE Christianity: Satan = Lucifer = fallen angel
+    │       Cosmic rebel with his own kingdom (Hell)
+    │
+~610 CE    Islam: Iblis = fallen Jinn (not angel)
+    │       Refuses to bow to Adam; whispers evil
+
+PARALLEL TRACKS:
+Hinduism:   No single "Satan" — evil is distributed
+Buddhism:   Māra (tempter) — more psychological than cosmic
+      </div>
+    </section>
+
+    <section>
+      <h2><span>3</span> Demons, Jinn, Ifrit &amp; Supernatural Entities</h2>
+
+      <h3>🌍 Demons — Universal Concept</h3>
+      <p>Belief in demons likely stems from the Paleolithic age, rooted in humanity's fear of the unknown. Large portions of Jewish demonology originated from a later form of Zoroastrianism and transferred to Judaism during the Persian era.</p>
+      <div class="annotation">
+        <p>Clear historical transmission chain: <strong>Zoroastrianism → Judaism → Christianity → Islam</strong>. This is mainstream academic consensus.</p>
+      </div>
+
+      <h3>🔥 Jinn (Islamic Cosmology)</h3>
+      <p>Jinn are supernatural beings created from <strong>smokeless fire</strong>, possessing free will like humans. They exist in a parallel realm, distinct from angels (created from light, no free will) and humans (created from clay).</p>
+
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Type</th><th>Nature</th><th>Characteristics</th></tr></thead>
+          <tbody>
+            <tr><td>Muslim Jinn</td><td>✅ Benevolent</td><td>Follow Islamic teachings</td></tr>
+            <tr><td>Kafir Jinn</td><td>⚠️ Neutral-Hostile</td><td>Non-believing</td></tr>
+            <tr><td>Shayatin</td><td>❌ Malevolent</td><td>Mischief and evil</td></tr>
+            <tr><td>Ifrit</td><td>❌❌ Extremely Powerful</td><td>Strength, cunning, fire</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h4>Creation Hierarchy</h4>
+      <div class="ascii-art">
+    ☀️ ANGELS — LIGHT — No free will — Pure obedience
+         │
+    🔥 JINN — SMOKELESS FIRE — Free will — Good or evil
+         │
+    🪨 HUMANS — CLAY — Free will — God's vicegerents
+      </div>
+
+      <h3>🔥 Ifrit — The Fire Demons</h3>
+      <p>Ifrit are powerful jinn associated with fire, ruins, and the underworld. They possess magical powers, grant wishes, and can appear helpful with hidden consequences. The Qur'an mentions an ifrit offering to bring the Throne of Sheba to Solomon (Surah An-Naml 27:39).</p>
+      <p>In Islamic Egypt, afarit are associated with the souls of those killed violently. Martyrs, saints, and prophets do not have ghosts, and therefore no ifrit.</p>
+      <div class="annotation">
+        <p>Critical distinction: <em>Theological</em> jinn (Quranic, real beings with free will) vs. <em>folkloric</em> ifrit (elaborated through Arabian, Egyptian, and Moroccan cultural narratives). The Qur'an uses "ifrit" only once as a descriptor.</p>
+      </div>
+    </section>
+
+    <section>
+      <h2><span>4</span> Hindu Demonology: Asuras, Rakshasas &amp; Cosmic Cycles</h2>
+      <p class="section-intro">Unlike Western theology where evil opposes God, Hinduism sees demons as integral to cosmic balance — created willingly and purposefully by the divine.</p>
+      <div class="annotation">
+        <p><strong>The single most important distinction in comparative demonology:</strong> In Abrahamic traditions, evil opposes God. In Hinduism, evil is part of God's creation and serves a cosmic purpose.</p>
+      </div>
+
+      <h3>👹 Asuras — The Anti-Gods</h3>
+      <p>In the Rig Veda, <em>asura</em> gradually transforms from a positive title ("lord") to a demonic class. By the Atharva Veda and Brahmanas, asuras are clearly depicted as diametrically opposed to the devas (gods), allied with rakshasas.</p>
+
+      <div class="ascii-art">
+                        BRAHMA (Creator)
+                            │
+                        KASHYAPA (Sage)
+                       ╱    │     ╲
+                  Aditi    Diti    Danu
+                   │        │       │
+               ADITYAS   DAITYAS  DANAVAS
+               (Devas)   (Asura   (Asura
+                Gods)    Demons)  Demons)
+      </div>
+
+      <h4>Notable Asuras</h4>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Asura</th><th>Story</th><th>Defeated By</th></tr></thead>
+          <tbody>
+            <tr><td>Ravana</td><td>10-headed antagonist of the Ramayana</td><td>Lord Rama</td></tr>
+            <tr><td>Hiranyakashipu</td><td>Received boons from Brahma through penance</td><td>Lord Vishnu (Narasimha)</td></tr>
+            <tr><td>Mahishasura</td><td>Buffalo Demon</td><td>Goddess Durga</td></tr>
+            <tr><td>King Mahabali</td><td>Respected for wisdom and generosity</td><td>Lord Vishnu (Vamana)</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>🦇 Rakshasas &amp; Taxonomy</h3>
+      <p>Rakshasas possess the power to change shape and appear as animals, monsters, or beautiful women. They are most powerful in the evening, dispelled by the rising sun, and detest prayer and sacrifice.</p>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Entity</th><th>Nature</th><th>Key Traits</th></tr></thead>
+          <tbody>
+            <tr><td>Asuras</td><td>Anti-gods</td><td>Power-seekers opposing Devas</td></tr>
+            <tr><td>Rakshasas</td><td>Shape-shifting demons</td><td>Night-dwelling, disrupt rituals</td></tr>
+            <tr><td>Pishacha</td><td>Flesh-eating ghouls</td><td>Feed on the dead</td></tr>
+            <tr><td>Vetala</td><td>Vampire-like spirits</td><td>Inhabit corpses</td></tr>
+            <tr><td>Yaksha</td><td>Ambiguous nature spirits</td><td>Generally benevolent</td></tr>
+            <tr><td>Bhuta / Preta</td><td>Ghosts / Hungry ghosts</td><td>Restless dead</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="annotation">
+        <p><strong>The Boon Paradox:</strong> Gods cannot refuse sincere penance (tapasya) — it creates a cosmic debt. This leads to the famous "loophole" pattern: demons request near-immortality with specific conditions, and avatars exploit those exact conditions to defeat them (e.g., Narasimha — neither man nor animal, neither inside nor outside, neither day nor night).</p>
+      </div>
+    </section>
+
+    <section>
+      <h2><span>5</span> Zoroastrianism: The Origin Blueprint</h2>
+      <p>Zoroastrianism stands as the oldest known monotheistic eschatology. Its contributions to world religion are foundational:</p>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Concept</th><th>Zoroastrian Origin</th><th>Later Adoption</th></tr></thead>
+          <tbody>
+            <tr><td>Cosmic Dualism</td><td>Ahura Mazda vs. Ahriman</td><td>God vs. Satan</td></tr>
+            <tr><td>Final Judgment</td><td>Frashokereti</td><td>Yawm al-Qiyamah, Last Judgment</td></tr>
+            <tr><td>Resurrection</td><td>Ristakhiz</td><td>Christian/Islamic resurrection</td></tr>
+            <tr><td>Heaven &amp; Hell</td><td>House of Song / House of Lies</td><td>Paradise / Jahannam / Gehenna</td></tr>
+            <tr><td>Angels &amp; Demons</td><td>Amesha Spentas / Daevas</td><td>Abrahamic angelology &amp; demonology</td></tr>
+            <tr><td>Messiah Figure</td><td>Saoshyant</td><td>Jesus (Second Coming) / Mahdi</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="annotation">
+        <p>The historical evidence is overwhelming: virtually every major Abrahamic eschatological concept has a Zoroastrian precursor. This establishes a clear chain of theological transmission rather than independent revelation.</p>
+      </div>
+    </section>
+
+    <section>
+      <h2><span>6</span> Scientific &amp; Neuroscientific Explanations</h2>
+
+      <h3>🧠 Neurotheology — The Triple Network Model</h3>
+      <p>Religious/spiritual experiences (RSEs) depend on interactions between the <strong>Default Mode Network</strong> (self-reflection), <strong>Frontoparietal Network</strong> (executive control), and <strong>Salience Network</strong> (emotional arousal).</p>
+
+      <div class="ascii-art">
+┌─────────────────────────────────────────────────────────┐
+│           THE TRIPLE NETWORK MODEL OF RSEs              │
+│                                                         │
+│   DEFAULT MODE         FRONTOPARIETAL      SALIENCE     │
+│   NETWORK (DMN)        NETWORK (FPN)       NETWORK(SN) │
+│   ─────────────        ──────────────      ──────────── │
+│   Self-reflection      Attention &         Detecting    │
+│   Internal thought     executive control   significance │
+│   Mind-wandering       Working memory      Emotional    │
+│   Narrative self       Goal-directed       arousal      │
+│                        behavior                         │
+│                                                         │
+│   Prayer → DMN activation (talking to "self"/God)       │
+│   Meditation → DMN suppression (ego dissolution)        │
+│   Mystical states → SN hyperactivation                  │
+│   Speaking in tongues → FPN deactivation                │
+└─────────────────────────────────────────────────────────┘
+      </div>
+
+      <h3>🧪 Cognitive Science of Religion</h3>
+      <p>According to CSR, belief in supernatural agents is the product of aggregated ordinary cognition. Key biases include:</p>
+      <ul>
+        <li><strong>Hyperactive Agency Detection (HADD):</strong> Rustling bush → "Something is there!" → spirits</li>
+        <li><strong>Theory of Mind (ToM):</strong> Attributing mental states to invisible beings</li>
+        <li><strong>Teleological Thinking:</strong> Seeing purpose in everything</li>
+        <li><strong>Pattern Recognition:</strong> Finding patterns in randomness (coincidences as signs)</li>
+        <li><strong>Mortality Salience:</strong> Death anxiety → afterlife beliefs as terror management</li>
+        <li><strong>Dualism:</strong> Mind feels separate from body → souls survive death</li>
+      </ul>
+
+      <h3>🔬 Scientific Explanations for Specific Phenomena</h3>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Phenomenon</th><th>Scientific Explanation</th><th>Evidence Strength</th></tr></thead>
+          <tbody>
+            <tr><td>Demonic Possession</td><td>DID, epilepsy, psychosis, cultural conditioning</td><td>Strong</td></tr>
+            <tr><td>Seeing Angels/Demons</td><td>Sleep paralysis + hypnagogic hallucinations</td><td>Strong</td></tr>
+            <tr><td>Near-Death Experiences</td><td>Anoxia, DMT release, REM intrusion</td><td>Moderate</td></tr>
+            <tr><td>Speaking in Tongues</td><td>Frontal lobe deactivation (glossolalia)</td><td>Strong</td></tr>
+            <tr><td>Feeling a "Presence"</td><td>Temporoparietal junction stimulation</td><td>Strong</td></tr>
+            <tr><td>Jinn/Ifrit Encounters</td><td>Sleep paralysis, cultural framing of psychosis</td><td>Moderate</td></tr>
+            <tr><td>Resurrection</td><td>No scientific mechanism known</td><td>None</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="annotation">
+        <p>Science can explain <em>how</em> the brain produces religious experiences. It <strong>cannot</strong> determine whether those experiences are <em>also</em> genuine encounters with the divine. Finding that prayer activates the frontal lobe doesn't prove God doesn't exist — it proves prayer has neural correlates, trivially expected for any experience.</p>
+      </div>
+    </section>
+
+    <section>
+      <h2><span>7</span> Comparative Master Tables</h2>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Religion</th><th>Evil Figure</th><th>Origin</th><th>Nature</th><th>Power</th></tr></thead>
+          <tbody>
+            <tr><td>Judaism</td><td>Ha-Satan</td><td>God's court</td><td>Accuser/Tester</td><td>Low — obedient</td></tr>
+            <tr><td>Christianity</td><td>Satan/Lucifer</td><td>Fallen angel</td><td>Cosmic rebel</td><td>High — defeated</td></tr>
+            <tr><td>Islam</td><td>Iblis/Shaytan</td><td>Fallen Jinn</td><td>Refuser/Whisperer</td><td>Limited</td></tr>
+            <tr><td>Zoroastrianism</td><td>Ahriman</td><td>Co-eternal</td><td>Anti-God</td><td>EQUAL to God</td></tr>
+            <tr><td>Hinduism</td><td>No equivalent</td><td>Various</td><td>Distributed</td><td>Varies</td></tr>
+            <tr><td>Buddhism</td><td>Māra</td><td>Internal</td><td>Tempter</td><td>Psychological</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Religion</th><th>End Times Event</th><th>Trigger</th><th>Outcome</th><th>Time Frame</th></tr></thead>
+          <tbody>
+            <tr><td>Christianity</td><td>Last Judgment</td><td>Second Coming</td><td>Heaven or Hell</td><td>Unknown, one-time</td></tr>
+            <tr><td>Islam</td><td>Yawm al-Qiyamah</td><td>Trumpet of Israfil</td><td>Jannah or Jahannam</td><td>Unknown, one-time</td></tr>
+            <tr><td>Judaism</td><td>Yom HaDin</td><td>Messiah arrives</td><td>Olam Ha-Ba</td><td>Unknown, one-time</td></tr>
+            <tr><td>Hinduism</td><td>Pralaya</td><td>End of Kali Yuga</td><td>Re-creation</td><td>Cyclic (~4.32B years)</td></tr>
+            <tr><td>Buddhism</td><td>Mappō</td><td>Dharma decline</td><td>Maitreya comes</td><td>Cyclic</td></tr>
+            <tr><td>Zoroastrianism</td><td>Frashokereti</td><td>Saoshyant arrives</td><td>Universal renovation</td><td>One-time</td></tr>
+            <tr><td>Norse</td><td>Ragnarök</td><td>Cosmic winter</td><td>New world rises</td><td>One-time</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section>
+      <h2><span>8</span> Analysis: Faith, Proofs &amp; Counter-Arguments</h2>
+
+      <h3>📈 Evidence FOR Cross-Religious Patterns</h3>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Argument</th><th>Strength</th><th>Analysis</th></tr></thead>
+          <tbody>
+            <tr><td>Universality — Every culture developed demons/spirits</td><td>⭐⭐⭐⭐⭐</td><td>Suggests either real phenomenon OR universal cognitive architecture</td></tr>
+            <tr><td>Convergent Descriptions — Sleep paralysis demons look similar</td><td>⭐⭐⭐⭐</td><td>Real entity OR hardwired fear templates</td></tr>
+            <tr><td>Historical Transmission — Zoroastrian → Abrahamic</td><td>⭐⭐⭐⭐⭐</td><td>Documented historical fact</td></tr>
+            <tr><td>Experiential Reports — Billions report religious experiences</td><td>⭐⭐⭐</td><td>Volume impressive but subjective ≠ objective</td></tr>
+            <tr><td>Moral Effectiveness — Belief creates ethical behavior</td><td>⭐⭐⭐⭐</td><td>Pragmatic truth ≠ literal truth</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>📉 Evidence AGAINST Literal Entities</h3>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Argument</th><th>Strength</th><th>Analysis</th></tr></thead>
+          <tbody>
+            <tr><td>No empirical detection</td><td>⭐⭐⭐⭐⭐</td><td>Zero controlled, reproducible evidence</td></tr>
+            <tr><td>Neural explanations exist</td><td>⭐⭐⭐⭐</td><td>Explains mechanism, but mechanism ≠ disproof</td></tr>
+            <tr><td>Cultural specificity</td><td>⭐⭐⭐⭐⭐</td><td>Christians see Mary, Hindus see Krishna</td></tr>
+            <tr><td>Historical evolution</td><td>⭐⭐⭐⭐</td><td>Concepts change over centuries</td></tr>
+            <tr><td>Cognitive biases</td><td>⭐⭐⭐⭐</td><td>Parsimonious explanation</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>🔄 The Undecidability Problem</h3>
+      <div class="ascii-art">
+┌──────────────────────────────────────────────────────────┐
+│                THE FUNDAMENTAL IMPASSE                    │
+│                                                          │
+│  THEIST: "God designed the brain to perceive spiritual   │
+│   reality. Neural correlates are MECHANISM, not proof    │
+│   the object doesn't exist."                             │
+│                                                          │
+│  ATHEIST: "The brain generates these naturally.          │
+│   No external entity is needed."                         │
+│                                                          │
+│  SCIENCE: "We describe WHAT happens. We cannot           │
+│   determine WHY — that is metaphysical."                 │
+│                                                          │
+│  ══════════════════════════════════════                   │
+│  VERDICT: Currently UNDECIDABLE by science alone        │
+└──────────────────────────────────────────────────────────┘
+      </div>
+
+      <h3>🎯 Key Takeaways</h3>
+      <ol>
+        <li><strong>The Zoroastrian Pipeline is Real:</strong> Undeniable chain of transmission from Zoroastrianism through Judaism into Christianity and Islam.</li>
+        <li><strong>Hinduism Operates on Different Logic:</strong> In Hindu cosmology, chaos precedes order. Devas represent order, demons chaos — both divine.</li>
+        <li><strong>"Satan" Is Not One Thing:</strong> Each religion has a unique perspective despite common presumption.</li>
+        <li><strong>The Brain Is Wired for Belief:</strong> Whether by design or evolution is the unanswerable question.</li>
+        <li><strong>Demons Serve a Social Function:</strong> Moral boundary markers, explanations for suffering, shadow exploration, and social control.</li>
+      </ol>
+    </section>
+
+    <section>
+      <h2><span>9</span> Sources &amp; Further Reading</h2>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Topic</th><th>Key Sources</th></tr></thead>
+          <tbody>
+            <tr><td>Comparative Eschatology</td><td>Academic monographs; JSTOR; Encyclopedia of Religion</td></tr>
+            <tr><td>Islamic Judgment Day</td><td>Wikipedia — Islamic Eschatology; Sahih Hadith collections</td></tr>
+            <tr><td>Ifrit &amp; Jinn</td><td>Qur'an 15:26-27, 27:39; Hadith (Malik ibn Anas); Lane's Arabic Lexicon</td></tr>
+            <tr><td>Satan Across Religions</td><td>Britannica; The Satanic Verses (historiography); EPFL GraphSearch</td></tr>
+            <tr><td>Hindu Demonology</td><td>Devi Mahatmya; Ramayana; Mahabharata; Markandeya Purana</td></tr>
+            <tr><td>Neuroscience of Religion</td><td>Persinger's "God Helmet"; NCBI PMC; Newberg &amp; d'Aquili</td></tr>
+            <tr><td>Cognitive Science</td><td>Justin Barrett; Boyer — Religion Explained; Terror Management Theory</td></tr>
+            <tr><td>Zoroastrian Influence</td><td>Mary Boyce — Zoroastrians; Russell — The Devil; Persian-era Jewish texts</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <blockquote>"The oldest question isn't whether demons are real — it's why every culture on earth, independently, decided they must be."</blockquote>
+    </section>
+
   </div>
 
-  <script>
-    const DATA = {
-      title: "The Supernatural Across World Religions",
-      subtitle: "Comparative Eschatology, Demonology & Scientific Analysis",
-      metrics: [
-        ["8", "Major traditions"],
-        ["6", "Core research areas"],
-        ["5", "Interactive views"],
-        ["30+", "Concept cards"]
-      ],
-      topics: [
-        {
-          id: "eschatology",
-          icon: "⚡",
-          title: "Eschatology",
-          color: "#8b5cf6",
-          summary: "How traditions imagine final judgment, cosmic reset, resurrection, liberation, or cyclical renewal.",
-          sections: [
-            {
-              tradition: "Christianity",
-              title: "Second Coming & Final Judgment",
-              tags: ["linear time", "resurrection", "judgment"],
-              summary: "Christian eschatology centers on Christ's return, resurrection of the dead, final judgment, and the renewal of creation.",
-              bullets: [
-                "Trigger: the Second Coming or Parousia of Christ.",
-                "Common sequence: resurrection, judgment, separation of righteous and wicked, new creation.",
-                "No definitive date is given, which supports continual moral vigilance.",
-                "Interpretations vary widely: Catholic, Orthodox, Protestant, premillennial, amillennial, and symbolic readings differ."
-              ],
-              note: "Optimization: replace absolute claims like “Christianity says exactly X” with “many Christian traditions teach X,” because Christian eschatology is internally diverse."
-            },
-            {
-              tradition: "Islam",
-              title: "Yawm al-Qiyāmah — Day of Resurrection",
-              tags: ["linear time", "Qur'an", "resurrection", "reckoning"],
-              summary: "Islamic eschatology emphasizes resurrection, cosmic upheaval, divine accounting, scales of deeds, and final destiny.",
-              bullets: [
-                "Key names include Yawm al-Qiyāmah, Yawm al-Ḥisāb, Yawm al-Dīn, and related Qur'anic terms.",
-                "Major motifs include the trumpet, resurrection, the scales, the bridge, paradise, and hell.",
-                "Many traditions describe minor and major signs before the final hour.",
-                "Reward or punishment may begin in the grave, while final judgment occurs at resurrection."
-              ],
-              note: "Correction: belief in the Last Day is one of the six articles of faith, not one of the five pillars of Islam."
-            },
-            {
-              tradition: "Judaism",
-              title: "Yom HaDin, Day of the Lord & Olam Ha-Ba",
-              tags: ["messiah", "resurrection", "national redemption"],
-              summary: "Jewish eschatology often emphasizes national restoration, messianic hope, resurrection in later traditions, and the World to Come.",
-              bullets: [
-                "The Hebrew Bible contains themes of divine intervention, judgment, exile, return, and restoration.",
-                "Later Jewish literature develops resurrection, final vindication, and postmortem judgment more fully.",
-                "The messiah is usually understood as a human Davidic ruler rather than a divine incarnation.",
-                "Compared with Christianity and Islam, Jewish eschatology is often less systematized and more this-worldly."
-              ],
-              note: "Use care: Judaism is not a single eschatological system; rabbinic, medieval, mystical, and modern Jewish views vary."
-            },
-            {
-              tradition: "Hinduism",
-              title: "Yugas, Pralaya, Karma & Kalki",
-              tags: ["cyclical time", "karma", "yugas", "pralaya"],
-              summary: "Hindu traditions often frame cosmic history as cyclical, with ages of decline, dissolution, renewal, karma, rebirth, and liberation.",
-              bullets: [
-                "The four yugas are Satya, Treta, Dvapara, and Kali.",
-                "Kali Yuga is commonly described as the present age of moral decline.",
-                "Pralaya refers to forms of dissolution, from individual death to cosmic dissolution.",
-                "Kalki, the final avatar of Vishnu in many traditions, restores dharma and renews the cycle."
-              ],
-              note: "Optimization: Pralaya is not simply “doomsday.” It is better described as cosmic dissolution or reset within a cyclical cosmology."
-            },
-            {
-              tradition: "Buddhism",
-              title: "Dharma Decline, Maitreya & Cyclic Worlds",
-              tags: ["cyclical time", "karma", "Maitreya", "liberation"],
-              summary: "Buddhist eschatological themes include decline of the Dharma, future appearance of Maitreya, karmic rebirth, and cosmic cycles.",
-              bullets: [
-                "There is generally no single creator-god judgment day equivalent.",
-                "Karma shapes rebirth and experience across samsara.",
-                "Maitreya appears in future traditions as a Buddha who renews the Dharma.",
-                "Some texts describe vast cycles of world formation, persistence, destruction, and emptiness."
-              ],
-              note: "Buddhist “end times” are usually less about final divine judgment and more about Dharma decline, impermanence, and liberation from samsara."
-            },
-            {
-              tradition: "Zoroastrianism",
-              title: "Frashokereti — Final Renovation",
-              tags: ["resurrection", "judgment", "cosmic dualism", "renovation"],
-              summary: "Zoroastrianism presents an influential vision of final renovation, resurrection, purification, and the defeat of evil.",
-              bullets: [
-                "Core figures include Ahura Mazda, Angra Mainyu or Ahriman, and the Saoshyant.",
-                "Frashokereti means the final making-wonderful or renovation of existence.",
-                "Many accounts include resurrection and a purifying ordeal often symbolized by molten metal.",
-                "Scholars often discuss Zoroastrian influence on later Jewish, Christian, and Islamic eschatologies."
-              ],
-              note: "Optimization: avoid saying Zoroastrianism “proves” later borrowings. Use “influenced,” “parallels,” or “scholarly transmission hypothesis.”"
-            }
-          ]
-        },
-        {
-          id: "adversary",
-          icon: "😈",
-          title: "The Adversary",
-          color: "#fb7185",
-          summary: "How traditions define Satan, Iblis, Ahriman, Māra, and distributed models of evil.",
-          sections: [
-            {
-              tradition: "Judaism",
-              title: "Ha-Satan — The Accuser",
-              tags: ["adversary", "prosecutor", "subordinate"],
-              summary: "In many Hebrew Bible contexts, ha-satan functions as an accuser or adversarial tester within the divine court.",
-              bullets: [
-                "The Hebrew term satan means adversary or accuser.",
-                "In Job, ha-satan is often interpreted as a title rather than a personal name.",
-                "The figure is subordinate to God rather than an independent cosmic rival.",
-                "Later Jewish demonology becomes more complex in post-biblical literature."
-              ],
-              note: "Key distinction: the courtroom accuser is not identical to the later Christian Devil."
-            },
-            {
-              tradition: "Christianity",
-              title: "Satan, Devil, Lucifer & the Fallen-Angel Model",
-              tags: ["fallen angel", "tempter", "cosmic rebel"],
-              summary: "Christian traditions often identify Satan as a personal force of evil, tempter, deceiver, and defeated enemy of God.",
-              bullets: [
-                "Satan is associated with temptation, accusation, deception, and rebellion.",
-                "The Lucifer identification comes through later interpretive traditions, especially readings of Isaiah 14 and related texts.",
-                "Christian demonology expands through apocalyptic literature, patristic theology, medieval demonology, and folklore.",
-                "Not all Christian traditions describe hell or Satan's role in identical ways."
-              ],
-              note: "Optimization: clarify that “Lucifer” as Satan is a later interpretive development, not a simple one-to-one biblical label."
-            },
-            {
-              tradition: "Islam",
-              title: "Iblīs and Shayṭān",
-              tags: ["jinn", "whispering", "refusal", "waswās"],
-              summary: "Iblīs refuses to bow to Adam and becomes the paradigmatic tempter who whispers evil suggestions to human beings.",
-              bullets: [
-                "Many Islamic interpretations identify Iblīs as a jinn, not an angel.",
-                "Iblīs refuses the divine command to bow before Adam.",
-                "Shayṭān can refer to Iblīs or devils more broadly.",
-                "His power is limited; he tempts but does not compel."
-              ],
-              note: "The jinn distinction is central: Islamic demonology does not simply copy the Christian fallen-angel model."
-            },
-            {
-              tradition: "Zoroastrianism",
-              title: "Angra Mainyu / Ahriman",
-              tags: ["dualism", "cosmic evil", "demons"],
-              summary: "Ahriman represents destructive spirit or evil principle in Zoroastrian cosmic conflict.",
-              bullets: [
-                "Ahriman opposes Ahura Mazda in a cosmic moral drama.",
-                "Daevas and demonic forces are associated with deception, corruption, and disorder.",
-                "The conflict ends with the defeat or neutralization of evil in many Zoroastrian accounts.",
-                "The structure provides an important comparison point for later Satan traditions."
-              ],
-              note: "Use nuance: Zoroastrian dualism is complex; not every school treats Ahriman as fully equal to Ahura Mazda in the same way."
-            },
-            {
-              tradition: "Hinduism",
-              title: "No Single Satan Equivalent",
-              tags: ["distributed evil", "asuras", "rakshasas", "dharma"],
-              summary: "Hindu traditions usually distribute opposition, chaos, and egoic power across many beings rather than one cosmic Devil.",
-              bullets: [
-                "Asuras, rakshasas, pishachas, and other beings may oppose devas or disrupt dharma.",
-                "Some so-called demons are morally complex, learned, devotional, or even benevolent.",
-                "Evil is often tied to adharma, ego, ignorance, imbalance, or misuse of power.",
-                "The cosmic system is cyclical rather than a one-time battle between God and Satan."
-              ],
-              note: "This is one of the strongest comparative differences between Abrahamic and Hindu cosmologies."
-            },
-            {
-              tradition: "Buddhism",
-              title: "Māra — Tempter and Personification of Delusion",
-              tags: ["temptation", "illusion", "attachment", "psychological"],
-              summary: "Māra tempts the Buddha and symbolizes forces that bind beings to craving, fear, death, and illusion.",
-              bullets: [
-                "Māra is both a mythic being and a symbol of mental obstruction.",
-                "He represents craving, fear, death, and resistance to awakening.",
-                "Buddhist evil is often rooted in ignorance, attachment, and aversion.",
-                "Liberation comes through insight, ethics, meditation, and awakening."
-              ],
-              note: "Māra is closer to a tempter or psychological obstacle than to an absolute anti-God."
-            }
-          ]
-        },
-        {
-          id: "entities",
-          icon: "👻",
-          title: "Demons, Jinn & Ifrit",
-          color: "#06b6d4",
-          summary: "A cross-cultural taxonomy of unseen beings: demons, jinn, ifrit, shedim, dybbuk, ghuls, and possession spirits.",
-          sections: [
-            {
-              tradition: "Global Folklore",
-              title: "Demons as Universal Cultural Forms",
-              tags: ["folklore", "possession", "fear", "misfortune"],
-              summary: "Demon-like beings appear across many cultures as explanations for suffering, illness, misfortune, moral danger, and the unknown.",
-              bullets: [
-                "Many traditions link demons to disease, possession, temptation, liminal spaces, wilderness, or death.",
-                "Demon narratives often preserve social boundaries and moral warnings.",
-                "Names and forms vary by culture, but recurring motifs include night attacks, shadow figures, voices, and possession.",
-                "Scientific explanations can address mechanisms without settling metaphysical truth claims."
-              ],
-              note: "Optimization: “universal” should mean widespread, not literally identical in every culture."
-            },
-            {
-              tradition: "Islam",
-              title: "Jinn — Free-Willed Beings of Smokeless Fire",
-              tags: ["jinn", "smokeless fire", "free will", "unseen"],
-              summary: "Jinn occupy a distinctive category in Islamic cosmology: unseen beings with agency, moral responsibility, and communities.",
-              bullets: [
-                "Jinn are created from smokeless fire in Islamic sources.",
-                "They possess free will and may be righteous, sinful, Muslim, non-Muslim, benevolent, neutral, or harmful.",
-                "They are not identical with angels, which are usually described as obedient beings of light.",
-                "Jinn stories blend theology, law, folklore, healing traditions, and popular imagination."
-              ],
-              note: "Distinguish scriptural jinn from later folklore about genies, wish granting, and magical binding."
-            },
-            {
-              tradition: "Islamic / Arabic Folklore",
-              title: "Ifrit — Powerful Jinn or Fierce Spirit",
-              tags: ["ifrit", "jinn", "fire", "Solomon"],
-              summary: "The ifrit is usually described as a powerful or rebellious jinn-like being, expanded heavily in folklore.",
-              bullets: [
-                "The Qur'an uses ifrit in connection with a powerful jinn in the story of Solomon.",
-                "Later folklore associates ifrit with fire, ruins, graveyards, cunning, revenge, and immense strength.",
-                "Egyptian and regional traditions sometimes link afarit to violent death or restless spirits.",
-                "Theological importance is narrower than popular culture suggests."
-              ],
-              note: "The Qur'an uses the term sparingly; much ifrit lore comes from regional storytelling."
-            },
-            {
-              tradition: "Christianity",
-              title: "Fallen Angels, Watchers & Medieval Demonology",
-              tags: ["fallen angels", "possession", "exorcism", "apocrypha"],
-              summary: "Christian demonology grows from biblical motifs, apocalyptic literature, church tradition, medieval taxonomies, and exorcism practice.",
-              bullets: [
-                "Demons are often linked to fallen angels or rebellious spirits.",
-                "The Watchers and Nephilim appear prominently in Enochic traditions.",
-                "Medieval sources developed hierarchies and named demons such as Beelzebub, Asmodeus, and Mammon.",
-                "Exorcism traditions frame some afflictions as spiritual assault, though modern pastoral care often requires medical discernment."
-              ],
-              note: "Separate canonical scripture, apocrypha, medieval manuals, and modern horror folklore."
-            },
-            {
-              tradition: "Judaism",
-              title: "Shedim, Dybbuk, Lilith & Asmodai",
-              tags: ["shedim", "dybbuk", "Lilith", "folklore"],
-              summary: "Jewish demonology includes biblical traces, rabbinic elaborations, mystical traditions, and later folklore.",
-              bullets: [
-                "Shedim is a general term often translated as demons.",
-                "Dybbuk folklore describes a possessing spirit, usually of a deceased person.",
-                "Lilith develops from ancient motifs into a major figure in later Jewish folklore.",
-                "Asmodai or Asmodeus appears in Jewish and later Christian demonological traditions."
-              ],
-              note: "Avoid treating all Jewish demon beliefs as biblical; much comes from later rabbinic, mystical, or folkloric sources."
-            },
-            {
-              tradition: "Regional Folklore",
-              title: "Ghuls, Churels, Banshees, Oni, Wendigo & Others",
-              tags: ["regional spirits", "ghosts", "death", "liminal"],
-              summary: "Regional spirit traditions encode local fears: wilderness, death, childbirth, cannibalism, pollution, betrayal, and social taboo.",
-              bullets: [
-                "Ghuls are often linked to deserts, graveyards, and corpse-eating folklore.",
-                "South Asian churels and pichal peri often encode anxieties around death, gender, and liminal spaces.",
-                "Banshees function as death omens in Irish tradition.",
-                "Oni, yokai, strigoi, wendigo, and other beings reflect local moral ecologies."
-              ],
-              note: "Use cultural specificity: regional beings should not all be flattened into “demons.”"
-            }
-          ]
-        },
-        {
-          id: "hindu",
-          icon: "🕉️",
-          title: "Hindu Demonology",
-          color: "#f97316",
-          summary: "Asuras, rakshasas, pishachas, vetalas, boons, cosmic balance, and non-binary models of good and evil.",
-          sections: [
-            {
-              tradition: "Hinduism",
-              title: "Asuras — Anti-Gods, Titans, or Rival Powers",
-              tags: ["asuras", "devas", "dharma", "cosmic conflict"],
-              summary: "Asuras evolve from complex Vedic beings into powerful rivals of the devas in later Hindu literature.",
-              bullets: [
-                "Asuras are not always simply evil; many are learned, disciplined, devotional, or noble.",
-                "Daityas and Danavas are important asura lineages associated with Diti and Danu.",
-                "Major figures include Hiranyakashipu, Mahishasura, Ravana, and Mahabali.",
-                "Their stories often dramatize pride, power, devotion, cosmic law, and divine intervention."
-              ],
-              note: "Ravana is more precisely a rakshasa king, though often grouped with demonic antagonists in broad summaries."
-            },
-            {
-              tradition: "Hinduism",
-              title: "Rakshasas — Shape-Shifters and Ritual Disruptors",
-              tags: ["rakshasa", "night", "shape-shifting", "Ramayana"],
-              summary: "Rakshasas are powerful beings in epic and Puranic literature, often associated with night, illusion, violence, and disruption.",
-              bullets: [
-                "They may change shape and appear as monsters, animals, or seductive human forms.",
-                "Many stories portray them as enemies of sages, sacrifices, and righteous kings.",
-                "Ravana, Kumbhakarna, and other Ramayana figures are prominent rakshasas.",
-                "Some rakshasas are noble or redeemable, showing the non-binary nature of Hindu mythic ethics."
-              ],
-              note: "Hindu demon categories often overlap with clan, cosmological, ethical, and narrative functions."
-            },
-            {
-              tradition: "Hinduism / Buddhism",
-              title: "Pishachas, Vetalas, Bhutas & Pretas",
-              tags: ["ghosts", "ghouls", "corpses", "hungry ghosts"],
-              summary: "South Asian traditions contain many classes of spirits linked to death, craving, pollution, possession, and liminality.",
-              bullets: [
-                "Pishachas are often flesh-eating ghoulish beings.",
-                "Vetalas are corpse-inhabiting spirits in Sanskrit story traditions.",
-                "Bhutas may refer to ghosts or spirit beings, especially restless dead.",
-                "Pretas or hungry ghosts symbolize intense craving and unsatisfied desire."
-              ],
-              note: "These categories vary across Hindu, Buddhist, folk, regional, and tantric contexts."
-            },
-            {
-              tradition: "Hinduism",
-              title: "The Boon Paradox",
-              tags: ["boons", "tapasya", "Brahma", "Shiva", "Vishnu"],
-              summary: "Many mythic antagonists gain power through severe austerity, forcing gods to honor the cosmic force of tapas.",
-              bullets: [
-                "Demons perform intense tapasya or penance to obtain boons.",
-                "Gods often grant conditional protections while denying absolute immortality.",
-                "Antagonists exploit loopholes, then avatars or goddesses defeat them through precise counter-loopholes.",
-                "The Narasimha story is a classic example: neither man nor animal, neither indoors nor outdoors, neither day nor night."
-              ],
-              note: "This pattern highlights cosmic law: even gods respond to tapas, vows, and dharma."
-            }
-          ]
-        },
-        {
-          id: "zoro",
-          icon: "🔥",
-          title: "Zoroastrian Blueprint",
-          color: "#fbbf24",
-          summary: "Good vs. evil, resurrection, judgment, heaven and hell, savior figures, and the debated transmission pipeline.",
-          sections: [
-            {
-              tradition: "Zoroastrianism",
-              title: "Ahura Mazda, Ahriman and Moral Cosmos",
-              tags: ["Ahura Mazda", "Ahriman", "dualism", "asha"],
-              summary: "Zoroastrianism frames existence as a moral struggle between truth/order and destructive deception.",
-              bullets: [
-                "Ahura Mazda is associated with wisdom, light, truth, and order.",
-                "Angra Mainyu or Ahriman represents destructive mentality, corruption, and opposition.",
-                "Human ethical choice matters within the cosmic struggle.",
-                "The final renovation restores creation and defeats evil."
-              ],
-              note: "For scholarly rigor, distinguish early Gathic material, later Avestan tradition, Pahlavi texts, and modern Zoroastrian interpretations."
-            },
-            {
-              tradition: "Comparative Religion",
-              title: "The Transmission Hypothesis",
-              tags: ["Persian period", "Judaism", "Christianity", "Islam", "influence"],
-              summary: "Many scholars discuss possible Zoroastrian influence on Jewish apocalypticism and later Abrahamic eschatology.",
-              bullets: [
-                "The Babylonian exile and Persian period created conditions for religious contact.",
-                "Shared motifs include resurrection, final judgment, heaven and hell, demons, angels, savior figures, and cosmic renovation.",
-                "Influence does not necessarily mean simple copying; ideas can be adapted, resisted, or reinterpreted.",
-                "The best academic wording is “probable influence,” “parallel development,” or “transmission hypothesis,” depending on evidence."
-              ],
-              note: "Avoid overstating: “Zoroastrianism predates” does not automatically prove direct borrowing for every later concept."
-            },
-            {
-              tradition: "Comparative Religion",
-              title: "Conceptual Parallels",
-              tags: ["resurrection", "judgment", "heaven", "hell", "messiah"],
-              summary: "Zoroastrianism provides one of the clearest ancient comparative frameworks for later eschatological systems.",
-              bullets: [
-                "Frashokereti parallels final restoration or renewal.",
-                "Saoshyant parallels later savior expectations.",
-                "Daevas and demonic forces parallel later demonological developments.",
-                "The House of Song and House of Lies are often compared with heaven and hell traditions."
-              ],
-              note: "Use tables to show parallels, but keep commentary clear that parallels are not identical doctrines."
-            }
-          ]
-        },
-        {
-          id: "science",
-          icon: "🔬",
-          title: "Scientific Analysis",
-          color: "#34d399",
-          summary: "Neurotheology, cognitive science of religion, sleep paralysis, agency detection, trauma, and social function.",
-          sections: [
-            {
-              tradition: "Neuroscience",
-              title: "Neurotheology and Neural Correlates",
-              tags: ["brain", "DMN", "salience network", "religious experience"],
-              summary: "Religious and spiritual experiences correlate with ordinary brain networks involved in selfhood, emotion, attention, and meaning.",
-              bullets: [
-                "Default mode, frontoparietal, salience, limbic, and temporal-parietal systems are often discussed.",
-                "Prayer, meditation, chanting, glossolalia, and mystical states may involve different neural profiles.",
-                "Neural correlates do not by themselves prove or disprove the existence of God or spirits.",
-                "They show that religious experiences, like all experiences, are mediated through brain activity."
-              ],
-              note: "Best framing: neuroscience explains mechanisms of experience, not ultimate metaphysical truth."
-            },
-            {
-              tradition: "Cognitive Science",
-              title: "Why Humans Detect Invisible Agents",
-              tags: ["HADD", "theory of mind", "dualism", "pattern recognition"],
-              summary: "Cognitive science proposes that supernatural belief emerges partly from normal human agency detection and meaning-making systems.",
-              bullets: [
-                "Hyperactive agency detection may turn ambiguous events into perceived intentional agents.",
-                "Theory of mind lets humans imagine invisible beings with beliefs, desires, and intentions.",
-                "Intuitive dualism makes minds feel separable from bodies, supporting soul and afterlife concepts.",
-                "Pattern recognition and confirmation bias can make coincidences feel like omens or signs."
-              ],
-              note: "This explains why supernatural beliefs are cognitively natural without proving they are false."
-            },
-            {
-              tradition: "Sleep Science",
-              title: "Sleep Paralysis and Night Demons",
-              tags: ["REM atonia", "hallucination", "sensed presence", "jinn"],
-              summary: "Sleep paralysis offers a strong natural model for many cross-cultural night-demon experiences.",
-              bullets: [
-                "REM atonia can persist into waking consciousness, causing paralysis.",
-                "Hypnagogic or hypnopompic hallucinations can produce shadow figures, voices, pressure, or floating sensations.",
-                "Cultures interpret the experience differently: jinn, old hag, kanashibari, ghosts, demons, or witches.",
-                "The experience is frightening but usually explainable without invoking external entities."
-              ],
-              note: "Excellent section for visual comparison: same physiology, different cultural interpretation."
-            },
-            {
-              tradition: "Psychology / Medicine",
-              title: "Possession, Visions and Altered States",
-              tags: ["possession", "epilepsy", "DID", "psychosis", "culture"],
-              summary: "Some experiences historically interpreted as possession may overlap with dissociation, epilepsy, psychosis, trauma, or culturally learned trance.",
-              bullets: [
-                "Dissociation and trauma can produce alternate identities or possession-like states.",
-                "Temporal lobe epilepsy and migraine phenomena can include unusual perceptions.",
-                "Psychosis can involve voices, presences, and persecutory interpretations.",
-                "Cultural scripts shape how symptoms are expressed and interpreted."
-              ],
-              note: "Important safety note: spiritual interpretation should not replace medical or mental-health evaluation when someone is in distress."
-            },
-            {
-              tradition: "Anthropology",
-              title: "Social Functions of Demons and Doomsdays",
-              tags: ["morality", "control", "trauma", "cohesion"],
-              summary: "Demon and apocalypse narratives often organize moral boundaries, explain suffering, process trauma, and strengthen group identity.",
-              bullets: [
-                "Judgment narratives can reinforce ethical behavior and accountability.",
-                "Demon narratives externalize danger, temptation, illness, or social deviance.",
-                "Apocalyptic narratives often intensify during crisis, exile, plague, war, or rapid social change.",
-                "These functions can be real even if the metaphysical claims remain debated."
-              ],
-              note: "Functional truth is not the same as literal truth, but it matters for understanding religion."
-            }
-          ]
-        }
-      ],
-      tables: [
-        {
-          title: "Adversary / Evil Figures",
-          columns: ["Tradition", "Figure", "Nature", "Function"],
-          rows: [
-            ["Judaism", "Ha-Satan", "Accuser or tester under divine authority", "Prosecutes, tests, opposes"],
-            ["Christianity", "Satan / Devil", "Personal evil, often fallen angel", "Temps, deceives, accuses, opposes God"],
-            ["Islam", "Iblīs / Shayṭān", "Jinn who refuses divine command", "Whispers evil suggestions"],
-            ["Zoroastrianism", "Angra Mainyu / Ahriman", "Destructive spirit or evil principle", "Corrupts creation and opposes truth"],
-            ["Hinduism", "No single equivalent", "Distributed among asuras, rakshasas, adharma", "Opposes dharma or creates imbalance"],
-            ["Buddhism", "Māra", "Tempter and symbol of delusion", "Blocks awakening through fear, craving, illusion"]
-          ]
-        },
-        {
-          title: "End-Time Models",
-          columns: ["Tradition", "Time Model", "End / Renewal Motif", "Outcome"],
-          rows: [
-            ["Christianity", "Linear", "Second Coming and Last Judgment", "New creation, heaven, hell, resurrection"],
-            ["Islam", "Linear", "Yawm al-Qiyāmah", "Resurrection, accounting, Jannah or Jahannam"],
-            ["Judaism", "Mostly linear / restorative", "Messianic age, resurrection in many traditions", "Olam Ha-Ba, restoration, divine justice"],
-            ["Hinduism", "Cyclical", "Yuga decline and Pralaya", "Cosmic reset, renewal of dharma, moksha beyond cycle"],
-            ["Buddhism", "Cyclical", "Dharma decline and world cycles", "Maitreya, renewed Dharma, liberation from samsara"],
-            ["Zoroastrianism", "Linear renovation", "Frashokereti", "Resurrection, purification, defeat of evil"]
-          ]
-        },
-        {
-          title: "Demon / Spirit Categories",
-          columns: ["Tradition", "Category", "Core Traits", "Moral Status"],
-          rows: [
-            ["Islam", "Jinn", "Unseen free-willed beings of smokeless fire", "Good, evil, or neutral"],
-            ["Islamic folklore", "Ifrit", "Powerful fierce jinn-like being", "Often dangerous or rebellious"],
-            ["Christianity", "Fallen angels / demons", "Rebellious spirits linked to Satan", "Usually evil"],
-            ["Judaism", "Shedim / dybbuk / Lilith", "Demons, possessing spirits, folkloric figures", "Varies by source"],
-            ["Hinduism", "Asuras", "Powerful rivals of devas", "Complex, not always evil"],
-            ["Hinduism", "Rakshasas", "Shape-shifting night beings", "Often hostile, sometimes nuanced"],
-            ["Buddhism", "Pretas / Māra / asuras", "Hungry ghosts, tempter, jealous beings", "Bound by craving or delusion"]
-          ]
-        },
-        {
-          title: "Scientific Interpretive Map",
-          columns: ["Phenomenon", "Naturalistic Explanation", "Confidence"],
-          rows: [
-            ["Sleep-demon encounters", "Sleep paralysis, REM atonia, hallucination, cultural framing", "Strong"],
-            ["Possession states", "Dissociation, trauma, epilepsy, psychosis, ritual trance", "Moderate to strong"],
-            ["Sensed presence", "Temporal-parietal processing, threat detection, altered states", "Moderate to strong"],
-            ["Prophetic dreams", "Pattern recognition, confirmation bias, memory selection", "Strong"],
-            ["Near-death experiences", "Anoxia, REM intrusion, neurochemical and psychological models", "Moderate"],
-            ["Doomsday expectation", "Mortality salience, social crisis, meaning-making, apocalyptic anxiety", "Strong"]
-          ]
-        }
+  <!-- NETWORK VIEW -->
+  <div id="view-network" class="hidden">
+    <p class="section-intro">Drag nodes to explore relationships. Click any node to see details. Lines show theological influence and conceptual parallels.</p>
+    <div class="network-legend">
+      <div class="legend-item"><div class="legend-dot" style="background:#d4a853"></div>Religion</div>
+      <div class="legend-item"><div class="legend-dot" style="background:#6b7fd7"></div>Concept</div>
+      <div class="legend-item"><div class="legend-dot" style="background:#c94a4a"></div>Entity</div>
+      <div class="legend-item"><div class="legend-dot" style="background:#4ecdc4"></div>Event</div>
+      <div class="legend-item"><div class="legend-dot" style="background:#a855f7"></div>Personage</div>
+    </div>
+    <canvas id="networkCanvas"></canvas>
+    <div class="network-info" id="networkInfo">
+      <h4>Select a node</h4>
+      <p>Click any node on the graph above to see its description, connections, and theological significance.</p>
+    </div>
+  </div>
+
+  <!-- BOARD VIEW -->
+  <div id="view-board" class="hidden board-view">
+    <!-- Generated by JS -->
+  </div>
+
+  <!-- MIND MAP VIEW -->
+  <div id="view-mindmap" class="hidden">
+    <p class="section-intro">Horizontal tree visualization. Click nodes to expand or collapse branches. Scroll to pan; use mouse wheel to zoom.</p>
+    <div class="mindmap-container">
+      <svg class="mindmap-svg" id="mindmapSvg"></svg>
+    </div>
+  </div>
+
+</main>
+
+<script>
+// ==========================
+// DATA STORE
+// ==========================
+const DATA = {
+  religions: [
+    { id: 'zoro', name: 'Zoroastrianism', color: '#c94a4a', era: '~1500 BCE', followers: '~200k', desc: 'The oldest monotheistic eschatology. Origin of cosmic dualism, final judgment, and resurrection concepts.' },
+    { id: 'hindu', name: 'Hinduism', color: '#f0b04a', era: '~1500 BCE', followers: '~1.2B', desc: 'Cyclical time (Yugas). Demons (Asuras/Rakshasas) are integral to cosmic balance, not opposed to God.' },
+    { id: 'buddha', name: 'Buddhism', color: '#a855f7', era: '~500 BCE', followers: '~520M', desc: 'No eternal soul or final judgment. Cyclic dissolution. Mara as psychological tempter. Maitreya future Buddha.' },
+    { id: 'judaism', name: 'Judaism', color: '#4ecdc4', era: '~1800 BCE', followers: '~15M', desc: 'Ha-satan is a title (the accuser), not a proper name. Eschatology focuses on national redemption.' },
+    { id: 'christ', name: 'Christianity', color: '#6b7fd7', era: '1st century CE', followers: '~2.4B', desc: 'Satan as fallen angel Lucifer. Linear eschatology: Second Coming, Last Judgment, Heaven/Hell.' },
+    { id: 'islam', name: 'Islam', color: '#4ade80', era: '7th century CE', followers: '~2.0B', desc: 'Iblis is a fallen Jinn (not angel). Detailed eschatology: Mahdi, Dajjal, Yajuj/Majuj, Qiyamah.' },
+    { id: 'norse', name: 'Norse', color: '#94a3b8', era: 'Prehistoric', followers: 'Revival', desc: 'Ragnarök: cosmic winter, gods die, world burns and is reborn. Linear but cyclical rebirth.' },
+    { id: 'egypt', name: 'Ancient Egypt', color: '#d4a853', era: '~3000 BCE', followers: 'Extinct', desc: 'Distributed evil: Set, Apophis, Osiris as judge. No single Satan figure.' },
+  ],
+  concepts: [
+    { id: 'dualism', name: 'Cosmic Dualism', type: 'concept', desc: 'Eternal battle between good and evil forces. Zoroastrian origin.' },
+    { id: 'judgment', name: 'Final Judgment', type: 'concept', desc: 'Universal resurrection and trial. Zoroastrian origin transmitted to Abrahamic faiths.' },
+    { id: 'resurrect', name: 'Resurrection', type: 'concept', desc: 'Bodily raising of the dead. Zoroastrian Ristakhiz → Jewish → Christian → Islamic.' },
+    { id: 'heavenhell', name: 'Heaven & Hell', type: 'concept', desc: 'Binary afterlife destinations. House of Song / House of Lies (Zoroastrian) → Paradise/Jahannam.' },
+    { id: 'angeldemon', name: 'Angels & Demons', type: 'concept', desc: 'Amesha Spentas / Daevas → Abrahamic angels and demons.' },
+    { id: 'messiah', name: 'Messiah/Savior', type: 'concept', desc: 'Saoshyant (Zoroastrian) → Mashiach (Jewish) → Jesus (Christian) / Mahdi (Islam).' },
+    { id: 'karma', name: 'Karma / Moral Law', type: 'concept', desc: 'Action-consequence law. Hindu/Buddhist substitute for judgment day.' },
+    { id: 'yuga', name: 'Yuga Cycle', type: 'concept', desc: 'Cyclic ages of virtue and decay. Satya → Kali → Pralaya → restart.' },
+  ],
+  entities: [
+    { id: 'ahriman', name: 'Ahriman', type: 'entity', desc: 'Angra Mainyu. Co-eternal evil principle in Zoroastrianism. EQUAL to Ahura Mazda in power.' },
+    { id: 'satan', name: 'Satan / Lucifer', type: 'entity', desc: 'Fallen angel. Cosmic rebel. Ruler of Hell. Christianity.' },
+    { id: 'iblis', name: 'Iblis', type: 'entity', desc: 'Fallen Jinn made of fire. Refused to bow to Adam. Whispers waswās in Islam.' },
+    { id: 'hasatan', name: 'Ha-Satan', type: 'entity', desc: 'The accuser. Title, not name. Divine prosecutor in God\'s court. Judaism.' },
+    { id: 'mara', name: 'Māra', type: 'entity', desc: 'Tempter who tried to stop Buddha\'s enlightenment. Psychological more than cosmic. Buddhism.' },
+    { id: 'ravana', name: 'Ravana', type: 'entity', desc: '10-headed Asura king. Antagonist of Ramayana. Defeated by Rama. Complex moral figure.' },
+    { id: 'ifrit', name: 'Ifrit', type: 'entity', desc: 'Powerful fire Jinn in Islam. Mentioned once in Qur\'an (27:39). Elaborated in folklore.' },
+    { id: 'jinn', name: 'Jinn', type: 'entity', desc: 'Created from smokeless fire. Parallel realm to humans. Can be Muslim, Christian, or pagan.' },
+    { id: 'asuras', name: 'Asuras', type: 'entity', desc: 'Anti-gods in Hinduism. Born of Kashyapa. Often complex, sometimes virtuous (Mahabali).' },
+    { id: 'rakshas', name: 'Rakshasas', type: 'entity', desc: 'Night-dwelling shape-shifters. Detest prayer. Dispelled by sunrise.' },
+    { id: 'dajjal', name: 'Al-Dajjal', type: 'entity', desc: 'Islamic false messiah. Antichrist equivalent. One-eyed. Killed by Jesus (Isa) in Islamic eschatology.' },
+    { id: 'mahdi', name: 'Al-Mahdi', type: 'entity', desc: 'Rightly-guided one who precedes judgment in Islam. Savior/messianic figure.' },
+  ],
+  events: [
+    { id: 'frash', name: 'Frashokereti', type: 'event', desc: 'Final renovation. Molten metal purifies the righteous. Zoroastrian.' },
+    { id: 'qiyamah', name: 'Yawm al-Qiyamah', type: 'event', desc: 'Day of Resurrection. Trumpet of Israfil. Bridge (Sirat) and scales (Mizan). Islam.' },
+    { id: 'lastjudg', name: 'Last Judgment', type: 'event', desc: 'Second Coming of Christ. Resurrection of dead. Heaven or Hell. Christianity.' },
+    { id: 'pralaya', name: 'Pralaya', type: 'event', desc: 'Cosmic dissolution. Not moral judgment. Cyclic reset. Hinduism.' },
+    { id: 'ragnarok', name: 'Ragnarök', type: 'event', desc: 'Gods battle giants. World burns. Reborn green. Norse.' },
+    { id: 'mappo', name: 'Mappō', type: 'event', desc: 'Decline of Dharma. Maitreya Buddha will restore teachings. Buddhism.' },
+  ]
+};
+
+// Connections for network graph
+const CONNECTIONS = [
+  // Theological transmission
+  ['zoro', 'judaism', 'Persian Exile (6th c. BCE)'],
+  ['judaism', 'christ', 'Foundation + Hellenism'],
+  ['judaism', 'islam', 'Arabian prophetic tradition'],
+  ['zoro', 'dualism', 'Origin'],
+  ['zoro', 'ahriman', 'Origin'],
+  ['zoro', 'frash', 'Origin'],
+  ['zoro', 'resurrect', 'Ristakhiz'],
+  ['zoro', 'heavenhell', 'House of Song / Lies'],
+  ['zoro', 'messiah', 'Saoshyant'],
+  ['zoro', 'angeldemon', 'Amesha Spentas / Daevas'],
+  ['judaism', 'hasatan', 'Book of Job'],
+  ['judaism', 'judgment', 'Post-biblical development'],
+  ['judaism', 'messiah', 'Mashiach'],
+  ['christ', 'satan', 'Fallen angel Lucifer'],
+  ['christ', 'lastjudg', 'Parousia'],
+  ['christ', 'resurrect', 'Canonical doctrine'],
+  ['islam', 'iblis', 'Refused to bow to Adam'],
+  ['islam', 'qiyamah', 'Central tenet'],
+  ['islam', 'jinn', 'Smokeless fire (Qur\'an 15:27)'],
+  ['islam', 'ifrit', 'Qur\'an 27:39'],
+  ['islam', 'dajjal', 'Major sign'],
+  ['islam', 'mahdi', 'Major sign'],
+  ['hindu', 'asuras', 'Kashyapa lineage'],
+  ['hindu', 'rakshas', 'Brahma\'s night breath'],
+  ['hindu', 'ravana', 'Asura king'],
+  ['hindu', 'pralaya', 'End of Kali Yuga'],
+  ['hindu', 'karma', 'Universal law'],
+  ['hindu', 'yuga', 'Cyclic ages'],
+  ['buddha', 'mara', 'Tempter of Buddha'],
+  ['buddha', 'mappo', 'Dharma decline'],
+  ['buddha', 'karma', 'Dependent origination'],
+  ['norse', 'ragnarok', 'Fimbulvetr → rebirth'],
+  ['egypt', 'hasatan', 'Distributed judgment roles'],
+  // Cross-concept links
+  ['dualism', 'ahriman', 'Opposes Ahura Mazda'],
+  ['dualism', 'satan', 'Evolved under influence'],
+  ['judgment', 'qiyamah', 'Equivalent'],
+  ['judgment', 'lastjudg', 'Equivalent'],
+  ['resurrect', 'qiyamah', 'Equivalent'],
+  ['resurrect', 'frash', 'Equivalent'],
+  ['messiah', 'mahdi', 'Equivalent concept'],
+  ['messiah', 'lastjudg', 'Trigger'],
+  ['satan', 'iblis', 'Related but distinct'],
+  ['satan', 'hasatan', 'Evolved from'],
+  ['satan', 'ahriman', 'Evolved under influence'],
+  ['ifrit', 'jinn', 'Subclass of'],
+  ['asuras', 'rakshas', 'Allied demon class'],
+  ['ravana', 'asuras', 'Member of'],
+  ['dajjal', 'satan', 'Equivalent role'],
+  ['heavenhell', 'qiyamah', 'Outcome'],
+  ['heavenhell', 'lastjudg', 'Outcome'],
+];
+
+// Board cards data
+const BOARD_CARDS = [
+  { col: 'Religions', title: 'Zoroastrianism', meta: '~1500 BCE | ~200k followers', body: 'Origin of dualism, judgment, resurrection, heaven/hell, and messiah concepts. Ahriman is co-eternal and equal to Ahura Mazda.', tags: ['Origin','Dualism','Ahriman'] },
+  { col: 'Religions', title: 'Judaism', meta: '~1800 BCE | ~15M followers', body: 'Ha-satan is a title (the accuser), not a name. Linear time. Eschatology focuses on national redemption (Mashiach) rather than individual hell.', tags: ['Accuser','Linear','Mashiach'] },
+  { col: 'Religions', title: 'Christianity', meta: '1st c. CE | ~2.4B followers', body: 'Satan as fallen angel Lucifer. Parousia (Second Coming) triggers Last Judgment. Heaven and Hell as eternal binary outcomes.', tags: ['Lucifer','Parousia','Hell'] },
+  { col: 'Religions', title: 'Islam', meta: '7th c. CE | ~2.0B followers', body: 'Iblis is a Jinn, not an angel. Detailed eschatology with Mahdi, Dajjal, and Yawm al-Qiyamah. Dual-phase accountability (grave + final).', tags: ['Iblis','Qiyamah','Jinn'] },
+  { col: 'Religions', title: 'Hinduism', meta: '~1500 BCE | ~1.2B followers', body: 'Cyclical Yugas. No Satan equivalent. Asuras and Rakshasas are part of divine order. Pralaya is cosmic reset, not judgment.', tags: ['Cyclical','Asuras','Pralaya'] },
+  { col: 'Religions', title: 'Buddhism', meta: '~500 BCE | ~520M followers', body: 'No soul, no final judgment. Mara as psychological tempter. Cyclic dissolution (Mappō) until Maitreya restores Dharma.', tags: ['Mara','Cyclic','Maitreya'] },
+  { col: 'Entities', title: 'Ahriman', meta: 'Zoroastrianism', body: 'Co-eternal evil principle. EQUAL to God. Source of all evil and demons. True cosmic dualism.', tags: ['Co-eternal','Equal','Origin'] },
+  { col: 'Entities', title: 'Ha-Satan', meta: 'Judaism', body: 'Divine prosecutor in God\'s court. Title, not proper name. Tests faith (Job). Fully obedient to God.', tags: ['Accuser','Title','Subordinate'] },
+  { col: 'Entities', title: 'Satan / Lucifer', meta: 'Christianity', body: 'Fallen angel. Cosmic rebel with own kingdom (Hell). Immense power but ultimately defeated by Christ.', tags: ['Rebel','Fallen','Hell'] },
+  { col: 'Entities', title: 'Iblis', meta: 'Islam', body: 'Fallen Jinn made of smokeless fire. Refused to bow to Adam. Whispers evil (waswās) into hearts. Limited by God\'s permission.', tags: ['Jinn','Fire','Whisperer'] },
+  { col: 'Entities', title: 'Māra', meta: 'Buddhism', body: 'Tempter who tried to prevent Buddha\'s enlightenment. More psychological than cosmic. Personification of attachment.', tags: ['Tempter','Psychological','Attachment'] },
+  { col: 'Entities', title: 'Ravana', meta: 'Hinduism', body: '10-headed Asura king of Lanka. Antagonist of Ramayana. Complex figure: scholar, devotee of Shiva, kidnapper of Sita.', tags: ['Asura','10-headed','Complex'] },
+  { col: 'Entities', title: 'Asuras', meta: 'Hinduism', body: 'Anti-gods born of Kashyapa. Not always evil — King Mahabali is a virtuous asura. Blur good/evil binary.', tags: ['Anti-gods','Kashyapa','Virtuous'] },
+  { col: 'Entities', title: 'Rakshasas', meta: 'Hinduism', body: 'Night-dwelling shape-shifters. Detest sacrifices and prayer. Dispelled by sunrise. Cannibalistic in epics.', tags: ['Night','Shape-shifter','Ritual'] },
+  { col: 'Entities', title: 'Jinn', meta: 'Islam', body: 'Created from smokeless fire. Parallel realm. Free will. Can be Muslim, Christian, Jewish, or pagan. Precede humans in existence.', tags: ['Fire','Free Will','Unseen'] },
+  { col: 'Entities', title: 'Ifrit', meta: 'Islamic Folklore', body: 'Powerful fire subclass of Jinn. Mentioned once in Qur\'an. Associated with ruins, cemeteries, and violent death. Grants wishes with hidden costs.', tags: ['Fire','Powerful','Folklore'] },
+  { col: 'End Times', title: 'Frashokereti', meta: 'Zoroastrianism', body: 'Final renovation of the universe. Molten metal river purifies righteous. Resurrection of dead. Saoshyant arrives.', tags: ['Renovation','Metal','Saoshyant'] },
+  { col: 'End Times', title: 'Yawm al-Qiyamah', meta: 'Islam', body: 'Day of Resurrection. Trumpet of Israfil. Bridge (Sirat) over Hell. Scales (Mizan) weigh deeds. Jannah or Jahannam.', tags: ['Trumpet','Bridge','Scales'] },
+  { col: 'End Times', title: 'Last Judgment', meta: 'Christianity', body: 'Second Coming (Parousia). Resurrection of dead. Book of Life opened. Lake of Fire for damned. New Heaven and New Earth.', tags: ['Parousia','Book','Lake of Fire'] },
+  { col: 'End Times', title: 'Pralaya', meta: 'Hinduism', body: 'Cosmic dissolution at end of Kali Yuga. Not moral judgment. Universe destroyed and re-created. Brahma\s day/night cycle.', tags: ['Dissolution','Cyclic','Brahma'] },
+  { col: 'End Times', title: 'Ragnarök', meta: 'Norse', body: 'Fimbulvetr (3-year winter). Fenrir breaks chains. Gods die. World burns. Reborn green. Linear destruction, cyclical rebirth.', tags: ['Winter','Gods Die','Rebirth'] },
+  { col: 'Science', title: 'Sleep Paralysis', meta: 'Neuroscience', body: 'REM atonia persists into wakefulness. Explains incubus, Old Hag, Jinn attacks, and Pisacha. Cross-cultural consistency.', tags: ['REM','Atonia','Universal'] },
+  { col: 'Science', title: 'HADD', meta: 'Cognitive Science', body: 'Hyperactive Agency Detection Device. Rustling bush = tiger/demon. False positives favored by evolution. Root of spirit belief.', tags: ['Agency','Evolution','Bias'] },
+  { col: 'Science', title: 'Temporal Lobe', meta: 'Neurotheology', body: 'Persinger\'s "God Helmet" stimulates temporal lobes to induce "presence" sensations. Explains angel/demon visions.', tags: ['God Helmet','Presence','fMRI'] },
+  { col: 'Science', title: 'Terror Management', meta: 'Psychology', body: 'Death anxiety drives afterlife belief. Eschatology functions as a buffer against mortality salience. Social cohesion side-effect.', tags: ['Death','Anxiety','Afterlife'] },
+  { col: 'Science', title: 'The Undecidability', meta: 'Philosophy of Science', body: 'Science describes neural mechanisms but cannot determine if those mechanisms are designed to perceive real entities or generate illusions.', tags: ['Mechanism','Gap','Metaphysics'] },
+];
+
+// Mind map tree data
+const MINDMAP_DATA = {
+  label: "The Supernatural\nAcross Religions",
+  color: "#d4a853",
+  children: [
+    {
+      label: "Eschatology\n(End Times)",
+      color: "#6b7fd7",
+      children: [
+        { label: "Linear", color: "#4ecdc4", children: [
+          { label: "Christianity\nParousia / Last Judgment", color: "#6b7fd7" },
+          { label: "Islam\nYawm al-Qiyamah", color: "#4ade80" },
+          { label: "Judaism\nYom HaDin / Mashiach", color: "#4ecdc4" },
+          { label: "Zoroastrianism\nFrashokereti", color: "#c94a4a" },
+          { label: "Norse\nRagnarök", color: "#94a3b8" }
+        ]},
+        { label: "Cyclical", color: "#f0b04a", children: [
+          { label: "Hinduism\nYugas → Pralaya", color: "#f0b04a" },
+          { label: "Buddhism\nMappō → Maitreya", color: "#a855f7" }
+        ]}
       ]
-    };
-
-    const state = {
-      view: "reader",
-      topic: "all",
-      q: "",
-      theme: localStorage.getItem("theme") || "dark"
-    };
-
-    const $ = (selector, root = document) => root.querySelector(selector);
-    const $$ = (selector, root = document) => Array.from(root.querySelectorAll(selector));
-
-    document.documentElement.dataset.theme = state.theme;
-
-    function escapeHTML(value) {
-      return String(value)
-        .replaceAll("&", "&amp;")
-        .replaceAll("<", "&lt;")
-        .replaceAll(">", "&gt;")
-        .replaceAll('"', "&quot;")
-        .replaceAll("'", "&#039;");
+    },
+    {
+      label: "The Adversary\n(Satan Figure)",
+      color: "#c94a4a",
+      children: [
+        { label: "Zoroastrianism\nAhriman (co-equal)", color: "#c94a4a" },
+        { label: "Judaism\nHa-Satan (accuser)", color: "#4ecdc4" },
+        { label: "Christianity\nLucifer (fallen angel)", color: "#6b7fd7" },
+        { label: "Islam\nIblis (fallen Jinn)", color: "#4ade80" },
+        { label: "Buddhism\nMāra (tempter)", color: "#a855f7" },
+        { label: "Hinduism\nNo equivalent (distributed)", color: "#f0b04a" }
+      ]
+    },
+    {
+      label: "Demonology\n(Supernatural Entities)",
+      color: "#a855f7",
+      children: [
+        { label: "Islamic", color: "#4ade80", children: [
+          { label: "Jinn\n(smokeless fire)", color: "#4ade80" },
+          { label: "Ifrit\n(fire demon)", color: "#4ade80" },
+          { label: "Shayatin\n(evil jinn)", color: "#4ade80" },
+          { label: "Ghul\n(graveyard shifter)", color: "#4ade80" }
+        ]},
+        { label: "Hindu", color: "#f0b04a", children: [
+          { label: "Asuras\n(anti-gods)", color: "#f0b04a" },
+          { label: "Rakshasas\n(night stalkers)", color: "#f0b04a" },
+          { label: "Pishacha\n(flesh-eaters)", color: "#f0b04a" },
+          { label: "Vetala\n(vampire spirits)", color: "#f0b04a" }
+        ]},
+        { label: "Christian", color: "#6b7fd7", children: [
+          { label: "Fallen Angels\n(Grigori / Nephilim)", color: "#6b7fd7" },
+          { label: "72 Demons\n(Ars Goetia)", color: "#6b7fd7" },
+          { label: "Beelzebub, Asmodeus...\n(7 princes)", color: "#6b7fd7" }
+        ]},
+        { label: "Jewish", color: "#4ecdc4", children: [
+          { label: "Shedim\n(general demons)", color: "#4ecdc4" },
+          { label: "Lilith\n(Adam\'s first wife)", color: "#4ecdc4" },
+          { label: "Dybbuk\n(possessing spirit)", color: "#4ecdc4" }
+        ]}
+      ]
+    },
+    {
+      label: "Scientific\nExplanations",
+      color: "#94a3b8",
+      children: [
+        { label: "Neurotheology", color: "#94a3b8", children: [
+          { label: "Triple Network\nDMN + FPN + SN", color: "#94a3b8" },
+          { label: "Temporal Lobe\nGod Helmet", color: "#94a3b8" }
+        ]},
+        { label: "Cognitive Science", color: "#94a3b8", children: [
+          { label: "HADD\n(agency detection)", color: "#94a3b8" },
+          { label: "Pattern Recognition\npareidolia", color: "#94a3b8" },
+          { label: "Terror Management\ndeath anxiety", color: "#94a3b8" }
+        ]},
+        { label: "Phenomena", color: "#94a3b8", children: [
+          { label: "Sleep Paralysis\nREM atonia", color: "#94a3b8" },
+          { label: "NDEs\nanoxia / DMT", color: "#94a3b8" },
+          { label: "Possession\nepilepsy / psychosis", color: "#94a3b8" }
+        ]}
+      ]
+    },
+    {
+      label: "Historical\nTransmission",
+      color: "#d4a853",
+      children: [
+        { label: "Zoroastrianism", color: "#c94a4a", children: [
+          { label: "→ Judaism\n(Persian Exile)", color: "#4ecdc4" }
+        ]},
+        { label: "Judaism", color: "#4ecdc4", children: [
+          { label: "→ Christianity\n(1st c. CE)", color: "#6b7fd7" },
+          { label: "→ Islam\n(7th c. CE)", color: "#4ade80" }
+        ]}
+      ]
     }
+  ]
+};
 
-    function truncate(value, length = 54) {
-      const text = String(value);
-      return text.length > length ? text.slice(0, length - 1) + "…" : text;
-    }
+// ==========================
+// VIEW SWITCHER
+// ==========================
+function switchView(viewName) {
+  document.querySelectorAll('.view-btn').forEach(b => b.classList.remove('active'));
+  document.querySelector(`[data-view="${viewName}"]`).classList.add('active');
 
-    function allSections() {
-      return DATA.topics.flatMap(topic =>
-        topic.sections.map(section => ({
-          ...section,
-          topicId: topic.id,
-          topicTitle: topic.title,
-          topicIcon: topic.icon,
-          color: topic.color
-        }))
-      );
-    }
+  document.getElementById('view-doc').classList.add('hidden');
+  document.getElementById('view-network').classList.add('hidden');
+  document.getElementById('view-board').classList.add('hidden');
+  document.getElementById('view-mindmap').classList.add('hidden');
 
-    function sectionText(section) {
-      return [
-        section.tradition,
-        section.title,
-        section.summary,
-        ...(section.tags || []),
-        ...(section.bullets || []),
-        section.note || ""
-      ].join(" ").toLowerCase();
-    }
+  const target = document.getElementById('view-' + viewName);
+  target.classList.remove('hidden');
+  target.classList.add('animate-in');
 
-    function filteredSections() {
-      const q = state.q.trim().toLowerCase();
-      return allSections().filter(section => {
-        const topicMatch = state.topic === "all" || section.topicId === state.topic;
-        const searchMatch = !q || sectionText(section).includes(q);
-        return topicMatch && searchMatch;
-      });
-    }
+  if (viewName === 'network') initNetwork();
+  if (viewName === 'board') renderBoard();
+  if (viewName === 'mindmap') renderMindMap();
+}
 
-    function groupedFilteredTopics() {
-      const sections = filteredSections();
-      return DATA.topics
-        .map(topic => ({
-          ...topic,
-          sections: sections.filter(section => section.topicId === topic.id)
-        }))
-        .filter(topic => topic.sections.length);
-    }
+// ==========================
+// NETWORK GRAPH (CANVAS)
+// ==========================
+let networkInitialized = false;
+let nodes = [], links = [], nodeMap = {};
 
-    function highlight(text) {
-      const safe = escapeHTML(text);
-      const q = state.q.trim();
-      if (!q) return safe;
-      const pattern = new RegExp(`(${q.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")})`, "ig");
-      return safe.replace(pattern, "<mark>$1</mark>");
-    }
+function initNetwork() {
+  if (networkInitialized) return;
+  const canvas = document.getElementById('networkCanvas');
+  const ctx = canvas.getContext('2d');
+  const dpr = window.devicePixelRatio || 1;
+  const rect = canvas.getBoundingClientRect();
+  canvas.width = rect.width * dpr;
+  canvas.height = rect.height * dpr;
+  ctx.scale(dpr, dpr);
+  const W = rect.width, H = rect.height;
 
-    function renderStats() {
-      $("#stats").innerHTML = DATA.metrics.map(([value, label]) => `
-        <div class="stat">
-          <strong>${escapeHTML(value)}</strong>
-          <span>${escapeHTML(label)}</span>
-        </div>
-      `).join("");
-    }
+  // Build nodes
+  nodes = [];
+  const addNode = (id, obj, type) => {
+    const angle = Math.random() * Math.PI * 2;
+    const radius = Math.min(W, H) * 0.35 * (0.5 + Math.random() * 0.5);
+    nodes.push({
+      id, name: obj.name || id, type, x: W/2 + Math.cos(angle)*radius, y: H/2 + Math.sin(angle)*radius,
+      vx: 0, vy: 0, color: obj.color || '#d4a853', desc: obj.desc || '', radius: type === 'religion' ? 22 : 16
+    });
+  };
+  Object.entries(DATA.religions).forEach(([k,v]) => addNode(v.id, v, 'religion'));
+  DATA.concepts.forEach(c => addNode(c.id, c, 'concept'));
+  DATA.entities.forEach(e => addNode(e.id, e, 'entity'));
+  DATA.events.forEach(e => addNode(e.id, e, 'event'));
+  nodes.forEach(n => nodeMap[n.id] = n);
 
-    function renderTopicNav() {
-      const allCount = allSections().length;
-      $("#topicNav").innerHTML = `
-        <button class="topic-btn ${state.topic === "all" ? "active" : ""}" data-topic="all">
-          <span class="topic-left"><span>🌐</span><span class="topic-name">All Topics</span></span>
-          <span class="badge">${allCount}</span>
-        </button>
-        ${DATA.topics.map(topic => `
-          <button class="topic-btn ${state.topic === topic.id ? "active" : ""}" data-topic="${topic.id}">
-            <span class="topic-left">
-              <span>${topic.icon}</span>
-              <span class="topic-name">${escapeHTML(topic.title)}</span>
-            </span>
-            <span class="badge">${topic.sections.length}</span>
-          </button>
-        `).join("")}
-      `;
+  // Build links
+  links = [];
+  CONNECTIONS.forEach(([s,t,label]) => {
+    if (nodeMap[s] && nodeMap[t]) links.push({ source: nodeMap[s], target: nodeMap[t], label });
+  });
 
-      $$(".topic-btn").forEach(button => {
-        button.addEventListener("click", () => {
-          state.topic = button.dataset.topic;
-          renderTopicNav();
-          render();
-        });
-      });
-    }
+  let dragged = null, hovered = null, selected = null;
 
-    function tagsHTML(tags) {
-      return `<div class="tags">${(tags || []).map(tag => `<span class="tag">${escapeHTML(tag)}</span>`).join("")}</div>`;
-    }
-
-    function cardHTML(section) {
-      return `
-        <article class="card" style="--card-color:${section.color}">
-          <div class="card-top">
-            <div class="icon-title">
-              <div class="icon">${section.topicIcon}</div>
-              <div>
-                <h4>${highlight(section.title)}</h4>
-                <small>${escapeHTML(section.tradition)} · ${escapeHTML(section.topicTitle)}</small>
-              </div>
-            </div>
-            <span class="badge">${escapeHTML(section.tags?.[0] || "topic")}</span>
-          </div>
-
-          ${tagsHTML(section.tags)}
-
-          <p style="color:var(--muted); line-height:1.65; margin:0;">
-            ${highlight(section.summary)}
-          </p>
-
-          <ul class="bullets">
-            ${(section.bullets || []).map(item => `<li>${highlight(item)}</li>`).join("")}
-          </ul>
-
-          ${section.note ? `<div class="note">📌 ${highlight(section.note)}</div>` : ""}
-        </article>
-      `;
-    }
-
-    function renderReader() {
-      const groups = groupedFilteredTopics();
-      $("#reader").innerHTML = groups.length ? groups.map(topic => `
-        <div class="section-head">
-          <div>
-            <h3>${topic.icon} ${escapeHTML(topic.title)}</h3>
-            <p>${escapeHTML(topic.summary)}</p>
-          </div>
-          <span class="badge">${topic.sections.length}</span>
-        </div>
-        <div class="grid reader-grid">
-          ${topic.sections.map(cardHTML).join("")}
-        </div>
-      `).join("") : emptyHTML();
-    }
-
-    function renderBoard() {
-      const groups = groupedFilteredTopics();
-
-      $("#board").innerHTML = `
-        <div class="section-head">
-          <div>
-            <h3>🧩 Research Board</h3>
-            <p>Card-based overview of the document. Use this to scan major claims, traditions, and analytical notes quickly.</p>
-          </div>
-        </div>
-
-        ${groups.length ? `
-          <div class="kanban">
-            ${groups.map(topic => `
-              <div class="column" style="--card-color:${topic.color}">
-                <h4>
-                  <span>${topic.icon} ${escapeHTML(topic.title)}</span>
-                  <span class="badge">${topic.sections.length}</span>
-                </h4>
-
-                ${topic.sections.map(section => `
-                  <div class="mini-card">
-                    <strong>${highlight(section.title)}</strong>
-                    <p>${highlight(section.summary)}</p>
-                    ${tagsHTML(section.tags)}
-                  </div>
-                `).join("")}
-              </div>
-            `).join("")}
-          </div>
-        ` : emptyHTML()}
-      `;
-    }
-
-    function renderNetwork() {
-      const groups = groupedFilteredTopics();
-      if (!groups.length) {
-        $("#network").innerHTML = emptyHTML();
-        return;
-      }
-
-      $("#network").innerHTML = `
-        <div class="section-head">
-          <div>
-            <h3>🕸 Network View</h3>
-            <p>Topics orbit the central document. Concept nodes orbit each topic. Click any node to inspect it.</p>
-          </div>
-        </div>
-
-        <div class="network-shell">
-          <svg id="networkSvg" role="img" aria-label="Interactive network diagram"></svg>
-          <aside id="networkPanel" class="network-panel">
-            <h4>🔮 ${escapeHTML(DATA.title)}</h4>
-            <p>Select a node to view its summary, tags, and editorial note.</p>
-          </aside>
-        </div>
-      `;
-
-      const svg = $("#networkSvg");
-      const shell = $(".network-shell");
-      const width = Math.max(shell.clientWidth, 920);
-      const height = 720;
-      svg.setAttribute("viewBox", `0 0 ${width} ${height}`);
-
-      const cx = width / 2;
-      const cy = height / 2;
-      const topicRadius = Math.min(width, height) * 0.32;
-      const conceptRadius = 106;
-
-      const nodes = [
-        { id: "root", type: "root", x: cx, y: cy, r: 36, label: "Research", color: "#ffffff", data: null }
-      ];
-      const links = [];
-
-      groups.forEach((topic, i) => {
-        const angle = (-Math.PI / 2) + (i / groups.length) * Math.PI * 2;
-        const tx = cx + Math.cos(angle) * topicRadius;
-        const ty = cy + Math.sin(angle) * topicRadius;
-
-        nodes.push({
-          id: topic.id,
-          type: "topic",
-          x: tx,
-          y: ty,
-          r: 27,
-          label: topic.title,
-          color: topic.color,
-          data: topic
-        });
-
-        links.push(["root", topic.id]);
-
-        topic.sections.forEach((section, j) => {
-          const spread = topic.sections.length === 1 ? 0 : (j / topic.sections.length) * Math.PI * 2;
-          const localAngle = angle + spread + 0.4;
-          const sx = tx + Math.cos(localAngle) * conceptRadius;
-          const sy = ty + Math.sin(localAngle) * conceptRadius;
-
-          const id = `${topic.id}-${j}`;
-          nodes.push({
-            id,
-            type: "section",
-            x: sx,
-            y: sy,
-            r: 17,
-            label: section.tradition,
-            color: topic.color,
-            data: section
-          });
-
-          links.push([topic.id, id]);
-        });
-      });
-
-      const nodeById = Object.fromEntries(nodes.map(node => [node.id, node]));
-
-      svg.innerHTML = `
-        <defs>
-          <filter id="glow">
-            <feGaussianBlur stdDeviation="3.5" result="coloredBlur"/>
-            <feMerge>
-              <feMergeNode in="coloredBlur"/>
-              <feMergeNode in="SourceGraphic"/>
-            </feMerge>
-          </filter>
-        </defs>
-
-        <g>
-          ${links.map(([a, b]) => {
-            const na = nodeById[a], nb = nodeById[b];
-            return `<line class="link" x1="${na.x}" y1="${na.y}" x2="${nb.x}" y2="${nb.y}"></line>`;
-          }).join("")}
-        </g>
-
-        <g>
-          ${nodes.map(node => `
-            <g class="node" data-node="${node.id}" transform="translate(${node.x}, ${node.y})">
-              <circle
-                r="${node.r}"
-                fill="${node.type === "root" ? "rgba(255,255,255,.16)" : node.color}"
-                opacity="${node.type === "section" ? "0.86" : "0.96"}"
-                filter="url(#glow)"
-              ></circle>
-              <text y="${node.r + 17}">${escapeHTML(truncate(node.label, node.type === "section" ? 18 : 24))}</text>
-            </g>
-          `).join("")}
-        </g>
-      `;
-
-      $$(".node", svg).forEach(nodeEl => {
-        nodeEl.addEventListener("click", () => {
-          const node = nodeById[nodeEl.dataset.node];
-          showNetworkPanel(node);
-        });
-      });
-
-      function showNetworkPanel(node) {
-        const panel = $("#networkPanel");
-
-        if (node.type === "root") {
-          panel.innerHTML = `
-            <h4>🔮 ${escapeHTML(DATA.title)}</h4>
-            <p>${escapeHTML(DATA.subtitle)}</p>
-            <div class="note">Use this graph to see how eschatology, demonology, adversary figures, Hindu categories, Zoroastrian influence, and science connect.</div>
-          `;
-          return;
-        }
-
-        if (node.type === "topic") {
-          panel.innerHTML = `
-            <h4>${node.data.icon} ${escapeHTML(node.data.title)}</h4>
-            <p>${escapeHTML(node.data.summary)}</p>
-            <div class="tags">
-              ${node.data.sections.map(section => `<span class="tag">${escapeHTML(section.tradition)}</span>`).join("")}
-            </div>
-          `;
-          return;
-        }
-
-        const section = node.data;
-        panel.innerHTML = `
-          <h4>${escapeHTML(section.title)}</h4>
-          <p><b>${escapeHTML(section.tradition)}</b> · ${escapeHTML(section.topicTitle)}</p>
-          ${tagsHTML(section.tags)}
-          <p>${escapeHTML(section.summary)}</p>
-          <ul class="bullets">
-            ${(section.bullets || []).slice(0, 4).map(item => `<li>${escapeHTML(item)}</li>`).join("")}
-          </ul>
-          ${section.note ? `<div class="note">📌 ${escapeHTML(section.note)}</div>` : ""}
-        `;
+  function updatePhysics() {
+    // Repulsion
+    for (let i = 0; i < nodes.length; i++) {
+      for (let j = i+1; j < nodes.length; j++) {
+        const a = nodes[i], b = nodes[j];
+        const dx = a.x - b.x, dy = a.y - b.y;
+        let dist = Math.sqrt(dx*dx + dy*dy) || 1;
+        const force = 2000 / (dist * dist);
+        const fx = (dx/dist) * force, fy = (dy/dist) * force;
+        a.vx += fx; a.vy += fy;
+        b.vx -= fx; b.vy -= fy;
       }
     }
+    // Attraction (links)
+    links.forEach(l => {
+      const dx = l.target.x - l.source.x, dy = l.target.y - l.source.y;
+      const dist = Math.sqrt(dx*dx + dy*dy) || 1;
+      const force = (dist - 100) * 0.003;
+      const fx = (dx/dist) * force, fy = (dy/dist) * force;
+      l.source.vx += fx; l.source.vy += fy;
+      l.target.vx -= fx; l.target.vy -= fy;
+    });
+    // Center gravity
+    nodes.forEach(n => {
+      n.vx += (W/2 - n.x) * 0.0005;
+      n.vy += (H/2 - n.y) * 0.0005;
+      n.vx *= 0.9; n.vy *= 0.9;
+      n.x += n.vx; n.y += n.vy;
+      n.x = Math.max(30, Math.min(W-30, n.x));
+      n.y = Math.max(30, Math.min(H-30, n.y));
+    });
+  }
 
-    function renderMindmap() {
-      const groups = groupedFilteredTopics();
+  function draw() {
+    ctx.clearRect(0,0,W,H);
+    // Links
+    links.forEach(l => {
+      ctx.beginPath();
+      ctx.moveTo(l.source.x, l.source.y);
+      ctx.lineTo(l.target.x, l.target.y);
+      ctx.strokeStyle = (selected && (l.source === selected || l.target === selected)) ? 'rgba(212,168,83,0.6)' : 'rgba(255,255,255,0.06)';
+      ctx.lineWidth = (selected && (l.source === selected || l.target === selected)) ? 2 : 1;
+      ctx.stroke();
+    });
+    // Nodes
+    nodes.forEach(n => {
+      ctx.beginPath();
+      ctx.arc(n.x, n.y, n.radius, 0, Math.PI*2);
+      ctx.fillStyle = n.color;
+      ctx.shadowColor = n.color;
+      ctx.shadowBlur = (hovered === n || selected === n) ? 20 : 0;
+      ctx.fill();
+      ctx.shadowBlur = 0;
+      ctx.strokeStyle = (selected === n) ? '#fff' : 'rgba(255,255,255,0.2)';
+      ctx.lineWidth = (selected === n) ? 2 : 1;
+      ctx.stroke();
+      // Label
+      ctx.fillStyle = '#e8e6e3';
+      ctx.font = `${n.type==='religion'?'600':'400'} 11px Inter, sans-serif`;
+      ctx.textAlign = 'center';
+      ctx.fillText(n.name, n.x, n.y + n.radius + 14);
+    });
+  }
 
-      $("#mindmap").innerHTML = `
-        <div class="section-head">
-          <div>
-            <h3>🧠 Nested Mind Map</h3>
-            <p>Expandable hierarchy of the document. Ideal for studying, teaching, or converting into a slide outline.</p>
-          </div>
-        </div>
+  function loop() {
+    if (!document.getElementById('view-network').classList.contains('hidden')) {
+      updatePhysics();
+      draw();
+    }
+    requestAnimationFrame(loop);
+  }
+  loop();
 
-        ${groups.length ? `
-          <div class="mindmap">
-            <div class="tree">
-              <div class="tree-root">🔮 ${escapeHTML(DATA.title)}</div>
-              <div class="branch">
-                ${groups.map(topic => `
-                  <details open>
-                    <summary>${topic.icon} ${escapeHTML(topic.title)} — ${escapeHTML(topic.summary)}</summary>
-                    <div class="branch">
-                      ${topic.sections.map(section => `
-                        <details>
-                          <summary>${escapeHTML(section.tradition)} · ${escapeHTML(section.title)}</summary>
-                          <div class="leaf">
-                            <b>Summary:</b> ${highlight(section.summary)}
-                            <br><br>
-                            <b>Tags:</b> ${(section.tags || []).map(escapeHTML).join(", ")}
-                            <br><br>
-                            <b>Key Points:</b>
-                            <ul>
-                              ${(section.bullets || []).map(item => `<li>${highlight(item)}</li>`).join("")}
-                            </ul>
-                            ${section.note ? `<div class="note">📌 ${highlight(section.note)}</div>` : ""}
-                          </div>
-                        </details>
-                      `).join("")}
-                    </div>
-                  </details>
-                `).join("")}
-              </div>
-            </div>
-          </div>
-        ` : emptyHTML()}
+  // Events
+  canvas.addEventListener('mousedown', e => {
+    const rect = canvas.getBoundingClientRect();
+    const mx = (e.clientX - rect.left), my = (e.clientY - rect.top);
+    dragged = nodes.find(n => Math.hypot(n.x - mx, n.y - my) < n.radius + 5);
+    if (dragged) selectNode(dragged);
+  });
+  canvas.addEventListener('mousemove', e => {
+    const rect = canvas.getBoundingClientRect();
+    const mx = (e.clientX - rect.left), my = (e.clientY - rect.top);
+    if (dragged) { dragged.x = mx; dragged.y = my; }
+    hovered = nodes.find(n => Math.hypot(n.x - mx, n.y - my) < n.radius + 5);
+    canvas.style.cursor = (dragged || hovered) ? 'pointer' : 'grab';
+  });
+  canvas.addEventListener('mouseup', () => dragged = null);
+  canvas.addEventListener('mouseleave', () => dragged = null);
+
+  function selectNode(n) {
+    selected = n;
+    const connections = links.filter(l => l.source === n || l.target === n);
+    const connText = connections.map(l => {
+      const other = l.source === n ? l.target : l.source;
+      return `<strong>${other.name}</strong> (${l.label || 'related'})`;
+    }).join(', ');
+    document.getElementById('networkInfo').innerHTML = `
+      <h4 style="color:${n.color}">${n.name}</h4>
+      <p><strong>Type:</strong> ${n.type.charAt(0).toUpperCase()+n.type.slice(1)}<br>
+      <strong>Description:</strong> ${n.desc}</p>
+      <p style="margin-top:8px"><strong>Connected to:</strong> ${connText || 'None'}</p>
+    `;
+  }
+  networkInitialized = true;
+}
+
+// ==========================
+// BOARD VIEW
+// ==========================
+function renderBoard() {
+  const container = document.getElementById('view-board');
+  if (container.children.length > 0) return; // already rendered
+
+  const cols = [...new Set(BOARD_CARDS.map(c => c.col))];
+  cols.forEach(colName => {
+    const col = document.createElement('div');
+    col.className = 'board-column';
+    const cards = BOARD_CARDS.filter(c => c.col === colName);
+    col.innerHTML = `
+      <div class="board-column-header">
+        <span>${colName}</span>
+        <span class="count">${cards.length}</span>
+      </div>
+    `;
+    cards.forEach(card => {
+      const c = document.createElement('div');
+      c.className = 'board-card';
+      c.innerHTML = `
+        <div class="board-card-title">${card.title}</div>
+        <div class="board-card-meta">${card.meta}</div>
+        <div class="board-card-body">${card.body}</div>
+        <div>${card.tags.map(t => `<span class="tag">${t}</span>`).join('')}</div>
       `;
+      col.appendChild(c);
+    });
+    container.appendChild(col);
+  });
+}
+
+// ==========================
+// MIND MAP VIEW (SVG)
+// ==========================
+function renderMindMap() {
+  const svg = document.getElementById('mindmapSvg');
+  if (svg.innerHTML) return; // already rendered
+
+  const NODE_W = 160, NODE_H = 44, GAP_X = 60, GAP_Y = 16;
+  let idCounter = 0;
+
+  function layoutTree(node, depth, yOffset) {
+    const id = 'mm-' + (idCounter++);
+    node._id = id;
+    node._depth = depth;
+    if (!node.children || node.children.length === 0) {
+      node._w = NODE_W; node._h = NODE_H; node._y = yOffset;
+      return { height: NODE_H + GAP_Y, maxDepth: depth };
     }
+    let childY = yOffset;
+    let totalH = 0;
+    let maxDepth = depth;
+    node.children.forEach(child => {
+      const res = layoutTree(child, depth + 1, childY);
+      childY += res.height;
+      totalH += res.height;
+      maxDepth = Math.max(maxDepth, res.maxDepth);
+    });
+    node._w = NODE_W; node._h = NODE_H;
+    node._y = (yOffset + (totalH - GAP_Y) / 2) - NODE_H/2;
+    return { height: totalH, maxDepth };
+  }
 
-    function renderCompare() {
-      $("#compare").innerHTML = `
-        <div class="section-head">
-          <div>
-            <h3>📊 Comparative Tables</h3>
-            <p>Optimized reference tables for quick comparison across traditions.</p>
-          </div>
-        </div>
+  const treeInfo = layoutTree(MINDMAP_DATA, 0, 0);
+  const totalWidth = (treeInfo.maxDepth + 1) * (NODE_W + GAP_X) + 100;
+  const totalHeight = treeInfo.height + 40;
+  svg.setAttribute('viewBox', `0 0 ${totalWidth} ${totalHeight}`);
+  svg.style.minHeight = totalHeight + 'px';
 
-        <div class="quality-box">
-          <article class="card" style="--card-color:#8b5cf6">
-            <h4>Academic Tone</h4>
-            <p style="color:var(--muted);line-height:1.55">Use “traditions teach,” “many interpretations hold,” and “scholars argue” instead of absolute universal claims.</p>
-          </article>
-          <article class="card" style="--card-color:#06b6d4">
-            <h4>Source Integrity</h4>
-            <p style="color:var(--muted);line-height:1.55">Replace vague source names with exact books, articles, translations, chapters, and page numbers.</p>
-          </article>
-          <article class="card" style="--card-color:#34d399">
-            <h4>Balanced Analysis</h4>
-            <p style="color:var(--muted);line-height:1.55">Separate theology, folklore, later interpretation, academic theory, and scientific explanation.</p>
-          </article>
-        </div>
+  function drawNode(node) {
+    const x = 40 + node._depth * (NODE_W + GAP_X);
+    const y = node._y + 20;
+    const g = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+    g.setAttribute('class', 'mm-node');
+    g.setAttribute('transform', `translate(${x},${y})`);
 
-        ${DATA.tables.map(table => `
-          <div class="section-head">
-            <div>
-              <h3>${escapeHTML(table.title)}</h3>
-            </div>
-          </div>
-          <article class="card table-card">
-            <table>
-              <thead>
-                <tr>
-                  ${table.columns.map(col => `<th>${escapeHTML(col)}</th>`).join("")}
-                </tr>
-              </thead>
-              <tbody>
-                ${table.rows.map(row => `
-                  <tr>
-                    ${row.map(cell => `<td>${highlight(cell)}</td>`).join("")}
-                  </tr>
-                `).join("")}
-              </tbody>
-            </table>
-          </article>
-        `).join("")}
-      `;
-    }
+    const rect = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+    rect.setAttribute('width', NODE_W);
+    rect.setAttribute('height', NODE_H);
+    rect.setAttribute('rx', 8);
+    rect.setAttribute('fill', 'rgba(22,22,32,0.9)');
+    rect.setAttribute('stroke', node.color || '#d4a853');
+    rect.setAttribute('stroke-width', 1.5);
+    g.appendChild(rect);
 
-    function emptyHTML() {
-      return `
-        <div class="empty">
-          <h3>No matching results</h3>
-          <p>Try a broader search term or switch back to “All Topics.”</p>
-        </div>
-      `;
-    }
+    const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+    text.setAttribute('x', NODE_W/2);
+    text.setAttribute('y', NODE_H/2);
+    text.setAttribute('text-anchor', 'middle');
+    text.setAttribute('dominant-baseline', 'middle');
+    text.setAttribute('class', 'mm-text');
+    text.setAttribute('fill', '#e8e6e3');
+    node.label.split('\n').forEach((line, i) => {
+      const tspan = document.createElementNS('http://www.w3.org/2000/svg', 'tspan');
+      tspan.setAttribute('x', NODE_W/2);
+      tspan.setAttribute('dy', i === 0 ? '-0.3em' : '1.2em');
+      tspan.textContent = line;
+      text.appendChild(tspan);
+    });
+    g.appendChild(text);
+    svg.appendChild(g);
 
-    function render() {
-      $$(".tab").forEach(tab => {
-        tab.classList.toggle("active", tab.dataset.view === state.view);
-      });
+    if (node.children) {
+      node.children.forEach(child => {
+        const cx = 40 + child._depth * (NODE_W + GAP_X);
+        const cy = child._y + 20 + NODE_H/2;
+        const px = x + NODE_W;
+        const py = y + NODE_H/2;
 
-      $$(".view").forEach(view => {
-        view.classList.toggle("active", view.id === state.view);
-      });
+        const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+        path.setAttribute('d', `M${px},${py} C${px+30},${py} ${cx-30},${cy} ${cx},${cy}`);
+        path.setAttribute('class', 'mm-link');
+        svg.insertBefore(path, svg.firstChild);
 
-      if (state.view === "reader") renderReader();
-      if (state.view === "board") renderBoard();
-      if (state.view === "network") renderNetwork();
-      if (state.view === "mindmap") renderMindmap();
-      if (state.view === "compare") renderCompare();
-    }
-
-    function bindEvents() {
-      $("#searchInput").addEventListener("input", event => {
-        state.q = event.target.value;
-        render();
-      });
-
-      $$(".tab").forEach(tab => {
-        tab.addEventListener("click", () => {
-          state.view = tab.dataset.view;
-          render();
-        });
-      });
-
-      $("#themeBtn").addEventListener("click", () => {
-        state.theme = state.theme === "dark" ? "light" : "dark";
-        document.documentElement.dataset.theme = state.theme;
-        localStorage.setItem("theme", state.theme);
-        render();
-      });
-
-      $("#printBtn").addEventListener("click", () => window.print());
-
-      $("#exportBtn").addEventListener("click", () => {
-        const blob = new Blob([JSON.stringify(DATA, null, 2)], { type: "application/json" });
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement("a");
-        a.href = url;
-        a.download = "supernatural-world-religions-data.json";
-        a.click();
-        URL.revokeObjectURL(url);
-      });
-
-      window.addEventListener("resize", () => {
-        if (state.view === "network") renderNetwork();
+        drawNode(child);
       });
     }
+  }
+  drawNode(MINDMAP_DATA);
+}
 
-    renderStats();
-    renderTopicNav();
-    bindEvents();
-    render();
-  </script>
-</body>
+// ==========================
+// INIT
+// ==========================
+window.addEventListener('DOMContentLoaded', () => {
+  switchView('doc');
+});
+
+</script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a0e2481d4e3c8826',t:'MTc4MTg2OTQ2NQ=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
