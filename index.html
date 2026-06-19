@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>The Supernatural Across World Religions — Interactive Research Deep Dive</title>
 <style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
   :root {
     --bg-deep: #0a0a0f;
     --bg-surface: #11111a;
@@ -19,508 +20,122 @@
     --accent-indigo: #6b7fd7;
     --accent-teal: #4ecdc4;
     --accent-purple: #a855f7;
+    --accent-green: #4ade80;
     --border-subtle: rgba(255,255,255,0.06);
     --border-accent: rgba(212,168,83,0.3);
-    --shadow-glow: rgba(212,168,83,0.08);
-    --font-heading: 'Georgia', 'Times New Roman', serif;
-    --font-body: 'Inter', system-ui, -apple-system, sans-serif;
+    --font-heading: Georgia, 'Times New Roman', serif;
+    --font-body: 'Inter', system-ui, sans-serif;
     --radius: 12px;
-    --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition: 0.3s cubic-bezier(0.4,0,0.2,1);
   }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{font-family:var(--font-body);background:var(--bg-deep);color:var(--text-primary);line-height:1.7;overflow-x:hidden}
+  ::-webkit-scrollbar{width:8px}
+  ::-webkit-scrollbar-track{background:var(--bg-deep)}
+  ::-webkit-scrollbar-thumb{background:#333;border-radius:4px}
+  ::-webkit-scrollbar-thumb:hover{background:var(--accent-gold)}
+  .ambient-bg{position:fixed;inset:0;z-index:0;pointer-events:none;background:radial-gradient(ellipse 80% 50% at 20% 40%,rgba(212,168,83,0.03) 0%,transparent 70%),radial-gradient(ellipse 60% 40% at 80% 60%,rgba(107,127,215,0.03) 0%,transparent 70%)}
+  .hero{position:relative;z-index:1;padding:80px 20px 60px;text-align:center;border-bottom:1px solid var(--border-subtle);background:linear-gradient(180deg,rgba(212,168,83,0.05) 0%,transparent 100%)}
+  .hero h1{font-family:var(--font-heading);font-size:clamp(2rem,5vw,3.5rem);font-weight:400;letter-spacing:-0.02em;line-height:1.2;margin-bottom:16px;background:linear-gradient(135deg,var(--text-primary) 0%,var(--accent-gold) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+  .hero .subtitle{font-size:1.1rem;color:var(--text-secondary);max-width:700px;margin:0 auto 32px}
+  .meta-badges{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;font-size:0.75rem;text-transform:uppercase;letter-spacing:0.08em;color:var(--text-muted)}
+  .meta-badges span{border:1px solid var(--border-subtle);padding:4px 12px;border-radius:100px}
+  .controls{position:sticky;top:0;z-index:100;background:rgba(10,10,15,0.85);backdrop-filter:blur(20px);border-bottom:1px solid var(--border-subtle);padding:16px 20px}
+  .controls-inner{max-width:1400px;margin:0 auto;display:flex;flex-wrap:wrap;gap:8px;justify-content:center}
+  .view-btn{background:transparent;border:1px solid var(--border-subtle);color:var(--text-secondary);padding:8px 20px;border-radius:100px;cursor:pointer;font-family:inherit;font-size:0.85rem;font-weight:500;transition:all var(--transition);display:flex;align-items:center;gap:8px}
+  .view-btn:hover{border-color:var(--border-accent);color:var(--text-primary)}
+  .view-btn.active{background:var(--accent-gold);color:var(--bg-deep);border-color:var(--accent-gold);font-weight:600}
+  .content-area{position:relative;z-index:1;max-width:1200px;margin:0 auto;padding:40px 20px 100px}
+  .hidden{display:none!important}
+  .animate-in{animation:fadeIn 0.5s ease forwards}
+  @keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+  .section-intro{font-size:1.1rem;color:var(--text-muted);max-width:800px;margin-bottom:32px;line-height:1.6}
 
-  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+  /* Document view */
+  .doc-view section{margin-bottom:60px}
+  .doc-view h2{font-family:var(--font-heading);font-size:1.8rem;font-weight:400;color:var(--accent-gold);margin-bottom:24px;padding-bottom:12px;border-bottom:1px solid var(--border-subtle);display:flex;align-items:center;gap:12px}
+  .doc-view h3{font-size:1.25rem;font-weight:600;color:var(--text-primary);margin:32px 0 16px;padding-left:16px;border-left:3px solid var(--accent-indigo)}
+  .doc-view h4{font-size:1.05rem;font-weight:600;color:var(--accent-teal);margin:24px 0 12px}
+  .doc-view p{margin-bottom:16px;color:var(--text-secondary)}
+  .doc-view blockquote{border-left:3px solid var(--accent-gold);padding:12px 20px;margin:20px 0;background:var(--bg-surface);border-radius:0 var(--radius) var(--radius) 0;font-style:italic;color:var(--text-primary)}
+  .doc-view ul,.doc-view ol{margin:16px 0 16px 24px;color:var(--text-secondary)}
+  .doc-view li{margin-bottom:8px}
+  .annotation{background:linear-gradient(135deg,rgba(212,168,83,0.08),rgba(107,127,215,0.05));border:1px solid var(--border-accent);border-radius:var(--radius);padding:20px;margin:24px 0;position:relative}
+  .annotation::before{content:"📌 Annotation";display:block;font-weight:700;font-size:0.75rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--accent-gold);margin-bottom:8px}
+  .table-wrap{overflow-x:auto;margin:24px 0;border-radius:var(--radius);border:1px solid var(--border-subtle)}
+  table{width:100%;border-collapse:collapse;font-size:0.9rem}
+  th{background:var(--bg-elevated);color:var(--accent-gold);font-weight:600;text-align:left;padding:12px 16px;border-bottom:1px solid var(--border-subtle);white-space:nowrap}
+  td{padding:12px 16px;border-bottom:1px solid var(--border-subtle);color:var(--text-secondary);vertical-align:top}
+  tr:last-child td{border-bottom:none}
+  tr:hover td{background:rgba(255,255,255,0.02)}
+  .ascii-art{background:var(--bg-surface);border:1px solid var(--border-subtle);border-radius:var(--radius);padding:20px;font-family:'Courier New',monospace;font-size:0.85rem;line-height:1.5;color:var(--accent-teal);overflow-x:auto;margin:20px 0}
+  .religion-header{display:flex;align-items:center;gap:12px;margin-bottom:16px}
+  .religion-icon{width:40px;height:40px;display:flex;align-items:center;justify-content:center;border-radius:10px;font-size:1.25rem;background:var(--bg-elevated);border:1px solid var(--border-subtle)}
+  .tag{display:inline-block;font-size:0.7rem;padding:2px 8px;border-radius:100px;background:rgba(212,168,83,0.1);color:var(--accent-gold);margin-top:8px;margin-right:4px;border:1px solid rgba(212,168,83,0.2)}
+  .tag.blue{background:rgba(107,127,215,0.1);color:var(--accent-indigo);border-color:rgba(107,127,215,0.2)}
+  .tag.red{background:rgba(201,74,74,0.1);color:var(--accent-crimson);border-color:rgba(201,74,74,0.2)}
+  .tag.teal{background:rgba(78,205,196,0.1);color:var(--accent-teal);border-color:rgba(78,205,196,0.2)}
+  .tag.purple{background:rgba(168,85,247,0.1);color:var(--accent-purple);border-color:rgba(168,85,247,0.2)}
+  .tag.green{background:rgba(74,222,128,0.1);color:var(--accent-green);border-color:rgba(74,222,128,0.2)}
 
-  * { margin: 0; padding: 0; box-sizing: border-box; }
+  /* Network */
+  #networkCanvas{width:100%;height:700px;background:var(--bg-surface);border-radius:var(--radius);border:1px solid var(--border-subtle);cursor:grab}
+  #networkCanvas:active{cursor:grabbing}
+  .network-legend{display:flex;flex-wrap:wrap;gap:16px;margin:16px 0;justify-content:center;font-size:0.85rem;color:var(--text-secondary)}
+  .legend-item{display:flex;align-items:center;gap:8px}
+  .legend-dot{width:12px;height:12px;border-radius:50%}
+  .network-info{background:var(--bg-card);border:1px solid var(--border-subtle);border-radius:var(--radius);padding:20px;margin-top:20px;min-height:100px}
+  .network-info h4{margin:0 0 8px;color:var(--accent-gold)}
+  .network-info p{color:var(--text-secondary);font-size:0.9rem;margin:0}
 
-  html { scroll-behavior: smooth; }
+  /* Board */
+  .board-view{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:20px}
+  .board-column{background:var(--bg-surface);border-radius:var(--radius);border:1px solid var(--border-subtle);padding:16px}
+  .board-column-header{font-size:0.85rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--accent-gold);margin-bottom:16px;padding-bottom:12px;border-bottom:1px solid var(--border-subtle);display:flex;justify-content:space-between;align-items:center}
+  .board-column-header .count{background:var(--bg-elevated);padding:2px 8px;border-radius:100px;font-size:0.75rem;color:var(--text-muted)}
+  .board-card{background:var(--bg-card);border:1px solid var(--border-subtle);border-radius:10px;padding:16px;margin-bottom:12px;transition:all var(--transition);cursor:pointer}
+  .board-card:hover{border-color:var(--border-accent);transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,0,0,0.3)}
+  .board-card-title{font-weight:600;font-size:0.95rem;margin-bottom:6px;color:var(--text-primary)}
+  .board-card-meta{font-size:0.8rem;color:var(--text-muted);margin-bottom:8px}
+  .board-card-body{font-size:0.85rem;color:var(--text-secondary);line-height:1.5}
 
-  body {
-    font-family: var(--font-body);
-    background: var(--bg-deep);
-    color: var(--text-primary);
-    line-height: 1.7;
-    overflow-x: hidden;
+  /* Mind map */
+  .mindmap-container{background:var(--bg-surface);border-radius:var(--radius);border:1px solid var(--border-subtle);padding:30px;overflow:auto}
+  .mindmap-svg{width:100%;min-height:800px}
+  .mm-node{cursor:pointer;transition:opacity 0.2s}
+  .mm-node:hover{opacity:0.9}
+  .mm-node:hover rect{filter:brightness(1.2)}
+  .mm-text{font-family:var(--font-body);font-size:13px;fill:var(--text-primary);pointer-events:none}
+  .mm-link{stroke:var(--border-subtle);stroke-width:2;fill:none}
+  .mm-link.highlight{stroke:var(--accent-gold);stroke-width:3}
+
+  @media(max-width:768px){
+    .hero{padding:40px 20px 30px}
+    .content-area{padding:20px 16px 60px}
+    #networkCanvas{height:400px}
+    .board-view{grid-template-columns:1fr}
+    .doc-view h2{font-size:1.4rem}
+    .table-wrap{font-size:0.8rem}
   }
-
-  /* Custom Scrollbar */
-  ::-webkit-scrollbar { width: 8px; }
-  ::-webkit-scrollbar-track { background: var(--bg-deep); }
-  ::-webkit-scrollbar-thumb { background: #333; border-radius: 4px; }
-  ::-webkit-scrollbar-thumb:hover { background: var(--accent-gold); }
-
-  /* Background ambient */
-  .ambient-bg {
-    position: fixed;
-    inset: 0;
-    z-index: 0;
-    pointer-events: none;
-    background:
-      radial-gradient(ellipse 80% 50% at 20% 40%, rgba(212,168,83,0.03) 0%, transparent 70%),
-      radial-gradient(ellipse 60% 40% at 80% 60%, rgba(107,127,215,0.03) 0%, transparent 70%);
-  }
-
-  /* Header / Hero */
-  .hero {
-    position: relative;
-    z-index: 1;
-    padding: 80px 20px 60px;
-    text-align: center;
-    border-bottom: 1px solid var(--border-subtle);
-    background: linear-gradient(180deg, rgba(212,168,83,0.05) 0%, transparent 100%);
-  }
-
-  .hero h1 {
-    font-family: var(--font-heading);
-    font-size: clamp(2rem, 5vw, 3.5rem);
-    font-weight: 400;
-    letter-spacing: -0.02em;
-    line-height: 1.2;
-    margin-bottom: 16px;
-    background: linear-gradient(135deg, var(--text-primary) 0%, var(--accent-gold) 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-  }
-
-  .hero .subtitle {
-    font-size: 1.1rem;
-    color: var(--text-secondary);
-    max-width: 700px;
-    margin: 0 auto 32px;
-  }
-
-  .meta-badges {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 10px;
-    font-size: 0.75rem;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    color: var(--text-muted);
-  }
-
-  .meta-badges span {
-    border: 1px solid var(--border-subtle);
-    padding: 4px 12px;
-    border-radius: 100px;
-  }
-
-  /* View Switcher */
-  .controls {
-    position: sticky;
-    top: 0;
-    z-index: 100;
-    background: rgba(10,10,15,0.85);
-    backdrop-filter: blur(20px);
-    border-bottom: 1px solid var(--border-subtle);
-    padding: 16px 20px;
-  }
-
-  .controls-inner {
-    max-width: 1400px;
-    margin: 0 auto;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-    justify-content: center;
-  }
-
-  .view-btn {
-    background: transparent;
-    border: 1px solid var(--border-subtle);
-    color: var(--text-secondary);
-    padding: 8px 20px;
-    border-radius: 100px;
-    cursor: pointer;
-    font-family: inherit;
-    font-size: 0.85rem;
-    font-weight: 500;
-    transition: all var(--transition);
-    display: flex;
-    align-items: center;
-    gap: 8px;
-  }
-
-  .view-btn:hover {
-    border-color: var(--border-accent);
-    color: var(--text-primary);
-  }
-
-  .view-btn.active {
-    background: var(--accent-gold);
-    color: var(--bg-deep);
-    border-color: var(--accent-gold);
-    font-weight: 600;
-  }
-
-  /* Content Area */
-  .content-area {
-    position: relative;
-    z-index: 1;
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 40px 20px 100px;
-  }
-
-  /* --- DOCUMENT VIEW --- */
-  .doc-view section {
-    margin-bottom: 60px;
-  }
-
-  .doc-view h2 {
-    font-family: var(--font-heading);
-    font-size: 1.8rem;
-    font-weight: 400;
-    color: var(--accent-gold);
-    margin-bottom: 24px;
-    padding-bottom: 12px;
-    border-bottom: 1px solid var(--border-subtle);
-    display: flex;
-    align-items: center;
-    gap: 12px;
-  }
-
-  .doc-view h3 {
-    font-size: 1.25rem;
-    font-weight: 600;
-    color: var(--text-primary);
-    margin: 32px 0 16px;
-    padding-left: 16px;
-    border-left: 3px solid var(--accent-indigo);
-  }
-
-  .doc-view h4 {
-    font-size: 1.05rem;
-    font-weight: 600;
-    color: var(--accent-teal);
-    margin: 24px 0 12px;
-  }
-
-  .doc-view p {
-    margin-bottom: 16px;
-    color: var(--text-secondary);
-  }
-
-  .doc-view blockquote {
-    border-left: 3px solid var(--accent-gold);
-    padding: 12px 20px;
-    margin: 20px 0;
-    background: var(--bg-surface);
-    border-radius: 0 var(--radius) var(--radius) 0;
-    font-style: italic;
-    color: var(--text-primary);
-  }
-
-  .annotation {
-    background: linear-gradient(135deg, rgba(212,168,83,0.08), rgba(107,127,215,0.05));
-    border: 1px solid var(--border-accent);
-    border-radius: var(--radius);
-    padding: 20px;
-    margin: 24px 0;
-    position: relative;
-  }
-
-  .annotation::before {
-    content: "📌 Annotation";
-    display: block;
-    font-weight: 700;
-    font-size: 0.75rem;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    color: var(--accent-gold);
-    margin-bottom: 8px;
-  }
-
-  /* Tables */
-  .table-wrap {
-    overflow-x: auto;
-    margin: 24px 0;
-    border-radius: var(--radius);
-    border: 1px solid var(--border-subtle);
-  }
-
-  table {
-    width: 100%;
-    border-collapse: collapse;
-    font-size: 0.9rem;
-  }
-
-  th {
-    background: var(--bg-elevated);
-    color: var(--accent-gold);
-    font-weight: 600;
-    text-align: left;
-    padding: 12px 16px;
-    border-bottom: 1px solid var(--border-subtle);
-    white-space: nowrap;
-  }
-
-  td {
-    padding: 12px 16px;
-    border-bottom: 1px solid var(--border-subtle);
-    color: var(--text-secondary);
-    vertical-align: top;
-  }
-
-  tr:last-child td { border-bottom: none; }
-
-  tr:hover td { background: rgba(255,255,255,0.02); }
-
-  /* Diagrams in doc */
-  .ascii-art {
-    background: var(--bg-surface);
-    border: 1px solid var(--border-subtle);
-    border-radius: var(--radius);
-    padding: 20px;
-    font-family: 'Courier New', monospace;
-    font-size: 0.85rem;
-    line-height: 1.5;
-    color: var(--accent-teal);
-    overflow-x: auto;
-    margin: 20px 0;
-  }
-
-  /* Lists */
-  .doc-view ul, .doc-view ol {
-    margin: 16px 0 16px 24px;
-    color: var(--text-secondary);
-  }
-
-  .doc-view li { margin-bottom: 8px; }
-
-  /* Religion Headers */
-  .religion-header {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    margin-bottom: 16px;
-  }
-
-  .religion-icon {
-    width: 40px;
-    height: 40px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 10px;
-    font-size: 1.25rem;
-    background: var(--bg-elevated);
-    border: 1px solid var(--border-subtle);
-  }
-
-  /* --- NETWORK VIEW --- */
-  #networkCanvas {
-    width: 100%;
-    height: 700px;
-    background: var(--bg-surface);
-    border-radius: var(--radius);
-    border: 1px solid var(--border-subtle);
-    cursor: grab;
-  }
-
-  #networkCanvas:active { cursor: grabbing; }
-
-  .network-legend {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 16px;
-    margin: 16px 0;
-    justify-content: center;
-    font-size: 0.85rem;
-    color: var(--text-secondary);
-  }
-
-  .legend-item { display: flex; align-items: center; gap: 8px; }
-  .legend-dot { width: 12px; height: 12px; border-radius: 50%; }
-
-  .network-info {
-    background: var(--bg-card);
-    border: 1px solid var(--border-subtle);
-    border-radius: var(--radius);
-    padding: 20px;
-    margin-top: 20px;
-    min-height: 100px;
-  }
-
-  .network-info h4 { margin: 0 0 8px; color: var(--accent-gold); }
-  .network-info p { color: var(--text-secondary); font-size: 0.9rem; margin: 0; }
-
-  /* --- BOARD VIEW --- */
-  .board-view {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-    gap: 20px;
-  }
-
-  .board-column {
-    background: var(--bg-surface);
-    border-radius: var(--radius);
-    border: 1px solid var(--border-subtle);
-    padding: 16px;
-  }
-
-  .board-column-header {
-    font-size: 0.85rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    color: var(--accent-gold);
-    margin-bottom: 16px;
-    padding-bottom: 12px;
-    border-bottom: 1px solid var(--border-subtle);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-
-  .board-column-header .count {
-    background: var(--bg-elevated);
-    padding: 2px 8px;
-    border-radius: 100px;
-    font-size: 0.75rem;
-    color: var(--text-muted);
-  }
-
-  .board-card {
-    background: var(--bg-card);
-    border: 1px solid var(--border-subtle);
-    border-radius: 10px;
-    padding: 16px;
-    margin-bottom: 12px;
-    transition: all var(--transition);
-    cursor: pointer;
-  }
-
-  .board-card:hover {
-    border-color: var(--border-accent);
-    transform: translateY(-2px);
-    box-shadow: 0 8px 24px rgba(0,0,0,0.3);
-  }
-
-  .board-card-title {
-    font-weight: 600;
-    font-size: 0.95rem;
-    margin-bottom: 6px;
-    color: var(--text-primary);
-  }
-
-  .board-card-meta {
-    font-size: 0.8rem;
-    color: var(--text-muted);
-    margin-bottom: 8px;
-  }
-
-  .board-card-body {
-    font-size: 0.85rem;
-    color: var(--text-secondary);
-    line-height: 1.5;
-  }
-
-  .tag {
-    display: inline-block;
-    font-size: 0.7rem;
-    padding: 2px 8px;
-    border-radius: 100px;
-    background: rgba(212,168,83,0.1);
-    color: var(--accent-gold);
-    margin-top: 8px;
-    margin-right: 4px;
-    border: 1px solid rgba(212,168,83,0.2);
-  }
-
-  .tag.blue { background: rgba(107,127,215,0.1); color: var(--accent-indigo); border-color: rgba(107,127,215,0.2); }
-  .tag.red { background: rgba(201,74,74,0.1); color: var(--accent-crimson); border-color: rgba(201,74,74,0.2); }
-  .tag.teal { background: rgba(78,205,196,0.1); color: var(--accent-teal); border-color: rgba(78,205,196,0.2); }
-  .tag.purple { background: rgba(168,85,247,0.1); color: var(--accent-purple); border-color: rgba(168,85,247,0.2); }
-
-  /* --- MIND MAP VIEW --- */
-  .mindmap-container {
-    background: var(--bg-surface);
-    border-radius: var(--radius);
-    border: 1px solid var(--border-subtle);
-    padding: 30px;
-    overflow: auto;
-  }
-
-  .mindmap-svg {
-    width: 100%;
-    min-height: 800px;
-  }
-
-  .mm-node {
-    cursor: pointer;
-    transition: opacity 0.2s;
-  }
-  .mm-node:hover { opacity: 0.9; }
-  .mm-node rect, .mm-node circle {
-    transition: all 0.2s;
-  }
-  .mm-node:hover rect {
-    filter: brightness(1.2);
-  }
-  .mm-text {
-    font-family: var(--font-body);
-    font-size: 13px;
-    fill: var(--text-primary);
-    pointer-events: none;
-  }
-  .mm-link {
-    stroke: var(--border-subtle);
-    stroke-width: 2;
-    fill: none;
-  }
-  .mm-link.highlight {
-    stroke: var(--accent-gold);
-    stroke-width: 3;
-  }
-
-  /* Utility */
-  .hidden { display: none !important; }
-
-  .section-intro {
-    font-size: 1.1rem;
-    color: var(--text-muted);
-    max-width: 800px;
-    margin-bottom: 32px;
-    line-height: 1.6;
-  }
-
-  /* Responsive */
-  @media (max-width: 768px) {
-    .hero { padding: 40px 20px 30px; }
-    .content-area { padding: 20px 16px 60px; }
-    #networkCanvas { height: 400px; }
-    .board-view { grid-template-columns: 1fr; }
-    .doc-view h2 { font-size: 1.4rem; }
-    .table-wrap { font-size: 0.8rem; }
-  }
-
-  /* Animations */
-  @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(10px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-  .animate-in { animation: fadeIn 0.5s ease forwards; }
-
 </style>
 </head>
 <body>
 <div class="ambient-bg"></div>
 
-<!-- Hero -->
 <header class="hero">
   <h1>🔮 The Supernatural Across World Religions</h1>
-  <p class="subtitle">A comprehensive research deep dive: Demons, Doomsdays, Divine Judgment &amp; Scientific Analysis across Abrahamic faiths, Hinduism, Zoroastrianism, Buddhism, and folklore traditions.</p>
+  <p class="subtitle">A comprehensive, optimized research deep dive: Demons, Doomsdays, Divine Judgment, Folklore &amp; Scientific Analysis across Abrahamic faiths, Hinduism, Zoroastrianism, Buddhism, and global folklore traditions.</p>
   <div class="meta-badges">
     <span>Comparative Religion</span>
     <span>Eschatology</span>
     <span>Demonology</span>
+    <span>Folklore</span>
     <span>Cognitive Science</span>
     <span>Neurotheology</span>
   </div>
 </header>
 
-<!-- Controls -->
 <nav class="controls">
   <div class="controls-inner">
     <button class="view-btn active" onclick="switchView('doc')" data-view="doc">📄 Document</button>
@@ -530,101 +145,129 @@
   </div>
 </nav>
 
-<!-- Content -->
 <main class="content-area">
 
-  <!-- DOCUMENT VIEW -->
-  <div id="view-doc" class="doc-view">
+<!-- DOCUMENT VIEW -->
+<div id="view-doc" class="doc-view">
 
-    <section>
-      <h2><span>1</span> Eschatology: The End of All Things</h2>
-      <p class="section-intro">Most major religions possess an End Times concept, but the architecture varies dramatically between linear one-time events and eternal cyclical dissolution.</p>
+  <section>
+    <h2><span>1</span> Eschatology: The End of All Things</h2>
+    <p class="section-intro">Every civilization develops an End Times narrative. The architecture varies dramatically between linear one-time events and eternal cyclical dissolution.</p>
 
-      <div class="table-wrap">
-        <table>
-          <thead>
-            <tr><th>Framework</th><th>Religions</th><th>Core Idea</th></tr>
-          </thead>
-          <tbody>
-            <tr><td>🔵 Linear (One-time)</td><td>Christianity, Islam, Judaism</td><td>Clear beginning, singular Judgment Day, eternal afterlife</td></tr>
-            <tr><td>🟢 Cyclical (Eternal)</td><td>Hinduism, Buddhism</td><td>Cosmic cycles of birth, death, and rebirth; no final judgment</td></tr>
-          </tbody>
-        </table>
-      </div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Framework</th><th>Religions</th><th>Core Idea</th></tr></thead>
+        <tbody>
+          <tr><td>🔵 Linear (One-time)</td><td>Christianity, Islam, Judaism, Zoroastrianism</td><td>Clear beginning, singular Judgment Day, eternal afterlife</td></tr>
+          <tr><td>🟢 Cyclical (Eternal)</td><td>Hinduism, Buddhism, Norse</td><td>Cosmic cycles of creation, destruction, and rebirth</td></tr>
+        </tbody>
+      </table>
+    </div>
 
-      <h3>✝️ Christianity — The Second Coming &amp; Final Judgment</h3>
-      <p>The Bible describes the <strong>Parousia</strong> (Second Coming) as the trigger for the resurrection of the dead and universal judgment. No date is specified — a deliberate theological design to sustain moral vigilance.</p>
-      <div class="annotation">
-        <p>Christianity's eschatology is notably <em>incomplete by design</em>. The absence of a date creates perpetual anticipation, functioning as a disciplinary mechanism rather than a predictive calendar.</p>
-      </div>
+    <h3>✝️ Christianity — The Second Coming &amp; Final Judgment</h3>
+    <p>The Bible describes the <strong>Parousia</strong> (Second Coming) as the trigger for the resurrection of the dead and universal judgment. No date is specified — a deliberate theological design to sustain moral vigilance.</p>
+    <div class="annotation">
+      <p>Christianity's eschatology is notably <em>incomplete by design</em>. The absence of a date creates perpetual anticipation, functioning as a disciplinary mechanism rather than a predictive calendar.</p>
+    </div>
 
-      <h3>☪️ Islam — Yawm al-Qiyāmah</h3>
-      <p>Judgment Day is the "dominant message" of the Qur'an and one of the six articles of faith. Islam uniquely asserts a <strong>dual-phase</strong> accountability: the <em>ʿadhāb al-qabr</em> (punishment of the grave) begins immediately after death, while the final judgment is the second phase.</p>
-      <div class="table-wrap">
-        <table>
-          <thead><tr><th>Arabic Name</th><th>Translation</th></tr></thead>
-          <tbody>
-            <tr><td>Yawm al-Qiyāmah</td><td>Day of Resurrection</td></tr>
-            <tr><td>Yawm al-Ḥisāb</td><td>Day of Reckoning</td></tr>
-            <tr><td>Yawm al-Dīn</td><td>Day of Judgment</td></tr>
-            <tr><td>Yawm al-Wāqi'ah</td><td>Day of the Inevitable Event</td></tr>
-            <tr><td>Yawm al-Zalzalah</td><td>Day of the Earthquake</td></tr>
-          </tbody>
-        </table>
-      </div>
+    <h3>☪️ Islam — Yawm al-Qiyāmah (Day of Resurrection)</h3>
+    <p>Judgment Day is the dominant message of the Qur'an and one of the six articles of faith. Islam uniquely asserts a <strong>dual-phase</strong> accountability: the <em>ʿadhāb al-qabr</em> (punishment of the grave) begins immediately after death, while the final judgment is the second phase.</p>
 
-      <h3>✡️ Judaism — Yom HaDin</h3>
-      <p>The Hebrew Bible contains scattered allusions to divine judgment. Post-biblical texts (Talmud, mystical writings) elaborate on resurrection and the weighing of deeds, but the focus remains on <strong>collective national redemption</strong> rather than individual afterlife judgment.</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Arabic Name</th><th>Translation</th></tr></thead>
+        <tbody>
+          <tr><td>Yawm al-Qiyāmah</td><td>Day of Resurrection</td></tr>
+          <tr><td>Yawm al-Ḥisāb</td><td>Day of Reckoning</td></tr>
+          <tr><td>Yawm al-Dīn</td><td>Day of Judgment</td></tr>
+          <tr><td>Yawm al-Wāqi'ah</td><td>Day of the Inevitable Event</td></tr>
+          <tr><td>Yawm al-Zalzalah</td><td>Day of the Earthquake</td></tr>
+        </tbody>
+      </table>
+    </div>
 
-      <h3>🕉️ Hinduism &amp; ☸️ Buddhism — Karma, Not Judgment</h3>
-      <p>Both traditions emphasize moral accountability through <em>karma</em>, where actions have consequences across lifetimes. The path to liberation involves virtue, Dharma, and spiritual discipline.</p>
-      <div class="table-wrap">
-        <table>
-          <thead><tr><th>Yuga</th><th>Duration</th><th>Character</th></tr></thead>
-          <tbody>
-            <tr><td>🟡 Satya Yuga</td><td>1,728,000 years</td><td>Golden Age — 100% virtue</td></tr>
-            <tr><td>🟠 Treta Yuga</td><td>1,296,000 years</td><td>75% virtue</td></tr>
-            <tr><td>🔴 Dvapara Yuga</td><td>864,000 years</td><td>50% virtue</td></tr>
-            <tr><td>⚫ Kali Yuga</td><td>432,000 years</td><td>Dark Age — current era</td></tr>
-          </tbody>
-        </table>
-      </div>
-      <p>At the end of a full Mahayuga cycle, <strong>Pralaya</strong> (cosmic dissolution) destroys and re-creates the universe. This is not a moral judgment — it is a cosmic reset.</p>
+    <h4>Islamic Eschatological Signs</h4>
+    <p>Islamic tradition divides the signs preceding Qiyamah into Minor (already occurring) and Major (yet to occur).</p>
+    <p><strong>Minor Signs:</strong> Spread of immorality, widespread wealth and inequality, time appearing to move faster, competition in tall buildings (Bedouins building skyscrapers), increase in literacy but decrease in religious knowledge, increase in fornication and adultery, and the rise of musical instruments.</p>
+    <p><strong>Major Signs:</strong></p>
+    <ol>
+      <li><strong>Al-Mahdi</strong> — the rightly-guided one appears to restore justice.</li>
+      <li><strong>Al-Dajjāl</strong> — the false messiah (Antichrist equivalent), one-eyed, who deceives humanity.</li>
+      <li><strong>Return of Isa (Jesus)</strong> — descends to kill Dajjāl and establish justice.</li>
+      <li><strong>Yajuj and Majuj</strong> (Gog and Magog) — released from behind a great wall to wreak havoc.</li>
+      <li><strong>Three Landslides</strong> — in the East, West, and Arabia.</li>
+      <li><strong>Smoke</strong> covering the earth, causing suffering for believers and disbelievers alike.</li>
+      <li><strong>The Beast (Dābbah)</strong> emerges from the earth to speak to humanity.</li>
+      <li><strong>Sun rises from the West</strong> — after this, repentance is no longer accepted.</li>
+      <li><strong>Fire from Yemen</strong> driving people to the gathering place.</li>
+      <li><strong>Trumpet of Isrāfīl</strong> — blown twice; all life ends, then is resurrected.</li>
+    </ol>
 
-      <h3>🔥 Zoroastrianism — The Original Blueprint</h3>
-      <p>Zoroastrianism introduced <strong>Frashokereti</strong>: the final renovation, resurrection of the dead, and judgment by molten metal. Predating Christianity by 400–600 years, this is arguably the <strong>most important finding</strong> in comparative eschatology.</p>
-      <div class="annotation">
-        <p><strong>Critical finding:</strong> Jewish exile in Persia (6th century BCE) transmitted Zoroastrian concepts into Judaism, which then flowed into Christianity and Islam. The chain of influence is documented historical consensus, not speculation.</p>
-      </div>
-    </section>
+    <h3>✡️ Judaism — Yom HaDin</h3>
+    <p>The Hebrew Bible contains scattered allusions to divine judgment. Post-biblical texts (Talmud, mystical writings) elaborate on resurrection and the weighing of deeds, but the focus remains on <strong>collective national redemption</strong> rather than individual afterlife judgment.</p>
 
-    <section>
-      <h2><span>2</span> Satan &amp; The Adversary Across Faiths</h2>
+    <h3>🕉️ Hinduism — Kali Yuga &amp; Pralaya</h3>
+    <p>Hinduism uniquely posits <strong>cyclical time</strong> rather than linear history. The universe passes through four ages (Yugas):</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Yuga</th><th>Duration</th><th>Virtue</th><th>State</th></tr></thead>
+        <tbody>
+          <tr><td>🟡 Satya Yuga</td><td>1,728,000 years</td><td>100%</td><td>Golden Age — pure, truthful</td></tr>
+          <tr><td>🟠 Treta Yuga</td><td>1,296,000 years</td><td>75%</td><td>Decline begins</td></tr>
+          <tr><td>🔴 Dvapara Yuga</td><td>864,000 years</td><td>50%</td><td>Half-virtue, rise of conflict</td></tr>
+          <tr><td>⚫ Kali Yuga</td><td>432,000 years</td><td>25%</td><td>Dark Age — current era</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>At the end of a full Mahayuga cycle, <strong>Pralaya</strong> (cosmic dissolution) destroys and re-creates the universe. This is not a moral judgment — it is a cosmic reset.</p>
+    <p><strong>Kalki Avatar:</strong> The tenth and final incarnation of Vishnu, riding a white horse with a flaming sword, will end Kali Yuga and restart Satya Yuga.</p>
 
-      <h3>🧬 Etymological Origins</h3>
-      <p>In Hebrew, <em>satan</em> means "adversary." The satan of the Hebrew Bible is a <strong>description, not a proper name</strong>. The definite article <em>ha-satan</em> ("the accuser") appears in the Book of Job as a title — a divine prosecutor operating within God's court.</p>
-      <div class="annotation">
-        <p>The original Hebrew "satan" is NOT a proper noun. The transformation into a cosmic enemy happened later through cross-cultural influence during the Persian exile.</p>
-      </div>
+    <h3>☸️ Buddhism — Decline of Dharma &amp; Maitreya</h3>
+    <p>The <em>Saddharma-vipralopa</em> is the gradual disappearance of the Buddha's teachings. After Dharma fades, the next Buddha — <strong>Maitreya</strong> — will appear to restore it. The universe undergoes endless cycles of <em>Sanvatta</em> (destruction) and <em>Vivatta</em> (formation).</p>
+    <p><strong>7 Suns Sutra:</strong> Eventually, seven suns will appear and scorch the earth — a remarkable parallel to modern astrophysical predictions of the Sun's expansion into a red giant.</p>
 
-      <div class="table-wrap">
-        <table>
-          <thead><tr><th>Religion</th><th>Figure</th><th>Origin</th><th>Nature</th><th>Power</th></tr></thead>
-          <tbody>
-            <tr><td>✡️ Judaism</td><td>Ha-Satan</td><td>God's court</td><td>Prosecutor / Tester</td><td>Fully subordinate</td></tr>
-            <tr><td>✝️ Christianity</td><td>Satan / Lucifer</td><td>Fallen angel</td><td>Cosmic rebel</td><td>High, but defeated</td></tr>
-            <tr><td>☪️ Islam</td><td>Iblīs / Shayṭān</td><td>Fallen Jinn</td><td>Refuser / Whisperer</td><td>Limited by God's will</td></tr>
-            <tr><td>🔥 Zoroastrianism</td><td>Angra Mainyu</td><td>Co-eternal</td><td>Anti-God</td><td>EQUAL to God</td></tr>
-            <tr><td>🕉️ Hinduism</td><td>No equivalent</td><td>—</td><td>Distributed evil</td><td>Varies</td></tr>
-            <tr><td>☸️ Buddhism</td><td>Māra</td><td>Internal/External</td><td>Tempter</td><td>Psychological</td></tr>
-            <tr><td>🏛️ Egypt</td><td>Set / Apophis</td><td>Divine realm</td><td>Chaos deity</td><td>Variable</td></tr>
-            <tr><td>🕊️ Yazidism</td><td>Melek Taus</td><td>Angel</td><td>Benevolent leader</td><td>High (redeemed)</td></tr>
-          </tbody>
-        </table>
-      </div>
+    <h3>🔥 Zoroastrianism — Frashokereti</h3>
+    <p>The oldest known monotheistic eschatology. <strong>Frashokereti</strong> (final renovation) includes the resurrection of the dead, judgment via a molten metal river that purifies the righteous and destroys the wicked, and the arrival of the savior <strong>Saoshyant</strong> — born of a virgin.</p>
+    <div class="annotation">
+      <p><strong>Critical finding:</strong> Jewish exile in Persia (6th century BCE) transmitted Zoroastrian concepts into Judaism, which then flowed into Christianity and Islam. The chain of influence is documented historical consensus, not speculation.</p>
+    </div>
 
-      <h3>Evolution of the Adversary</h3>
-      <div class="ascii-art">
+    <h3>🌀 Norse Mythology — Ragnarök</h3>
+    <p>A three-year winter (<strong>Fimbulvetr</strong>) precedes the final battle. The wolf <strong>Fenrir</strong> breaks his chains; the serpent <strong>Jörmungandr</strong> rises from the sea. The gods (Odin, Thor, Freyr) die fighting. The world burns, then is reborn green.</p>
+
+    <h3>🧠 Why Eschatologies Exist — Anthropological Theories</h3>
+    <ol>
+      <li><strong>Terror Management Theory:</strong> Humans need death-anxiety buffers; afterlife concepts provide existential relief.</li>
+      <li><strong>Social Cohesion:</strong> Fear of judgment encourages moral behavior and group solidarity.</li>
+      <li><strong>Pattern Recognition:</strong> Humans see beginnings and therefore expect endings — our minds are teleological.</li>
+      <li><strong>Historical Trauma:</strong> Many apocalyptic narratives emerged after catastrophes (volcanic eruptions, plagues, exiles, colonization).</li>
+    </ol>
+
+    <h3>🔬 Scientific Parallels to Doomsday</h3>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Religious Prediction</th><th>Scientific Equivalent</th></tr></thead>
+        <tbody>
+          <tr><td>Sun rises from west (Islam)</td><td>Geomagnetic reversal could theoretically shift perceived orientation</td></tr>
+          <tr><td>7 Suns destroy earth (Buddhism)</td><td>Red Giant phase of the Sun in ~5 billion years</td></tr>
+          <tr><td>World burns (Norse, Hindu)</td><td>Heat death of the universe / solar expansion</td></tr>
+          <tr><td>World submerged (many traditions)</td><td>Sea level rise from climate change / Milankovitch cycles</td></tr>
+          <tr><td>Cosmic cycles (Hindu)</td><td>Big Bang / Big Crunch cyclic universe models (speculative cosmology)</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <h2><span>2</span> Satan &amp; The Adversary Across Faiths</h2>
+
+    <h3>🧬 Etymological Origins</h3>
+    <p>In Hebrew, <em>satan</em> means "adversary." The satan of the Hebrew Bible is a <strong>description, not a proper name</strong>. The definite article <em>ha-satan</em> ("the accuser") appears in the Book of Job as a title — a divine prosecutor operating within God's court.</p>
+    <div class="annotation">
+      <p>The original Hebrew "satan" is NOT a proper noun. The transformation into a cosmic enemy happened later through cross-cultural influence during the Persian exile.</p>
+    </div>
+
+    <div class="ascii-art">
 ~1500 BCE  Zoroastrianism: Angra Mainyu (co-equal enemy)
     │
 ~600 BCE   Judaism absorbs Persian dualism during Exile
@@ -639,61 +282,108 @@
 PARALLEL TRACKS:
 Hinduism:   No single "Satan" — evil is distributed
 Buddhism:   Māra (tempter) — more psychological than cosmic
-      </div>
-    </section>
+Egypt:      Set / Apophis — chaos deities
+    </div>
 
-    <section>
-      <h2><span>3</span> Demons, Jinn, Ifrit &amp; Supernatural Entities</h2>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Religion</th><th>Figure</th><th>Origin</th><th>Nature</th><th>Power</th></tr></thead>
+        <tbody>
+          <tr><td>✡️ Judaism</td><td>Ha-Satan</td><td>God's court</td><td>Accuser / Tester</td><td>Low — fully obedient</td></tr>
+          <tr><td>✝️ Christianity</td><td>Satan / Lucifer</td><td>Fallen angel</td><td>Cosmic rebel</td><td>High — but defeated</td></tr>
+          <tr><td>☪️ Islam</td><td>Iblīs / Shayṭān</td><td>Fallen Jinn</td><td>Refuser / Whisperer</td><td>Limited — by God's will</td></tr>
+          <tr><td>🔥 Zoroastrianism</td><td>Angra Mainyu</td><td>Co-eternal</td><td>Anti-God</td><td>EQUAL to God</td></tr>
+          <tr><td>🕉️ Hinduism</td><td>No equivalent</td><td>Various</td><td>Distributed evil</td><td>Varies by demon</td></tr>
+          <tr><td>☸️ Buddhism</td><td>Māra</td><td>Internal / External</td><td>Tempter / Illusionist</td><td>Psychological</td></tr>
+          <tr><td>🏛️ Egypt</td><td>Set / Apophis</td><td>Divine realm</td><td>Chaos deity</td><td>Variable</td></tr>
+          <tr><td>🕊️ Yazidism</td><td>Melek Taus</td><td>Angel</td><td>Benevolent leader</td><td>High — redeemed</td></tr>
+        </tbody>
+      </table>
+    </div>
 
-      <h3>🌍 Demons — Universal Concept</h3>
-      <p>Belief in demons likely stems from the Paleolithic age, rooted in humanity's fear of the unknown. Large portions of Jewish demonology originated from a later form of Zoroastrianism and transferred to Judaism during the Persian era.</p>
-      <div class="annotation">
-        <p>Clear historical transmission chain: <strong>Zoroastrianism → Judaism → Christianity → Islam</strong>. This is mainstream academic consensus.</p>
-      </div>
+    <h3>✝️ Christian Demonology — Hierarchy of Hell</h3>
+    <p>Medieval Christian sources (particularly the <em>Ars Goetia</em> and <em>Malleus Maleficarum</em>, 1486) catalogued a rigid hierarchy of demons.</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Rank</th><th>Demon</th><th>Domain / Sin</th></tr></thead>
+        <tbody>
+          <tr><td>Emperor</td><td>Lucifer / Satan</td><td>Pride</td></tr>
+          <tr><td>Prince</td><td>Beelzebub</td><td>Gluttony</td></tr>
+          <tr><td>Prince</td><td>Asmodeus</td><td>Lust</td></tr>
+          <tr><td>Prince</td><td>Leviathan</td><td>Envy</td></tr>
+          <tr><td>Prince</td><td>Mammon</td><td>Greed</td></tr>
+          <tr><td>Prince</td><td>Belphegor</td><td>Sloth</td></tr>
+          <tr><td>Prince</td><td>Amon</td><td>Wrath</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>Key texts include the non-canonical <strong>Book of Enoch</strong>, which describes the <strong>Watchers</strong> (Grigori) — fallen angels who mated with human women, producing the <strong>Nephilim</strong> (giants). The <strong>Ars Goetia</strong> catalogs 72 demons supposedly summonable by King Solomon.</p>
 
-      <h3>🔥 Jinn (Islamic Cosmology)</h3>
-      <p>Jinn are supernatural beings created from <strong>smokeless fire</strong>, possessing free will like humans. They exist in a parallel realm, distinct from angels (created from light, no free will) and humans (created from clay).</p>
+    <h3>✡️ Jewish Demonology</h3>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Entity</th><th>Description</th></tr></thead>
+        <tbody>
+          <tr><td>Lilith</td><td>Adam's rebellious first wife (from the <em>Alphabet of Ben Sira</em>). Associated with infant mortality and sexual autonomy.</td></tr>
+          <tr><td>Asmodai</td><td>King of demons. Appears in the Book of Tobit. Associated with lust and gambling.</td></tr>
+          <tr><td>Dybbuk</td><td>A possessing spirit of a dead person that enters the body of a living person and speaks through them.</td></tr>
+          <tr><td>Shedim</td><td>General term for demons in Jewish tradition. Often neutral but capricious.</td></tr>
+          <tr><td>Azazel</td><td>Scapegoat demon referenced in Leviticus 16. The sins of the people are symbolically laid upon him.</td></tr>
+          <tr><td>Mazzikim</td><td>"Harmers" — invisible spirits that cause injury and mischief.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
 
-      <div class="table-wrap">
-        <table>
-          <thead><tr><th>Type</th><th>Nature</th><th>Characteristics</th></tr></thead>
-          <tbody>
-            <tr><td>Muslim Jinn</td><td>✅ Benevolent</td><td>Follow Islamic teachings</td></tr>
-            <tr><td>Kafir Jinn</td><td>⚠️ Neutral-Hostile</td><td>Non-believing</td></tr>
-            <tr><td>Shayatin</td><td>❌ Malevolent</td><td>Mischief and evil</td></tr>
-            <tr><td>Ifrit</td><td>❌❌ Extremely Powerful</td><td>Strength, cunning, fire</td></tr>
-          </tbody>
-        </table>
-      </div>
+  <section>
+    <h2><span>3</span> Demons, Jinn, Ifrit &amp; Supernatural Entities</h2>
 
-      <h4>Creation Hierarchy</h4>
-      <div class="ascii-art">
-    ☀️ ANGELS — LIGHT — No free will — Pure obedience
+    <h3>🌍 Universal Demonology</h3>
+    <p>A demon is a malevolent supernatural entity. Belief in demons likely stems from the Paleolithic age, rooted in humanity's fear of the unknown. Large portions of Jewish demonology originated from a later form of Zoroastrianism and transferred to Judaism during the Persian era.</p>
+    <div class="annotation">
+      <p>Clear historical transmission chain: <strong>Zoroastrianism → Judaism → Christianity → Islam</strong>. This is mainstream academic consensus.</p>
+    </div>
+
+    <h3>🔥 Islamic Demonology — Jinn Taxonomy</h3>
+    <p>Jinn are created from <strong>smokeless fire</strong> (Qur'an 15:27), possessing free will, and exist in a parallel realm. Unlike Christian demons, they are not fallen angels — they are mortal beings with their own societies, kings, and tribes.</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Type</th><th>Description</th></tr></thead>
+        <tbody>
+          <tr><td>Marid</td><td>Most powerful; rebellious sea jinn. Think <em>Aladdin's lamp</em> genie.</td></tr>
+          <tr><td>Ifrit</td><td>Cunning, malevolent, associated with fire and ruins. Mentioned in Qur'an 27:39.</td></tr>
+          <tr><td>Ghul</td><td>Shape-shifters in graveyards and deserts; eat the dead. Origin of the word "ghoul."</td></tr>
+          <tr><td>Si'lat</td><td>Female jinn; can take human form. Often associated with seduction and deception.</td></tr>
+          <tr><td>Shayatin</td><td>Devils — followers of Iblis. Malevolent jinn dedicated to leading humans astray.</td></tr>
+          <tr><td>Hinn</td><td>Lower-class jinn, often appearing as dogs or other animals.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h4>Creation Hierarchy</h4>
+    <div class="ascii-art">
+    ☀️ ANGELS — Created from LIGHT — No free will — Pure obedience
          │
-    🔥 JINN — SMOKELESS FIRE — Free will — Good or evil
+    🔥 JINN — Created from SMOKELESS FIRE — Free will — Good or evil
          │
-    🪨 HUMANS — CLAY — Free will — God's vicegerents
-      </div>
+    🪨 HUMANS — Created from CLAY — Free will — God's vicegerents
+    </div>
 
-      <h3>🔥 Ifrit — The Fire Demons</h3>
-      <p>Ifrit are powerful jinn associated with fire, ruins, and the underworld. They possess magical powers, grant wishes, and can appear helpful with hidden consequences. The Qur'an mentions an ifrit offering to bring the Throne of Sheba to Solomon (Surah An-Naml 27:39).</p>
-      <p>In Islamic Egypt, afarit are associated with the souls of those killed violently. Martyrs, saints, and prophets do not have ghosts, and therefore no ifrit.</p>
-      <div class="annotation">
-        <p>Critical distinction: <em>Theological</em> jinn (Quranic, real beings with free will) vs. <em>folkloric</em> ifrit (elaborated through Arabian, Egyptian, and Moroccan cultural narratives). The Qur'an uses "ifrit" only once as a descriptor.</p>
-      </div>
-    </section>
+    <h3>🔥 Ifrit — The Fire Demons</h3>
+    <p>Ifrit are powerful jinn associated with fire, ruins, and the underworld. They possess magical powers, grant wishes (often with hidden costs), and can appear helpful with bad consequences. The Qur'an mentions an ifrit offering to bring the Throne of Sheba to Solomon (Surah An-Naml 27:39).</p>
+    <p>In Islamic Egypt, afarit are associated with the souls of those killed violently. Only people who are killed give rise to a dangerous and active ifrit, drawn to the blood of the victim. Martyrs, saints and prophets do not have a ghost, and therefore no ifrit. This belief was probably influenced by the Ancient Egyptian idea of <strong>Ka</strong> (the soul/spirit double).</p>
+    <div class="annotation">
+      <p>Critical distinction: <em>Theological</em> jinn (Quranic, real beings with free will) vs. <em>folkloric</em> ifrit (elaborated through Arabian, Egyptian, and Moroccan cultural narratives). The Qur'an uses "ifrit" only once as a descriptor.</p>
+    </div>
 
-    <section>
-      <h2><span>4</span> Hindu Demonology: Asuras, Rakshasas &amp; Cosmic Cycles</h2>
-      <p class="section-intro">Unlike Western theology where evil opposes God, Hinduism sees demons as integral to cosmic balance — created willingly and purposefully by the divine.</p>
-      <div class="annotation">
-        <p><strong>The single most important distinction in comparative demonology:</strong> In Abrahamic traditions, evil opposes God. In Hinduism, evil is part of God's creation and serves a cosmic purpose.</p>
-      </div>
+    <h3>🕉️ Hindu Demonology — Asuras, Rakshasas &amp; Cosmic Balance</h3>
+    <p>Unlike Western theology where evil opposes God, Hinduism sees demons as integral to cosmic balance — created willingly and purposefully by the divine. Lord Brahma first created demons, followed by devas (gods), and humans much later.</p>
+    <div class="annotation">
+      <p><strong>The single most important distinction in comparative demonology:</strong> In Abrahamic traditions, evil opposes God. In Hinduism, evil is part of God's creation and serves a cosmic purpose.</p>
+    </div>
 
-      <h3>👹 Asuras — The Anti-Gods</h3>
-      <p>In the Rig Veda, <em>asura</em> gradually transforms from a positive title ("lord") to a demonic class. By the Atharva Veda and Brahmanas, asuras are clearly depicted as diametrically opposed to the devas (gods), allied with rakshasas.</p>
-
-      <div class="ascii-art">
+    <h4>Asura Lineage</h4>
+    <div class="ascii-art">
                         BRAHMA (Creator)
                             │
                         KASHYAPA (Sage)
@@ -703,404 +393,590 @@ Buddhism:   Māra (tempter) — more psychological than cosmic
                ADITYAS   DAITYAS  DANAVAS
                (Devas)   (Asura   (Asura
                 Gods)    Demons)  Demons)
-      </div>
+    </div>
 
-      <h4>Notable Asuras</h4>
-      <div class="table-wrap">
-        <table>
-          <thead><tr><th>Asura</th><th>Story</th><th>Defeated By</th></tr></thead>
-          <tbody>
-            <tr><td>Ravana</td><td>10-headed antagonist of the Ramayana</td><td>Lord Rama</td></tr>
-            <tr><td>Hiranyakashipu</td><td>Received boons from Brahma through penance</td><td>Lord Vishnu (Narasimha)</td></tr>
-            <tr><td>Mahishasura</td><td>Buffalo Demon</td><td>Goddess Durga</td></tr>
-            <tr><td>King Mahabali</td><td>Respected for wisdom and generosity</td><td>Lord Vishnu (Vamana)</td></tr>
-          </tbody>
-        </table>
-      </div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Asura</th><th>Story</th><th>Defeated By</th></tr></thead>
+        <tbody>
+          <tr><td>Ravana</td><td>10-headed king of Lanka. Scholar, devotee of Shiva, kidnapper of Sita.</td><td>Lord Rama</td></tr>
+          <tr><td>Hiranyakashipu</td><td>Received boons from Brahma through penance. Could not be killed by man or beast, inside or outside, day or night.</td><td>Lord Vishnu (Narasimha)</td></tr>
+          <tr><td>Mahishasura</td><td>Buffalo Demon who could not be defeated by any man.</td><td>Goddess Durga</td></tr>
+          <tr><td>King Mahabali</td><td>Virtuous asura who ruled Kerala and outlawed discrimination.</td><td>Lord Vishnu (Vamana)</td></tr>
+        </tbody>
+      </table>
+    </div>
 
-      <h3>🦇 Rakshasas &amp; Taxonomy</h3>
-      <p>Rakshasas possess the power to change shape and appear as animals, monsters, or beautiful women. They are most powerful in the evening, dispelled by the rising sun, and detest prayer and sacrifice.</p>
-      <div class="table-wrap">
-        <table>
-          <thead><tr><th>Entity</th><th>Nature</th><th>Key Traits</th></tr></thead>
-          <tbody>
-            <tr><td>Asuras</td><td>Anti-gods</td><td>Power-seekers opposing Devas</td></tr>
-            <tr><td>Rakshasas</td><td>Shape-shifting demons</td><td>Night-dwelling, disrupt rituals</td></tr>
-            <tr><td>Pishacha</td><td>Flesh-eating ghouls</td><td>Feed on the dead</td></tr>
-            <tr><td>Vetala</td><td>Vampire-like spirits</td><td>Inhabit corpses</td></tr>
-            <tr><td>Yaksha</td><td>Ambiguous nature spirits</td><td>Generally benevolent</td></tr>
-            <tr><td>Bhuta / Preta</td><td>Ghosts / Hungry ghosts</td><td>Restless dead</td></tr>
-          </tbody>
-        </table>
-      </div>
+    <h4>Hindu Demonic Taxonomy</h4>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Entity</th><th>Nature</th><th>Key Traits</th></tr></thead>
+        <tbody>
+          <tr><td>Asuras</td><td>Anti-gods</td><td>Power-seekers opposing Devas</td></tr>
+          <tr><td>Rakshasas</td><td>Shape-shifting demons</td><td>Night-dwelling, disrupt rituals, dispelled by sunrise</td></tr>
+          <tr><td>Pishacha</td><td>Flesh-eating ghouls</td><td>Feed on the dead, haunt cremation grounds</td></tr>
+          <tr><td>Vetala</td><td>Vampire-like spirits</td><td>Inhabit corpses, answer questions with riddles</td></tr>
+          <tr><td>Yaksha</td><td>Ambiguous nature spirits</td><td>Generally benevolent demigods; guard treasure</td></tr>
+          <tr><td>Bhuta / Preta</td><td>Ghosts / Hungry ghosts</td><td>Restless dead; those who died violently or with unfulfilled desires</td></tr>
+        </tbody>
+      </table>
+    </div>
 
-      <div class="annotation">
-        <p><strong>The Boon Paradox:</strong> Gods cannot refuse sincere penance (tapasya) — it creates a cosmic debt. This leads to the famous "loophole" pattern: demons request near-immortality with specific conditions, and avatars exploit those exact conditions to defeat them (e.g., Narasimha — neither man nor animal, neither inside nor outside, neither day nor night).</p>
-      </div>
-    </section>
+    <h4>Hindu Exorcism Traditions</h4>
+    <p>Brahmins traditionally perform exorcisms (<em>bhuta-vidya</em>), use <strong>mantras</strong> (sound formulas), and conduct rituals like <strong>homa/yajna</strong> (fire sacrifices) to ward off demonic influences. Specific deities and protective symbols (e.g., Hanuman, Durga) are invoked to banish possessing entities.</p>
 
-    <section>
-      <h2><span>5</span> Zoroastrianism: The Origin Blueprint</h2>
-      <p>Zoroastrianism stands as the oldest known monotheistic eschatology. Its contributions to world religion are foundational:</p>
-      <div class="table-wrap">
-        <table>
-          <thead><tr><th>Concept</th><th>Zoroastrian Origin</th><th>Later Adoption</th></tr></thead>
-          <tbody>
-            <tr><td>Cosmic Dualism</td><td>Ahura Mazda vs. Ahriman</td><td>God vs. Satan</td></tr>
-            <tr><td>Final Judgment</td><td>Frashokereti</td><td>Yawm al-Qiyamah, Last Judgment</td></tr>
-            <tr><td>Resurrection</td><td>Ristakhiz</td><td>Christian/Islamic resurrection</td></tr>
-            <tr><td>Heaven &amp; Hell</td><td>House of Song / House of Lies</td><td>Paradise / Jahannam / Gehenna</td></tr>
-            <tr><td>Angels &amp; Demons</td><td>Amesha Spentas / Daevas</td><td>Abrahamic angelology &amp; demonology</td></tr>
-            <tr><td>Messiah Figure</td><td>Saoshyant</td><td>Jesus (Second Coming) / Mahdi</td></tr>
-          </tbody>
-        </table>
-      </div>
-      <div class="annotation">
-        <p>The historical evidence is overwhelming: virtually every major Abrahamic eschatological concept has a Zoroastrian precursor. This establishes a clear chain of theological transmission rather than independent revelation.</p>
-      </div>
-    </section>
+    <div class="annotation">
+      <p><strong>The Boon Paradox:</strong> Gods cannot refuse sincere penance (tapasya) — it creates a cosmic debt. This leads to the famous "loophole" pattern: demons request near-immortality with specific conditions, and avatars of Vishnu exploit those exact conditions to defeat them.</p>
+    </div>
 
-    <section>
-      <h2><span>6</span> Scientific &amp; Neuroscientific Explanations</h2>
+    <h3>🌐 Folklore &amp; Regional Spirits</h3>
+    <p>Beyond formal theology, every region on Earth has generated its own taxonomy of malevolent spirits.</p>
 
-      <h3>🧠 Neurotheology — The Triple Network Model</h3>
-      <p>Religious/spiritual experiences (RSEs) depend on interactions between the <strong>Default Mode Network</strong> (self-reflection), <strong>Frontoparietal Network</strong> (executive control), and <strong>Salience Network</strong> (emotional arousal).</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Region</th><th>Entity</th><th>Description</th></tr></thead>
+        <tbody>
+          <tr><td>South Asian</td><td>Churel</td><td>Vengeful female ghost of a woman who died in childbirth. Seduces and drains men.</td></tr>
+          <tr><td>South Asian</td><td>Pichal Peri</td><td>Backward-footed forest spirit that lures travelers.</td></tr>
+          <tr><td>South Asian</td><td>Naga</td><td>Serpent deities, also in Buddhism — often ambiguous but can be wrathful.</td></tr>
+          <tr><td>European</td><td>Banshee</td><td>Irish death omen — wailing spirit foretelling a family death.</td></tr>
+          <tr><td>European</td><td>Strigoi</td><td>Romanian undead/vampire spirit that returns to harm the living.</td></tr>
+          <tr><td>East Asian</td><td>Yokai (Japan)</td><td>Vast category of supernatural spirits, demons, and monsters.</td></tr>
+          <tr><td>East Asian</td><td>Oni (Japan)</td><td>Ogre-demons with horns and clubs, often guarding hell.</td></tr>
+          <tr><td>East Asian</td><td>Gui (China)</td><td>Ghosts of the deceased, often hungry or vengeful.</td></tr>
+          <tr><td>African</td><td>Mami Wata</td><td>West African water spirit — beautiful, seductive, often dangerous.</td></tr>
+          <tr><td>African</td><td>Tokoloshe</td><td>Zulu mischievous dwarf-like spirit that causes illness and havoc.</td></tr>
+          <tr><td>Mesoamerican</td><td>Aluxob</td><td>Mayan small, tricky spirits associated with forests and maize fields.</td></tr>
+          <tr><td>North American</td><td>Wendigo</td><td>Algonquian cannibal spirit — personification of winter and starvation.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
 
-      <div class="ascii-art">
+  <section>
+    <h2><span>4</span> Zoroastrianism — The Origin Blueprint</h2>
+    <p>Zoroastrianism stands as the oldest known monotheistic eschatology. Its contributions to world religion are foundational:</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Concept</th><th>Zoroastrian Origin</th><th>Later Adoption</th></tr></thead>
+        <tbody>
+          <tr><td>Cosmic Dualism</td><td>Ahura Mazda vs. Ahriman</td><td>God vs. Satan</td></tr>
+          <tr><td>Final Judgment</td><td>Frashokereti</td><td>Yawm al-Qiyamah, Last Judgment</td></tr>
+          <tr><td>Resurrection</td><td>Ristakhiz</td><td>Christian/Islamic resurrection</td></tr>
+          <tr><td>Heaven &amp; Hell</td><td>House of Song / House of Lies</td><td>Paradise / Jahannam / Gehenna</td></tr>
+          <tr><td>Angels &amp; Demons</td><td>Amesha Spentas / Daevas</td><td>Abrahamic angelology &amp; demonology</td></tr>
+          <tr><td>Messiah Figure</td><td>Saoshyant</td><td>Jesus (Second Coming) / Mahdi</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="annotation">
+      <p>The historical evidence is overwhelming: virtually every major Abrahamic eschatological concept has a Zoroastrian precursor. This establishes a clear chain of theological transmission rather than independent revelation.</p>
+    </div>
+  </section>
+
+  <section>
+    <h2><span>5</span> Scientific &amp; Neuroscientific Explanations</h2>
+
+    <h3>🧠 Neurotheology — The Triple Network Model</h3>
+    <p>Religious/spiritual experiences (RSEs) depend on interactions between the <strong>Default Mode Network</strong> (self-reflection), <strong>Frontoparietal Network</strong> (executive control), and <strong>Salience Network</strong> (emotional arousal).</p>
+    <div class="ascii-art">
 ┌─────────────────────────────────────────────────────────┐
 │           THE TRIPLE NETWORK MODEL OF RSEs              │
 │                                                         │
 │   DEFAULT MODE         FRONTOPARIETAL      SALIENCE     │
-│   NETWORK (DMN)        NETWORK (FPN)       NETWORK(SN) │
+│   NETWORK (DMN)        NETWORK (FPN)       NETWORK(SN)  │
 │   ─────────────        ──────────────      ──────────── │
-│   Self-reflection      Attention &         Detecting    │
-│   Internal thought     executive control   significance │
-│   Mind-wandering       Working memory      Emotional    │
-│   Narrative self       Goal-directed       arousal      │
+│   Self-reflection      Attention &           Detecting    │
+│   Internal thought     executive control     significance │
+│   Mind-wandering       Working memory        Emotional    │
+│   Narrative self       Goal-directed         arousal      │
 │                        behavior                         │
 │                                                         │
 │   Prayer → DMN activation (talking to "self"/God)       │
-│   Meditation → DMN suppression (ego dissolution)        │
+│   Meditation → DMN suppression (ego dissolution)          │
 │   Mystical states → SN hyperactivation                  │
 │   Speaking in tongues → FPN deactivation                │
 └─────────────────────────────────────────────────────────┘
-      </div>
+    </div>
 
-      <h3>🧪 Cognitive Science of Religion</h3>
-      <p>According to CSR, belief in supernatural agents is the product of aggregated ordinary cognition. Key biases include:</p>
-      <ul>
-        <li><strong>Hyperactive Agency Detection (HADD):</strong> Rustling bush → "Something is there!" → spirits</li>
-        <li><strong>Theory of Mind (ToM):</strong> Attributing mental states to invisible beings</li>
-        <li><strong>Teleological Thinking:</strong> Seeing purpose in everything</li>
-        <li><strong>Pattern Recognition:</strong> Finding patterns in randomness (coincidences as signs)</li>
-        <li><strong>Mortality Salience:</strong> Death anxiety → afterlife beliefs as terror management</li>
-        <li><strong>Dualism:</strong> Mind feels separate from body → souls survive death</li>
-      </ul>
+    <h3>🧪 Cognitive Science of Religion</h3>
+    <p>According to CSR, belief in supernatural agents is the product of aggregated ordinary cognition. Key biases include:</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Cognitive Mechanism</th><th>What It Does</th><th>How It Generates Religious Belief</th></tr></thead>
+        <tbody>
+          <tr><td>Agency Detection (HADD)</td><td>Humans over-detect intentional agents</td><td>Rustling bush → "Something is there!" → spirits</td></tr>
+          <tr><td>Theory of Mind (ToM)</td><td>Attribute mental states to others</td><td>Extended to invisible beings → gods have minds</td></tr>
+          <tr><td>Teleological Thinking</td><td>See purpose in everything</td><td>"This rock looks like a face" → designed by God</td></tr>
+          <tr><td>Pattern Recognition</td><td>Find patterns in randomness</td><td>Coincidences → divine signs / omens</td></tr>
+          <tr><td>Mortality Salience</td><td>Death awareness creates anxiety</td><td>Afterlife beliefs as terror management</td></tr>
+          <tr><td>Dualism</td><td>Mind feels separate from body</td><td>Souls can survive death</td></tr>
+        </tbody>
+      </table>
+    </div>
 
-      <h3>🔬 Scientific Explanations for Specific Phenomena</h3>
-      <div class="table-wrap">
-        <table>
-          <thead><tr><th>Phenomenon</th><th>Scientific Explanation</th><th>Evidence Strength</th></tr></thead>
-          <tbody>
-            <tr><td>Demonic Possession</td><td>DID, epilepsy, psychosis, cultural conditioning</td><td>Strong</td></tr>
-            <tr><td>Seeing Angels/Demons</td><td>Sleep paralysis + hypnagogic hallucinations</td><td>Strong</td></tr>
-            <tr><td>Near-Death Experiences</td><td>Anoxia, DMT release, REM intrusion</td><td>Moderate</td></tr>
-            <tr><td>Speaking in Tongues</td><td>Frontal lobe deactivation (glossolalia)</td><td>Strong</td></tr>
-            <tr><td>Feeling a "Presence"</td><td>Temporoparietal junction stimulation</td><td>Strong</td></tr>
-            <tr><td>Jinn/Ifrit Encounters</td><td>Sleep paralysis, cultural framing of psychosis</td><td>Moderate</td></tr>
-            <tr><td>Resurrection</td><td>No scientific mechanism known</td><td>None</td></tr>
-          </tbody>
-        </table>
-      </div>
+    <h3>😴 Cross-Cultural Sleep Paralysis</h3>
+    <p>Sleep paralysis affects <strong>~8% of the population</strong> at least once. The symptoms are remarkably consistent across cultures — paralysis, chest pressure, and the sense of a dark figure in the room — but interpretations vary:</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Culture</th><th>Name</th><th>Description</th></tr></thead>
+        <tbody>
+          <tr><td>Arab / Islamic world</td><td>Jinn attack</td><td>Dark figure sitting on the chest, whispering</td></tr>
+          <tr><td>India</td><td>Pisacha</td><td>Malevolent spirit pressing on the chest</td></tr>
+          <tr><td>Japan</td><td>Kanashibari</td><td>"Bound by invisible metal" — paralysis demon</td></tr>
+          <tr><td>Newfoundland</td><td>Old Hag</td><td>Witch or old woman sitting on the sleeper</td></tr>
+          <tr><td>Science</td><td>REM Atonia</td><td>Brain awake, body still paralyzed from REM sleep</td></tr>
+        </tbody>
+      </table>
+    </div>
 
-      <div class="annotation">
-        <p>Science can explain <em>how</em> the brain produces religious experiences. It <strong>cannot</strong> determine whether those experiences are <em>also</em> genuine encounters with the divine. Finding that prayer activates the frontal lobe doesn't prove God doesn't exist — it proves prayer has neural correlates, trivially expected for any experience.</p>
-      </div>
-    </section>
+    <h3>⚗️ Pre-Scientific Explanations</h3>
+    <p>Before germ theory and mental illness diagnosis, supernatural explanations filled the explanatory gap:</p>
+    <ul>
+      <li><strong>Epilepsy</strong> → demonic possession</li>
+      <li><strong>Schizophrenia</strong> → hearing jinn whispers or divine/demonic voices</li>
+      <li><strong>Sleep paralysis</strong> → night demons (incubus / succubus)</li>
+      <li><strong>Infectious disease</strong> → curses or witchcraft</li>
+      <li><strong>Mental health crises</strong> → spirit attacks or demonic oppression</li>
+    </ul>
+    <div class="annotation">
+      <p>The Prophet Muhammad reportedly forbade striking those with epilepsy, suggesting an early recognition that not all "possession" was demonic. This represents an early empirical distinction between neurological and supernatural causation.</p>
+    </div>
 
-    <section>
-      <h2><span>7</span> Comparative Master Tables</h2>
-      <div class="table-wrap">
-        <table>
-          <thead><tr><th>Religion</th><th>Evil Figure</th><th>Origin</th><th>Nature</th><th>Power</th></tr></thead>
-          <tbody>
-            <tr><td>Judaism</td><td>Ha-Satan</td><td>God's court</td><td>Accuser/Tester</td><td>Low — obedient</td></tr>
-            <tr><td>Christianity</td><td>Satan/Lucifer</td><td>Fallen angel</td><td>Cosmic rebel</td><td>High — defeated</td></tr>
-            <tr><td>Islam</td><td>Iblis/Shaytan</td><td>Fallen Jinn</td><td>Refuser/Whisperer</td><td>Limited</td></tr>
-            <tr><td>Zoroastrianism</td><td>Ahriman</td><td>Co-eternal</td><td>Anti-God</td><td>EQUAL to God</td></tr>
-            <tr><td>Hinduism</td><td>No equivalent</td><td>Various</td><td>Distributed</td><td>Varies</td></tr>
-            <tr><td>Buddhism</td><td>Māra</td><td>Internal</td><td>Tempter</td><td>Psychological</td></tr>
-          </tbody>
-        </table>
-      </div>
+    <h3>🔬 Possible Real Phenomena — Open Questions</h3>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Phenomenon</th><th>Status</th></tr></thead>
+        <tbody>
+          <tr><td>Near-Death Experiences (NDEs)</td><td>Documented globally; neurologically explained by anoxia and DMT release</td></tr>
+          <tr><td>Out-of-Body Experiences (OBEs)</td><td>Inducible via temporo-parietal junction stimulation (Blanke, 2002)</td></tr>
+          <tr><td>Collective visions (Fatima, etc.)</td><td>Mass psychology / atmospheric optics (e.g., sun dog phenomena)</td></tr>
+          <tr><td>Poltergeist activity</td><td>Most cases: infrasound, geomagnetic fluctuations, or fraud</td></tr>
+          <tr><td>Miraculous healings</td><td>Placebo effect, psychosomatic illness, spontaneous remission</td></tr>
+          <tr><td>Prophetic dreams</td><td>Confirmation bias + pattern recognition in vast dream data</td></tr>
+        </tbody>
+      </table>
+    </div>
 
-      <div class="table-wrap">
-        <table>
-          <thead><tr><th>Religion</th><th>End Times Event</th><th>Trigger</th><th>Outcome</th><th>Time Frame</th></tr></thead>
-          <tbody>
-            <tr><td>Christianity</td><td>Last Judgment</td><td>Second Coming</td><td>Heaven or Hell</td><td>Unknown, one-time</td></tr>
-            <tr><td>Islam</td><td>Yawm al-Qiyamah</td><td>Trumpet of Israfil</td><td>Jannah or Jahannam</td><td>Unknown, one-time</td></tr>
-            <tr><td>Judaism</td><td>Yom HaDin</td><td>Messiah arrives</td><td>Olam Ha-Ba</td><td>Unknown, one-time</td></tr>
-            <tr><td>Hinduism</td><td>Pralaya</td><td>End of Kali Yuga</td><td>Re-creation</td><td>Cyclic (~4.32B years)</td></tr>
-            <tr><td>Buddhism</td><td>Mappō</td><td>Dharma decline</td><td>Maitreya comes</td><td>Cyclic</td></tr>
-            <tr><td>Zoroastrianism</td><td>Frashokereti</td><td>Saoshyant arrives</td><td>Universal renovation</td><td>One-time</td></tr>
-            <tr><td>Norse</td><td>Ragnarök</td><td>Cosmic winter</td><td>New world rises</td><td>One-time</td></tr>
-          </tbody>
-        </table>
-      </div>
-    </section>
+    <h3>⚠️ The Explanatory Gap</h3>
+    <div class="annotation">
+      <p>Science can explain <em>how</em> the brain produces religious experiences. It <strong>cannot</strong> determine whether those experiences are <em>also</em> genuine encounters with the divine. Finding that prayer activates the frontal lobe does not prove God doesn't exist — it proves prayer has neural correlates, which is trivially expected for any experience.</p>
+    </div>
 
-    <section>
-      <h2><span>8</span> Analysis: Faith, Proofs &amp; Counter-Arguments</h2>
+    <h3>📋 Scientific Explanations for Specific Religious Phenomena</h3>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Phenomenon</th><th>Scientific Explanation</th><th>Evidence</th></tr></thead>
+        <tbody>
+          <tr><td>Demonic Possession</td><td>Dissociative identity disorder, epilepsy, psychosis, cultural conditioning</td><td>Strong</td></tr>
+          <tr><td>Seeing Angels/Demons</td><td>Sleep paralysis + hypnagogic hallucinations, temporal lobe epilepsy</td><td>Strong</td></tr>
+          <tr><td>Near-Death Experiences</td><td>Anoxia (oxygen deprivation), DMT release, REM intrusion</td><td>Moderate</td></tr>
+          <tr><td>Speaking in Tongues</td><td>Frontal lobe deactivation (glossolalia), learned cultural behavior</td><td>Strong</td></tr>
+          <tr><td>Feeling a "Presence"</td><td>Temporoparietal junction stimulation, sensed-presence effect</td><td>Strong</td></tr>
+          <tr><td>Jinn/Ifrit Encounters</td><td>Sleep paralysis, cultural framing of psychotic episodes</td><td>Moderate</td></tr>
+          <tr><td>Doomsday Predictions</td><td>Cognitive biases, apocalyptic anxiety, meaning-seeking behavior</td><td>Strong</td></tr>
+          <tr><td>Karma</td><td>No direct scientific equivalent; overlaps with behavioral psychology</td><td>Philosophical parallel</td></tr>
+          <tr><td>Resurrection</td><td>No known scientific mechanism</td><td>None</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
 
-      <h3>📈 Evidence FOR Cross-Religious Patterns</h3>
-      <div class="table-wrap">
-        <table>
-          <thead><tr><th>Argument</th><th>Strength</th><th>Analysis</th></tr></thead>
-          <tbody>
-            <tr><td>Universality — Every culture developed demons/spirits</td><td>⭐⭐⭐⭐⭐</td><td>Suggests either real phenomenon OR universal cognitive architecture</td></tr>
-            <tr><td>Convergent Descriptions — Sleep paralysis demons look similar</td><td>⭐⭐⭐⭐</td><td>Real entity OR hardwired fear templates</td></tr>
-            <tr><td>Historical Transmission — Zoroastrian → Abrahamic</td><td>⭐⭐⭐⭐⭐</td><td>Documented historical fact</td></tr>
-            <tr><td>Experiential Reports — Billions report religious experiences</td><td>⭐⭐⭐</td><td>Volume impressive but subjective ≠ objective</td></tr>
-            <tr><td>Moral Effectiveness — Belief creates ethical behavior</td><td>⭐⭐⭐⭐</td><td>Pragmatic truth ≠ literal truth</td></tr>
-          </tbody>
-        </table>
-      </div>
+  <section>
+    <h2><span>6</span> Comparative Master Tables</h2>
 
-      <h3>📉 Evidence AGAINST Literal Entities</h3>
-      <div class="table-wrap">
-        <table>
-          <thead><tr><th>Argument</th><th>Strength</th><th>Analysis</th></tr></thead>
-          <tbody>
-            <tr><td>No empirical detection</td><td>⭐⭐⭐⭐⭐</td><td>Zero controlled, reproducible evidence</td></tr>
-            <tr><td>Neural explanations exist</td><td>⭐⭐⭐⭐</td><td>Explains mechanism, but mechanism ≠ disproof</td></tr>
-            <tr><td>Cultural specificity</td><td>⭐⭐⭐⭐⭐</td><td>Christians see Mary, Hindus see Krishna</td></tr>
-            <tr><td>Historical evolution</td><td>⭐⭐⭐⭐</td><td>Concepts change over centuries</td></tr>
-            <tr><td>Cognitive biases</td><td>⭐⭐⭐⭐</td><td>Parsimonious explanation</td></tr>
-          </tbody>
-        </table>
-      </div>
+    <h3>Evil Figures / The Adversary</h3>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Religion</th><th>Figure</th><th>Origin</th><th>Nature</th><th>Power</th><th>Status</th></tr></thead>
+        <tbody>
+          <tr><td>Judaism</td><td>Ha-Satan</td><td>God's court</td><td>Accuser / Tester</td><td>Low</td><td>Title, not name</td></tr>
+          <tr><td>Christianity</td><td>Satan / Lucifer</td><td>Fallen angel</td><td>Cosmic rebel</td><td>High</td><td>Proper entity</td></tr>
+          <tr><td>Islam</td><td>Iblis / Shaytan</td><td>Fallen Jinn</td><td>Refuser / Whisperer</td><td>Limited</td><td>Made of fire</td></tr>
+          <tr><td>Zoroastrianism</td><td>Ahriman</td><td>Co-eternal</td><td>Anti-God</td><td>EQUAL</td><td>True dualism</td></tr>
+          <tr><td>Hinduism</td><td>No equivalent</td><td>Various</td><td>Distributed</td><td>Varies</td><td>Contextual</td></tr>
+          <tr><td>Buddhism</td><td>Māra</td><td>Internal</td><td>Tempter</td><td>Psychological</td><td>Metaphorical</td></tr>
+          <tr><td>Egyptian</td><td>Set / Apophis</td><td>Divine</td><td>Chaos</td><td>Variable</td><td>Pantheon</td></tr>
+          <tr><td>Yazidism</td><td>Melek Taus</td><td>Angel</td><td>Benevolent</td><td>High</td><td>Redeemed</td></tr>
+        </tbody>
+      </table>
+    </div>
 
-      <h3>🔄 The Undecidability Problem</h3>
-      <div class="ascii-art">
+    <h3>Demon Types Across Traditions</h3>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Tradition</th><th>Demon Class</th><th>Created From</th><th>Key Powers</th><th>Moral Status</th></tr></thead>
+        <tbody>
+          <tr><td>Islam</td><td>Jinn (general)</td><td>Smokeless fire</td><td>Shape-shifting, invisibility</td><td>Can be good or evil</td></tr>
+          <tr><td>Islam</td><td>Marid</td><td>Fire (sea jinn)</td><td>Rebellious, wish-granting</td><td>Neutral-hostile</td></tr>
+          <tr><td>Islam</td><td>Ifrit</td><td>Fire (subclass)</td><td>Immense strength, cunning</td><td>Generally malevolent</td></tr>
+          <tr><td>Islam</td><td>Ghul</td><td>Fire / Death</td><td>Graveyard shape-shifting</td><td>Evil</td></tr>
+          <tr><td>Islam</td><td>Shayatin</td><td>Jinn rebels</td><td>Whispering, deception</td><td>Evil</td></tr>
+          <tr><td>Hinduism</td><td>Asuras</td><td>Brahma/Kashyapa</td><td>Cosmic power, boons</td><td>Complex — sometimes virtuous</td></tr>
+          <tr><td>Hinduism</td><td>Rakshasas</td><td>Brahma's breath</td><td>Shape-shifting, night power</td><td>Generally evil</td></tr>
+          <tr><td>Hinduism</td><td>Pishacha</td><td>Darkness</td><td>Flesh-eating, possession</td><td>Evil</td></tr>
+          <tr><td>Christianity</td><td>Fallen Angels</td><td>Originally light</td><td>Temptation, possession</td><td>Irredeemable</td></tr>
+          <tr><td>Zoroastrianism</td><td>Daevas</td><td>Ahriman</td><td>Corruption</td><td>Fully evil</td></tr>
+          <tr><td>Buddhism</td><td>Asuras</td><td>Karma-born</td><td>Jealousy, warfare</td><td>Misguided — can reform</td></tr>
+          <tr><td>Japanese</td><td>Oni</td><td>Various</td><td>Physical destruction</td><td>Varies</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>End Times Comparison</h3>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Religion</th><th>Event Name</th><th>Trigger</th><th>Process</th><th>Outcome</th><th>Time</th></tr></thead>
+        <tbody>
+          <tr><td>Christianity</td><td>Last Judgment</td><td>Second Coming</td><td>Resurrection → Trial</td><td>Heaven or Hell</td><td>Unknown, one-time</td></tr>
+          <tr><td>Islam</td><td>Yawm al-Qiyamah</td><td>Trumpet of Israfil</td><td>Bridge (Sirat), Scales (Mizan)</td><td>Jannah or Jahannam</td><td>Unknown, one-time</td></tr>
+          <tr><td>Judaism</td><td>Yom HaDin</td><td>Messiah arrives</td><td>National redemption</td><td>Olam Ha-Ba</td><td>Unknown, one-time</td></tr>
+          <tr><td>Hinduism</td><td>Pralaya</td><td>End of Kali Yuga</td><td>Cosmic dissolution</td><td>Re-creation</td><td>Cyclic (~4.32B yrs)</td></tr>
+          <tr><td>Buddhism</td><td>Mappō</td><td>Dharma decline</td><td>Gradual dissolution</td><td>Maitreya comes</td><td>Cyclic</td></tr>
+          <tr><td>Zoroastrianism</td><td>Frashokereti</td><td>Saoshyant arrives</td><td>Molten metal test</td><td>Renovation</td><td>One-time</td></tr>
+          <tr><td>Norse</td><td>Ragnarök</td><td>Cosmic winter</td><td>Gods battle giants</td><td>New world</td><td>One-time</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>Origins of Evil</h3>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Religion</th><th>Is Evil Eternal?</th><th>Will Evil End?</th></tr></thead>
+        <tbody>
+          <tr><td>Christianity</td><td>No (created)</td><td>Yes (defeated by Christ)</td></tr>
+          <tr><td>Islam</td><td>No (Iblis is created)</td><td>Yes (at Qiyamah)</td></tr>
+          <tr><td>Zoroastrianism</td><td>Yes (co-eternal)</td><td>Yes (Ahura Mazda wins)</td></tr>
+          <tr><td>Hinduism</td><td>Cyclical</td><td>Resets each yuga</td></tr>
+          <tr><td>Buddhism</td><td>Mental construct</td><td>Ends with enlightenment</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <h2><span>7</span> Analysis: Faith, Proofs &amp; Counter-Arguments</h2>
+
+    <h3>📈 Evidence FOR Cross-Religious Patterns</h3>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Argument</th><th>Strength</th><th>Analysis</th></tr></thead>
+        <tbody>
+          <tr><td>Universality — Every culture independently developed demon/spirit concepts</td><td>⭐⭐⭐⭐⭐</td><td>Suggests either a real phenomenon OR a universal cognitive architecture</td></tr>
+          <tr><td>Convergent Descriptions — Sleep paralysis demons look similar across cultures</td><td>⭐⭐⭐⭐</td><td>Could indicate real entity OR hardwired fear templates</td></tr>
+          <tr><td>Historical Transmission — Zoroastrian ideas clearly influenced Judaism → Christianity → Islam</td><td>⭐⭐⭐⭐⭐</td><td>Documented historical fact</td></tr>
+          <tr><td>Experiential Reports — Billions of people report religious experiences</td><td>⭐⭐⭐</td><td>Volume impressive but subjective experience is not objective proof</td></tr>
+          <tr><td>Moral Effectiveness — Belief in judgment creates ethical behavior</td><td>⭐⭐⭐⭐</td><td>Pragmatic truth ≠ literal truth, but functional significance is real</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>📉 Evidence AGAINST Literal Supernatural Entities</h3>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Argument</th><th>Strength</th><th>Analysis</th></tr></thead>
+        <tbody>
+          <tr><td>No empirical detection — Zero controlled, reproducible evidence for demons/angels</td><td>⭐⭐⭐⭐⭐</td><td>Strongest scientific counter-argument</td></tr>
+          <tr><td>Neural explanations — Brain mechanisms explain possession, visions, NDEs</td><td>⭐⭐⭐⭐</td><td>Explains mechanism, but mechanism ≠ disproof of cause</td></tr>
+          <tr><td>Cultural specificity — Christians see Mary, Hindus see Krishna, Muslims hear Quran</td><td>⭐⭐⭐⭐⭐</td><td>Strongly suggests cultural conditioning shapes experience</td></tr>
+          <tr><td>Historical evolution — Concepts clearly evolved over centuries</td><td>⭐⭐⭐⭐</td><td>If "revealed truth," why does it change with history?</td></tr>
+          <tr><td>Cognitive biases — HADD, pattern recognition, ToM explain supernatural belief</td><td>⭐⭐⭐⭐</td><td>Parsimonious explanation without invoking the supernatural</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>🔄 The Undecidability Problem</h3>
+    <div class="ascii-art">
 ┌──────────────────────────────────────────────────────────┐
 │                THE FUNDAMENTAL IMPASSE                    │
 │                                                          │
 │  THEIST: "God designed the brain to perceive spiritual   │
-│   reality. Neural correlates are MECHANISM, not proof    │
+│   reality. Neural correlates are MECHANISM, not proof   │
 │   the object doesn't exist."                             │
 │                                                          │
-│  ATHEIST: "The brain generates these naturally.          │
-│   No external entity is needed."                         │
+│  ATHEIST: "The brain generates these naturally.         │
+│   No external entity is needed."                          │
 │                                                          │
-│  SCIENCE: "We describe WHAT happens. We cannot           │
+│  SCIENCE: "We describe WHAT happens. We cannot            │
 │   determine WHY — that is metaphysical."                 │
 │                                                          │
 │  ══════════════════════════════════════                   │
-│  VERDICT: Currently UNDECIDABLE by science alone        │
+│  VERDICT: Currently UNDECIDABLE by science alone         │
 └──────────────────────────────────────────────────────────┘
-      </div>
-
-      <h3>🎯 Key Takeaways</h3>
-      <ol>
-        <li><strong>The Zoroastrian Pipeline is Real:</strong> Undeniable chain of transmission from Zoroastrianism through Judaism into Christianity and Islam.</li>
-        <li><strong>Hinduism Operates on Different Logic:</strong> In Hindu cosmology, chaos precedes order. Devas represent order, demons chaos — both divine.</li>
-        <li><strong>"Satan" Is Not One Thing:</strong> Each religion has a unique perspective despite common presumption.</li>
-        <li><strong>The Brain Is Wired for Belief:</strong> Whether by design or evolution is the unanswerable question.</li>
-        <li><strong>Demons Serve a Social Function:</strong> Moral boundary markers, explanations for suffering, shadow exploration, and social control.</li>
-      </ol>
-    </section>
-
-    <section>
-      <h2><span>9</span> Sources &amp; Further Reading</h2>
-      <div class="table-wrap">
-        <table>
-          <thead><tr><th>Topic</th><th>Key Sources</th></tr></thead>
-          <tbody>
-            <tr><td>Comparative Eschatology</td><td>Academic monographs; JSTOR; Encyclopedia of Religion</td></tr>
-            <tr><td>Islamic Judgment Day</td><td>Wikipedia — Islamic Eschatology; Sahih Hadith collections</td></tr>
-            <tr><td>Ifrit &amp; Jinn</td><td>Qur'an 15:26-27, 27:39; Hadith (Malik ibn Anas); Lane's Arabic Lexicon</td></tr>
-            <tr><td>Satan Across Religions</td><td>Britannica; The Satanic Verses (historiography); EPFL GraphSearch</td></tr>
-            <tr><td>Hindu Demonology</td><td>Devi Mahatmya; Ramayana; Mahabharata; Markandeya Purana</td></tr>
-            <tr><td>Neuroscience of Religion</td><td>Persinger's "God Helmet"; NCBI PMC; Newberg &amp; d'Aquili</td></tr>
-            <tr><td>Cognitive Science</td><td>Justin Barrett; Boyer — Religion Explained; Terror Management Theory</td></tr>
-            <tr><td>Zoroastrian Influence</td><td>Mary Boyce — Zoroastrians; Russell — The Devil; Persian-era Jewish texts</td></tr>
-          </tbody>
-        </table>
-      </div>
-      <blockquote>"The oldest question isn't whether demons are real — it's why every culture on earth, independently, decided they must be."</blockquote>
-    </section>
-
-  </div>
-
-  <!-- NETWORK VIEW -->
-  <div id="view-network" class="hidden">
-    <p class="section-intro">Drag nodes to explore relationships. Click any node to see details. Lines show theological influence and conceptual parallels.</p>
-    <div class="network-legend">
-      <div class="legend-item"><div class="legend-dot" style="background:#d4a853"></div>Religion</div>
-      <div class="legend-item"><div class="legend-dot" style="background:#6b7fd7"></div>Concept</div>
-      <div class="legend-item"><div class="legend-dot" style="background:#c94a4a"></div>Entity</div>
-      <div class="legend-item"><div class="legend-dot" style="background:#4ecdc4"></div>Event</div>
-      <div class="legend-item"><div class="legend-dot" style="background:#a855f7"></div>Personage</div>
     </div>
-    <canvas id="networkCanvas"></canvas>
-    <div class="network-info" id="networkInfo">
-      <h4>Select a node</h4>
-      <p>Click any node on the graph above to see its description, connections, and theological significance.</p>
-    </div>
-  </div>
 
-  <!-- BOARD VIEW -->
-  <div id="view-board" class="hidden board-view">
-    <!-- Generated by JS -->
-  </div>
+    <h3>🎯 Key Takeaways</h3>
+    <ol>
+      <li><strong>The Zoroastrian Pipeline is Real:</strong> Undeniable chain of transmission from Zoroastrianism through Judaism into Christianity and Islam.</li>
+      <li><strong>Hinduism Operates on Different Logic:</strong> In Hindu cosmology, chaos precedes order. Devas represent order, demons chaos — both are divine.</li>
+      <li><strong>"Satan" Is Not One Thing:</strong> Each religion has a unique perspective despite common presumption of identity.</li>
+      <li><strong>The Brain Is Wired for Belief:</strong> Whether by design or evolution is the unanswerable question.</li>
+      <li><strong>Demons Serve a Social Function:</strong> Moral boundary markers, explanations for suffering, shadow exploration, and social control.</li>
+      <li><strong>Pre-Scientific Explanations Are Predictable:</strong> Every culture mapped epilepsy, psychosis, and sleep paralysis onto local demonologies.</li>
+    </ol>
+  </section>
 
-  <!-- MIND MAP VIEW -->
-  <div id="view-mindmap" class="hidden">
-    <p class="section-intro">Horizontal tree visualization. Click nodes to expand or collapse branches. Scroll to pan; use mouse wheel to zoom.</p>
-    <div class="mindmap-container">
-      <svg class="mindmap-svg" id="mindmapSvg"></svg>
+  <section>
+    <h2><span>8</span> Sources &amp; Further Reading</h2>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Topic</th><th>Key Sources</th></tr></thead>
+        <tbody>
+          <tr><td>Comparative Eschatology</td><td>Academic monographs; JSTOR; Encyclopedia of Religion</td></tr>
+          <tr><td>Islamic Judgment Day</td><td>Qur'an (Surah Al-Qiyamah, Al-Zalzalah); Sahih Bukhari &amp; Muslim; Ibn Kathir</td></tr>
+          <tr><td>Ifrit &amp; Jinn</td><td>Qur'an 15:26-27, 27:39; Hadith (Malik ibn Anas); Lane's Arabic Lexicon; El-Zein</td></tr>
+          <tr><td>Satan Across Religions</td><td>Britannica; Russell — The Devil; Pagels — The Origin of Satan</td></tr>
+          <tr><td>Hindu Demonology</td><td>Devi Mahatmya; Ramayana; Mahabharata; Markandeya Purana; Devdutt Pattanaik</td></tr>
+          <tr><td>Christian Demonology</td><td>Ars Goetia; Malleus Maleficarum (Kramer &amp; Sprenger); Book of Enoch</td></tr>
+          <tr><td>Jewish Demonology</td><td>Talmud; Zohar; Book of Tobit; Alphabet of Ben Sira; Scholem</td></tr>
+          <tr><td>Folklore Studies</td><td>Campbell — The Power of Myth; Thompson — Motif-Index; regional ethnographies</td></tr>
+          <tr><td>Neuroscience of Religion</td><td>Newberg &amp; d'Aquili — Why God Won't Go Away; Persinger — God Helmet; NCBI</td></tr>
+          <tr><td>Cognitive Science</td><td>Barrett — Why Would Anyone Believe in God?; Boyer — Religion Explained; TMT</td></tr>
+          <tr><td>Zoroastrian Influence</td><td>Boyce — Zoroastrians; Russell — The Devil; Persian-era Jewish texts (Isaiah, Daniel)</td></tr>
+        </tbody>
+      </table>
     </div>
+    <blockquote>"The oldest question isn't whether demons are real — it's why every culture on earth, independently, decided they must be."</blockquote>
+  </section>
+
+</div>
+
+<!-- NETWORK VIEW -->
+<div id="view-network" class="hidden">
+  <p class="section-intro">Drag nodes to explore relationships. Click any node to see details. Lines show theological influence and conceptual parallels.</p>
+  <div class="network-legend">
+    <div class="legend-item"><div class="legend-dot" style="background:#d4a853"></div>Religion</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#6b7fd7"></div>Concept</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#c94a4a"></div>Entity</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#4ecdc4"></div>Event</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#a855f7"></div>Folklore</div>
   </div>
+  <canvas id="networkCanvas"></canvas>
+  <div class="network-info" id="networkInfo">
+    <h4>Select a node</h4>
+    <p>Click any node on the graph above to see its description, connections, and theological significance.</p>
+  </div>
+</div>
+
+<!-- BOARD VIEW -->
+<div id="view-board" class="hidden board-view"></div>
+
+<!-- MIND MAP VIEW -->
+<div id="view-mindmap" class="hidden">
+  <p class="section-intro">Horizontal tree visualization. Click nodes to expand or collapse branches. Scroll to pan; use mouse wheel to zoom.</p>
+  <div class="mindmap-container">
+    <svg class="mindmap-svg" id="mindmapSvg"></svg>
+  </div>
+</div>
 
 </main>
 
 <script>
 // ==========================
-// DATA STORE
+// DATA
 // ==========================
 const DATA = {
   religions: [
-    { id: 'zoro', name: 'Zoroastrianism', color: '#c94a4a', era: '~1500 BCE', followers: '~200k', desc: 'The oldest monotheistic eschatology. Origin of cosmic dualism, final judgment, and resurrection concepts.' },
-    { id: 'hindu', name: 'Hinduism', color: '#f0b04a', era: '~1500 BCE', followers: '~1.2B', desc: 'Cyclical time (Yugas). Demons (Asuras/Rakshasas) are integral to cosmic balance, not opposed to God.' },
-    { id: 'buddha', name: 'Buddhism', color: '#a855f7', era: '~500 BCE', followers: '~520M', desc: 'No eternal soul or final judgment. Cyclic dissolution. Mara as psychological tempter. Maitreya future Buddha.' },
-    { id: 'judaism', name: 'Judaism', color: '#4ecdc4', era: '~1800 BCE', followers: '~15M', desc: 'Ha-satan is a title (the accuser), not a proper name. Eschatology focuses on national redemption.' },
-    { id: 'christ', name: 'Christianity', color: '#6b7fd7', era: '1st century CE', followers: '~2.4B', desc: 'Satan as fallen angel Lucifer. Linear eschatology: Second Coming, Last Judgment, Heaven/Hell.' },
-    { id: 'islam', name: 'Islam', color: '#4ade80', era: '7th century CE', followers: '~2.0B', desc: 'Iblis is a fallen Jinn (not angel). Detailed eschatology: Mahdi, Dajjal, Yajuj/Majuj, Qiyamah.' },
-    { id: 'norse', name: 'Norse', color: '#94a3b8', era: 'Prehistoric', followers: 'Revival', desc: 'Ragnarök: cosmic winter, gods die, world burns and is reborn. Linear but cyclical rebirth.' },
-    { id: 'egypt', name: 'Ancient Egypt', color: '#d4a853', era: '~3000 BCE', followers: 'Extinct', desc: 'Distributed evil: Set, Apophis, Osiris as judge. No single Satan figure.' },
+    { id:'zoro', name:'Zoroastrianism', color:'#c94a4a', era:'~1500 BCE', followers:'~200k', desc:'The oldest monotheistic eschatology. Origin of cosmic dualism, judgment, resurrection, heaven/hell, and messiah concepts.' },
+    { id:'hindu', name:'Hinduism', color:'#f0b04a', era:'~1500 BCE', followers:'~1.2B', desc:'Cyclical time (Yugas). Demons are integral to cosmic balance, not opposed to God. Brahma creates both order and chaos.' },
+    { id:'buddha', name:'Buddhism', color:'#a855f7', era:'~500 BCE', followers:'~520M', desc:'No eternal soul or final judgment. Cyclic dissolution. Mara as psychological tempter. Maitreya future Buddha.' },
+    { id:'judaism', name:'Judaism', color:'#4ecdc4', era:'~1800 BCE', followers:'~15M', desc:'Ha-satan is a title (the accuser), not a name. Linear time. Eschatology focuses on national redemption (Mashiach) rather than individual hell.' },
+    { id:'christ', name:'Christianity', color:'#6b7fd7', era:'1st c. CE', followers:'~2.4B', desc:'Satan as fallen angel Lucifer. Parousia (Second Coming) triggers Last Judgment. Heaven and Hell as eternal binary outcomes.' },
+    { id:'islam', name:'Islam', color:'#4ade80', era:'7th c. CE', followers:'~2.0B', desc:'Iblis is a Jinn, not an angel. Detailed eschatology with Mahdi, Dajjal, and Yawm al-Qiyamah. Dual-phase accountability (grave + final).' },
+    { id:'norse', name:'Norse', color:'#94a3b8', era:'Prehistoric', followers:'Revival', desc:'Ragnarök: cosmic winter, gods die, world burns and is reborn. Linear destruction with cyclical rebirth.' },
+    { id:'egypt', name:'Ancient Egypt', color:'#d4a853', era:'~3000 BCE', followers:'Extinct', desc:'Distributed evil: Set, Apophis, Osiris as judge. No single Satan figure. Ka soul concept influenced later ifrit lore.' },
   ],
   concepts: [
-    { id: 'dualism', name: 'Cosmic Dualism', type: 'concept', desc: 'Eternal battle between good and evil forces. Zoroastrian origin.' },
-    { id: 'judgment', name: 'Final Judgment', type: 'concept', desc: 'Universal resurrection and trial. Zoroastrian origin transmitted to Abrahamic faiths.' },
-    { id: 'resurrect', name: 'Resurrection', type: 'concept', desc: 'Bodily raising of the dead. Zoroastrian Ristakhiz → Jewish → Christian → Islamic.' },
-    { id: 'heavenhell', name: 'Heaven & Hell', type: 'concept', desc: 'Binary afterlife destinations. House of Song / House of Lies (Zoroastrian) → Paradise/Jahannam.' },
-    { id: 'angeldemon', name: 'Angels & Demons', type: 'concept', desc: 'Amesha Spentas / Daevas → Abrahamic angels and demons.' },
-    { id: 'messiah', name: 'Messiah/Savior', type: 'concept', desc: 'Saoshyant (Zoroastrian) → Mashiach (Jewish) → Jesus (Christian) / Mahdi (Islam).' },
-    { id: 'karma', name: 'Karma / Moral Law', type: 'concept', desc: 'Action-consequence law. Hindu/Buddhist substitute for judgment day.' },
-    { id: 'yuga', name: 'Yuga Cycle', type: 'concept', desc: 'Cyclic ages of virtue and decay. Satya → Kali → Pralaya → restart.' },
+    { id:'dualism', name:'Cosmic Dualism', type:'concept', desc:'Eternal battle between good and evil forces. Zoroastrian origin.' },
+    { id:'judgment', name:'Final Judgment', type:'concept', desc:'Universal resurrection and trial. Zoroastrian origin transmitted to Abrahamic faiths.' },
+    { id:'resurrect', name:'Resurrection', type:'concept', desc:'Bodily raising of the dead. Zoroastrian Ristakhiz → Jewish → Christian → Islamic.' },
+    { id:'heavenhell', name:'Heaven & Hell', type:'concept', desc:'Binary afterlife destinations. House of Song / House of Lies (Zoroastrian) → Paradise / Jahannam.' },
+    { id:'angeldemon', name:'Angels & Demons', type:'concept', desc:'Amesha Spentas / Daevas → Abrahamic angels and demons.' },
+    { id:'messiah', name:'Messiah/Savior', type:'concept', desc:'Saoshyant (Zoroastrian) → Mashiach (Jewish) → Jesus (Christian) / Mahdi (Islam).' },
+    { id:'karma', name:'Karma / Moral Law', type:'concept', desc:'Action-consequence law. Hindu/Buddhist substitute for judgment day.' },
+    { id:'yuga', name:'Yuga Cycle', type:'concept', desc:'Cyclic ages of virtue and decay. Satya → Kali → Pralaya → restart.' },
+    { id:'folklore', name:'Folklore Spirits', type:'concept', desc:'Regional supernatural entities outside formal theology. Universal human pattern.' },
+    { id:'sleep', name:'Sleep Paralysis', type:'concept', desc:'REM atonia explaining cross-cultural night demon experiences.' },
   ],
   entities: [
-    { id: 'ahriman', name: 'Ahriman', type: 'entity', desc: 'Angra Mainyu. Co-eternal evil principle in Zoroastrianism. EQUAL to Ahura Mazda in power.' },
-    { id: 'satan', name: 'Satan / Lucifer', type: 'entity', desc: 'Fallen angel. Cosmic rebel. Ruler of Hell. Christianity.' },
-    { id: 'iblis', name: 'Iblis', type: 'entity', desc: 'Fallen Jinn made of fire. Refused to bow to Adam. Whispers waswās in Islam.' },
-    { id: 'hasatan', name: 'Ha-Satan', type: 'entity', desc: 'The accuser. Title, not name. Divine prosecutor in God\'s court. Judaism.' },
-    { id: 'mara', name: 'Māra', type: 'entity', desc: 'Tempter who tried to stop Buddha\'s enlightenment. Psychological more than cosmic. Buddhism.' },
-    { id: 'ravana', name: 'Ravana', type: 'entity', desc: '10-headed Asura king. Antagonist of Ramayana. Defeated by Rama. Complex moral figure.' },
-    { id: 'ifrit', name: 'Ifrit', type: 'entity', desc: 'Powerful fire Jinn in Islam. Mentioned once in Qur\'an (27:39). Elaborated in folklore.' },
-    { id: 'jinn', name: 'Jinn', type: 'entity', desc: 'Created from smokeless fire. Parallel realm to humans. Can be Muslim, Christian, or pagan.' },
-    { id: 'asuras', name: 'Asuras', type: 'entity', desc: 'Anti-gods in Hinduism. Born of Kashyapa. Often complex, sometimes virtuous (Mahabali).' },
-    { id: 'rakshas', name: 'Rakshasas', type: 'entity', desc: 'Night-dwelling shape-shifters. Detest prayer. Dispelled by sunrise.' },
-    { id: 'dajjal', name: 'Al-Dajjal', type: 'entity', desc: 'Islamic false messiah. Antichrist equivalent. One-eyed. Killed by Jesus (Isa) in Islamic eschatology.' },
-    { id: 'mahdi', name: 'Al-Mahdi', type: 'entity', desc: 'Rightly-guided one who precedes judgment in Islam. Savior/messianic figure.' },
+    { id:'ahriman', name:'Ahriman', type:'entity', desc:'Angra Mainyu. Co-eternal evil principle in Zoroastrianism. EQUAL to Ahura Mazda.' },
+    { id:'satan', name:'Satan / Lucifer', type:'entity', desc:'Fallen angel. Cosmic rebel. Ruler of Hell. Christianity.' },
+    { id:'iblis', name:'Iblis', type:'entity', desc:'Fallen Jinn made of fire. Refused to bow to Adam. Whispers waswās in Islam.' },
+    { id:'hasatan', name:'Ha-Satan', type:'entity', desc:'The accuser. Title, not proper name. Divine prosecutor in God\'s court. Judaism.' },
+    { id:'mara', name:'Māra', type:'entity', desc:'Tempter who tried to stop Buddha\'s enlightenment. Psychological more than cosmic. Buddhism.' },
+    { id:'ravana', name:'Ravana', type:'entity', desc:'10-headed Asura king. Antagonist of Ramayana. Complex moral figure.' },
+    { id:'ifrit', name:'Ifrit', type:'entity', desc:'Powerful fire Jinn in Islam. Mentioned once in Qur\'an (27:39). Elaborated in folklore.' },
+    { id:'jinn', name:'Jinn', type:'entity', desc:'Created from smokeless fire. Parallel realm. Free will. Can be Muslim, Christian, or pagan.' },
+    { id:'asuras', name:'Asuras', type:'entity', desc:'Anti-gods born of Kashyapa. Not always evil — King Mahabali is virtuous. Hinduism.' },
+    { id:'rakshas', name:'Rakshasas', type:'entity', desc:'Night-dwelling shape-shifters. Detest prayer. Dispelled by sunrise. Hinduism.' },
+    { id:'dajjal', name:'Al-Dajjal', type:'entity', desc:'Islamic false messiah. Antichrist equivalent. One-eyed. Killed by Jesus (Isa).' },
+    { id:'mahdi', name:'Al-Mahdi', type:'entity', desc:'Rightly-guided one who precedes judgment in Islam. Savior/messianic figure.' },
+    { id:'marid', name:'Marid', type:'entity', desc:'Most powerful sea jinn. Rebellious. Associated with water and wishes. Islamic folklore.' },
+    { id:'ghul', name:'Ghul', type:'entity', desc:'Shape-shifting graveyard demon that eats the dead. Origin of "ghoul". Islamic folklore.' },
+    { id:'silat', name:'Si\'lat', type:'entity', desc:'Female jinn that takes human form. Seductive and deceptive. Islamic folklore.' },
+    { id:'hinn', name:'Hinn', type:'entity', desc:'Lower-class jinn, often appearing as dogs. Islamic folklore.' },
+    { id:'lilith', name:'Lilith', type:'entity', desc:'Adam\'s rebellious first wife. Associated with infant mortality. Jewish folklore.' },
+    { id:'asmodai', name:'Asmodai', type:'entity', desc:'King of demons. Book of Tobit. Associated with lust and gambling. Jewish demonology.' },
+    { id:'dybbuk', name:'Dybbuk', type:'entity', desc:'Possessing spirit of a dead person that speaks through the living. Jewish folklore.' },
+    { id:'shedim', name:'Shedim', type:'entity', desc:'General term for demons in Jewish tradition. Often capricious.' },
+    { id:'azazel', name:'Azazel', type:'entity', desc:'Scapegoat demon. Leviticus 16. Sins laid upon him. Jewish demonology.' },
+    { id:'mazzikim', name:'Mazzikim', type:'entity', desc:'"Harmers" — invisible spirits that cause injury. Jewish folklore.' },
+    { id:'banshee', name:'Banshee', type:'entity', desc:'Irish death omen. Wailing spirit foretelling family death. Celtic folklore.' },
+    { id:'strigoi', name:'Strigoi', type:'entity', desc:'Romanian undead/vampire spirit. European folklore.' },
+    { id:'wendigo', name:'Wendigo', type:'entity', desc:'Algonquian cannibal spirit. Personification of winter starvation. Indigenous North American.' },
+    { id:'churel', name:'Churel', type:'entity', desc:'Vengeful female ghost of a woman who died in childbirth. South Asian folklore.' },
+    { id:'pichal', name:'Pichal Peri', type:'entity', desc:'Backward-footed forest spirit that lures travelers. South Asian folklore.' },
+    { id:'naga', name:'Naga', type:'entity', desc:'Serpent deities, often ambiguous. Hindu and Buddhist folklore.' },
+    { id:'yokai', name:'Yokai', type:'entity', desc:'Vast category of Japanese supernatural spirits and monsters.' },
+    { id:'oni', name:'Oni', type:'entity', desc:'Japanese ogre-demons with horns and clubs. Often guard hell.' },
+    { id:'gui', name:'Gui', type:'entity', desc:'Chinese ghosts of the deceased. Often hungry or vengeful.' },
+    { id:'mami', name:'Mami Wata', type:'entity', desc:'West African water spirit. Beautiful, seductive, dangerous.' },
+    { id:'tokol', name:'Tokoloshe', type:'entity', desc:'Zulu mischievous dwarf spirit causing illness and havoc.' },
+    { id:'alux', name:'Aluxob', type:'entity', desc:'Mayan small tricky forest spirits associated with maize fields.' },
   ],
   events: [
-    { id: 'frash', name: 'Frashokereti', type: 'event', desc: 'Final renovation. Molten metal purifies the righteous. Zoroastrian.' },
-    { id: 'qiyamah', name: 'Yawm al-Qiyamah', type: 'event', desc: 'Day of Resurrection. Trumpet of Israfil. Bridge (Sirat) and scales (Mizan). Islam.' },
-    { id: 'lastjudg', name: 'Last Judgment', type: 'event', desc: 'Second Coming of Christ. Resurrection of dead. Heaven or Hell. Christianity.' },
-    { id: 'pralaya', name: 'Pralaya', type: 'event', desc: 'Cosmic dissolution. Not moral judgment. Cyclic reset. Hinduism.' },
-    { id: 'ragnarok', name: 'Ragnarök', type: 'event', desc: 'Gods battle giants. World burns. Reborn green. Norse.' },
-    { id: 'mappo', name: 'Mappō', type: 'event', desc: 'Decline of Dharma. Maitreya Buddha will restore teachings. Buddhism.' },
+    { id:'frash', name:'Frashokereti', type:'event', desc:'Final renovation. Molten metal purifies righteous. Zoroastrian.' },
+    { id:'qiyamah', name:'Yawm al-Qiyamah', type:'event', desc:'Day of Resurrection. Trumpet of Israfil. Bridge Sirat. Scales Mizan. Islam.' },
+    { id:'lastjudg', name:'Last Judgment', type:'event', desc:'Second Coming. Resurrection of dead. Heaven or Hell. Christianity.' },
+    { id:'pralaya', name:'Pralaya', type:'event', desc:'Cosmic dissolution. Not moral judgment. Cyclic reset. Hinduism.' },
+    { id:'ragnarok', name:'Ragnarök', type:'event', desc:'Gods battle giants. World burns. Reborn green. Norse.' },
+    { id:'mappo', name:'Mappō', type:'event', desc:'Decline of Dharma. Maitreya Buddha restores. Buddhism.' },
   ]
 };
 
-// Connections for network graph
 const CONNECTIONS = [
-  // Theological transmission
-  ['zoro', 'judaism', 'Persian Exile (6th c. BCE)'],
-  ['judaism', 'christ', 'Foundation + Hellenism'],
-  ['judaism', 'islam', 'Arabian prophetic tradition'],
-  ['zoro', 'dualism', 'Origin'],
-  ['zoro', 'ahriman', 'Origin'],
-  ['zoro', 'frash', 'Origin'],
-  ['zoro', 'resurrect', 'Ristakhiz'],
-  ['zoro', 'heavenhell', 'House of Song / Lies'],
-  ['zoro', 'messiah', 'Saoshyant'],
-  ['zoro', 'angeldemon', 'Amesha Spentas / Daevas'],
-  ['judaism', 'hasatan', 'Book of Job'],
-  ['judaism', 'judgment', 'Post-biblical development'],
-  ['judaism', 'messiah', 'Mashiach'],
-  ['christ', 'satan', 'Fallen angel Lucifer'],
-  ['christ', 'lastjudg', 'Parousia'],
-  ['christ', 'resurrect', 'Canonical doctrine'],
-  ['islam', 'iblis', 'Refused to bow to Adam'],
-  ['islam', 'qiyamah', 'Central tenet'],
-  ['islam', 'jinn', 'Smokeless fire (Qur\'an 15:27)'],
-  ['islam', 'ifrit', 'Qur\'an 27:39'],
-  ['islam', 'dajjal', 'Major sign'],
-  ['islam', 'mahdi', 'Major sign'],
-  ['hindu', 'asuras', 'Kashyapa lineage'],
-  ['hindu', 'rakshas', 'Brahma\'s night breath'],
-  ['hindu', 'ravana', 'Asura king'],
-  ['hindu', 'pralaya', 'End of Kali Yuga'],
-  ['hindu', 'karma', 'Universal law'],
-  ['hindu', 'yuga', 'Cyclic ages'],
-  ['buddha', 'mara', 'Tempter of Buddha'],
-  ['buddha', 'mappo', 'Dharma decline'],
-  ['buddha', 'karma', 'Dependent origination'],
-  ['norse', 'ragnarok', 'Fimbulvetr → rebirth'],
-  ['egypt', 'hasatan', 'Distributed judgment roles'],
-  // Cross-concept links
-  ['dualism', 'ahriman', 'Opposes Ahura Mazda'],
-  ['dualism', 'satan', 'Evolved under influence'],
-  ['judgment', 'qiyamah', 'Equivalent'],
-  ['judgment', 'lastjudg', 'Equivalent'],
-  ['resurrect', 'qiyamah', 'Equivalent'],
-  ['resurrect', 'frash', 'Equivalent'],
-  ['messiah', 'mahdi', 'Equivalent concept'],
-  ['messiah', 'lastjudg', 'Trigger'],
-  ['satan', 'iblis', 'Related but distinct'],
-  ['satan', 'hasatan', 'Evolved from'],
-  ['satan', 'ahriman', 'Evolved under influence'],
-  ['ifrit', 'jinn', 'Subclass of'],
-  ['asuras', 'rakshas', 'Allied demon class'],
-  ['ravana', 'asuras', 'Member of'],
-  ['dajjal', 'satan', 'Equivalent role'],
-  ['heavenhell', 'qiyamah', 'Outcome'],
-  ['heavenhell', 'lastjudg', 'Outcome'],
+  ['zoro','judaism','Persian Exile (6th c. BCE)'],
+  ['judaism','christ','Foundation + Hellenism'],
+  ['judaism','islam','Arabian prophetic tradition'],
+  ['zoro','dualism','Origin'],
+  ['zoro','ahriman','Origin'],
+  ['zoro','frash','Origin'],
+  ['zoro','resurrect','Ristakhiz'],
+  ['zoro','heavenhell','House of Song / Lies'],
+  ['zoro','messiah','Saoshyant'],
+  ['zoro','angeldemon','Amesha Spentas / Daevas'],
+  ['judaism','hasatan','Book of Job'],
+  ['judaism','judgment','Post-biblical development'],
+  ['judaism','messiah','Mashiach'],
+  ['judaism','lilith','Alphabet of Ben Sira'],
+  ['judaism','asmodai','Book of Tobit'],
+  ['judaism','dybbuk','Possession tradition'],
+  ['judaism','shedim','General demons'],
+  ['judaism','azazel','Leviticus 16'],
+  ['judaism','mazzikim','Invisible harmers'],
+  ['christ','satan','Fallen angel Lucifer'],
+  ['christ','lastjudg','Parousia'],
+  ['christ','resurrect','Canonical doctrine'],
+  ['islam','iblis','Refused to bow to Adam'],
+  ['islam','qiyamah','Central tenet'],
+  ['islam','jinn','Smokeless fire (Qur\'an 15:27)'],
+  ['islam','ifrit','Qur\'an 27:39'],
+  ['islam','dajjal','Major sign'],
+  ['islam','mahdi','Major sign'],
+  ['islam','marid','Sea jinn folklore'],
+  ['islam','ghul','Graveyard eater'],
+  ['islam','silat','Female form'],
+  ['islam','hinn','Lower class'],
+  ['hindu','asuras','Kashyapa lineage'],
+  ['hindu','rakshas','Brahma\'s night breath'],
+  ['hindu','ravana','Asura king'],
+  ['hindu','pralaya','End of Kali Yuga'],
+  ['hindu','karma','Universal law'],
+  ['hindu','yuga','Cyclic ages'],
+  ['hindu','naga','Serpent deities'],
+  ['hindu','churel','South Asian ghost'],
+  ['hindu','pichal','Forest spirit'],
+  ['buddha','mara','Tempter of Buddha'],
+  ['buddha','mappo','Dharma decline'],
+  ['buddha','karma','Dependent origination'],
+  ['buddha','naga','Serpent lore'],
+  ['norse','ragnarok','Fimbulvetr → rebirth'],
+  ['egypt','hasatan','Distributed judgment roles'],
+  ['egypt','ifrit','Ka soul influence'],
+  ['dualism','ahriman','Opposes Ahura Mazda'],
+  ['dualism','satan','Evolved under influence'],
+  ['judgment','qiyamah','Equivalent'],
+  ['judgment','lastjudg','Equivalent'],
+  ['resurrect','qiyamah','Equivalent'],
+  ['resurrect','frash','Equivalent'],
+  ['messiah','mahdi','Equivalent concept'],
+  ['messiah','lastjudg','Trigger'],
+  ['satan','iblis','Related but distinct'],
+  ['satan','hasatan','Evolved from'],
+  ['satan','ahriman','Evolved under influence'],
+  ['ifrit','jinn','Subclass of'],
+  ['asuras','rakshas','Allied demon class'],
+  ['ravana','asuras','Member of'],
+  ['dajjal','satan','Equivalent role'],
+  ['heavenhell','qiyamah','Outcome'],
+  ['heavenhell','lastjudg','Outcome'],
+  ['folklore','banshee','European'],
+  ['folklore','strigoi','European'],
+  ['folklore','wendigo','North American'],
+  ['folklore','yokai','Japanese'],
+  ['folklore','oni','Japanese'],
+  ['folklore','gui','Chinese'],
+  ['folklore','mami','African'],
+  ['folklore','tokol','African'],
+  ['folklore','alux','Mesoamerican'],
+  ['sleep','jinn','Arab explanation'],
+  ['sleep','rakshas','Indian explanation'],
+  ['sleep','oni','Japanese explanation'],
+  ['sleep','banshee','Newfoundland'],
 ];
 
-// Board cards data
 const BOARD_CARDS = [
-  { col: 'Religions', title: 'Zoroastrianism', meta: '~1500 BCE | ~200k followers', body: 'Origin of dualism, judgment, resurrection, heaven/hell, and messiah concepts. Ahriman is co-eternal and equal to Ahura Mazda.', tags: ['Origin','Dualism','Ahriman'] },
-  { col: 'Religions', title: 'Judaism', meta: '~1800 BCE | ~15M followers', body: 'Ha-satan is a title (the accuser), not a name. Linear time. Eschatology focuses on national redemption (Mashiach) rather than individual hell.', tags: ['Accuser','Linear','Mashiach'] },
-  { col: 'Religions', title: 'Christianity', meta: '1st c. CE | ~2.4B followers', body: 'Satan as fallen angel Lucifer. Parousia (Second Coming) triggers Last Judgment. Heaven and Hell as eternal binary outcomes.', tags: ['Lucifer','Parousia','Hell'] },
-  { col: 'Religions', title: 'Islam', meta: '7th c. CE | ~2.0B followers', body: 'Iblis is a Jinn, not an angel. Detailed eschatology with Mahdi, Dajjal, and Yawm al-Qiyamah. Dual-phase accountability (grave + final).', tags: ['Iblis','Qiyamah','Jinn'] },
-  { col: 'Religions', title: 'Hinduism', meta: '~1500 BCE | ~1.2B followers', body: 'Cyclical Yugas. No Satan equivalent. Asuras and Rakshasas are part of divine order. Pralaya is cosmic reset, not judgment.', tags: ['Cyclical','Asuras','Pralaya'] },
-  { col: 'Religions', title: 'Buddhism', meta: '~500 BCE | ~520M followers', body: 'No soul, no final judgment. Mara as psychological tempter. Cyclic dissolution (Mappō) until Maitreya restores Dharma.', tags: ['Mara','Cyclic','Maitreya'] },
-  { col: 'Entities', title: 'Ahriman', meta: 'Zoroastrianism', body: 'Co-eternal evil principle. EQUAL to God. Source of all evil and demons. True cosmic dualism.', tags: ['Co-eternal','Equal','Origin'] },
-  { col: 'Entities', title: 'Ha-Satan', meta: 'Judaism', body: 'Divine prosecutor in God\'s court. Title, not proper name. Tests faith (Job). Fully obedient to God.', tags: ['Accuser','Title','Subordinate'] },
-  { col: 'Entities', title: 'Satan / Lucifer', meta: 'Christianity', body: 'Fallen angel. Cosmic rebel with own kingdom (Hell). Immense power but ultimately defeated by Christ.', tags: ['Rebel','Fallen','Hell'] },
-  { col: 'Entities', title: 'Iblis', meta: 'Islam', body: 'Fallen Jinn made of smokeless fire. Refused to bow to Adam. Whispers evil (waswās) into hearts. Limited by God\'s permission.', tags: ['Jinn','Fire','Whisperer'] },
-  { col: 'Entities', title: 'Māra', meta: 'Buddhism', body: 'Tempter who tried to prevent Buddha\'s enlightenment. More psychological than cosmic. Personification of attachment.', tags: ['Tempter','Psychological','Attachment'] },
-  { col: 'Entities', title: 'Ravana', meta: 'Hinduism', body: '10-headed Asura king of Lanka. Antagonist of Ramayana. Complex figure: scholar, devotee of Shiva, kidnapper of Sita.', tags: ['Asura','10-headed','Complex'] },
-  { col: 'Entities', title: 'Asuras', meta: 'Hinduism', body: 'Anti-gods born of Kashyapa. Not always evil — King Mahabali is a virtuous asura. Blur good/evil binary.', tags: ['Anti-gods','Kashyapa','Virtuous'] },
-  { col: 'Entities', title: 'Rakshasas', meta: 'Hinduism', body: 'Night-dwelling shape-shifters. Detest sacrifices and prayer. Dispelled by sunrise. Cannibalistic in epics.', tags: ['Night','Shape-shifter','Ritual'] },
-  { col: 'Entities', title: 'Jinn', meta: 'Islam', body: 'Created from smokeless fire. Parallel realm. Free will. Can be Muslim, Christian, Jewish, or pagan. Precede humans in existence.', tags: ['Fire','Free Will','Unseen'] },
-  { col: 'Entities', title: 'Ifrit', meta: 'Islamic Folklore', body: 'Powerful fire subclass of Jinn. Mentioned once in Qur\'an. Associated with ruins, cemeteries, and violent death. Grants wishes with hidden costs.', tags: ['Fire','Powerful','Folklore'] },
-  { col: 'End Times', title: 'Frashokereti', meta: 'Zoroastrianism', body: 'Final renovation of the universe. Molten metal river purifies righteous. Resurrection of dead. Saoshyant arrives.', tags: ['Renovation','Metal','Saoshyant'] },
-  { col: 'End Times', title: 'Yawm al-Qiyamah', meta: 'Islam', body: 'Day of Resurrection. Trumpet of Israfil. Bridge (Sirat) over Hell. Scales (Mizan) weigh deeds. Jannah or Jahannam.', tags: ['Trumpet','Bridge','Scales'] },
-  { col: 'End Times', title: 'Last Judgment', meta: 'Christianity', body: 'Second Coming (Parousia). Resurrection of dead. Book of Life opened. Lake of Fire for damned. New Heaven and New Earth.', tags: ['Parousia','Book','Lake of Fire'] },
-  { col: 'End Times', title: 'Pralaya', meta: 'Hinduism', body: 'Cosmic dissolution at end of Kali Yuga. Not moral judgment. Universe destroyed and re-created. Brahma\s day/night cycle.', tags: ['Dissolution','Cyclic','Brahma'] },
-  { col: 'End Times', title: 'Ragnarök', meta: 'Norse', body: 'Fimbulvetr (3-year winter). Fenrir breaks chains. Gods die. World burns. Reborn green. Linear destruction, cyclical rebirth.', tags: ['Winter','Gods Die','Rebirth'] },
-  { col: 'Science', title: 'Sleep Paralysis', meta: 'Neuroscience', body: 'REM atonia persists into wakefulness. Explains incubus, Old Hag, Jinn attacks, and Pisacha. Cross-cultural consistency.', tags: ['REM','Atonia','Universal'] },
-  { col: 'Science', title: 'HADD', meta: 'Cognitive Science', body: 'Hyperactive Agency Detection Device. Rustling bush = tiger/demon. False positives favored by evolution. Root of spirit belief.', tags: ['Agency','Evolution','Bias'] },
-  { col: 'Science', title: 'Temporal Lobe', meta: 'Neurotheology', body: 'Persinger\'s "God Helmet" stimulates temporal lobes to induce "presence" sensations. Explains angel/demon visions.', tags: ['God Helmet','Presence','fMRI'] },
-  { col: 'Science', title: 'Terror Management', meta: 'Psychology', body: 'Death anxiety drives afterlife belief. Eschatology functions as a buffer against mortality salience. Social cohesion side-effect.', tags: ['Death','Anxiety','Afterlife'] },
-  { col: 'Science', title: 'The Undecidability', meta: 'Philosophy of Science', body: 'Science describes neural mechanisms but cannot determine if those mechanisms are designed to perceive real entities or generate illusions.', tags: ['Mechanism','Gap','Metaphysics'] },
+  {col:'Religions',title:'Zoroastrianism',meta:'~1500 BCE | ~200k followers',body:'Origin of dualism, judgment, resurrection, heaven/hell, and messiah concepts. Ahriman is co-eternal and equal to Ahura Mazda.',tags:['Origin','Dualism','Ahriman']},
+  {col:'Religions',title:'Judaism',meta:'~1800 BCE | ~15M followers',body:'Ha-satan is a title, not a name. Linear time. Eschatology focuses on national redemption (Mashiach) rather than individual hell.',tags:['Accuser','Linear','Mashiach']},
+  {col:'Religions',title:'Christianity',meta:'1st c. CE | ~2.4B followers',body:'Satan as fallen angel Lucifer. Parousia triggers Last Judgment. Heaven and Hell as eternal binary outcomes. 72 demons in Ars Goetia.',tags:['Lucifer','Parousia','Hell']},
+  {col:'Religions',title:'Islam',meta:'7th c. CE | ~2.0B followers',body:'Iblis is a Jinn, not an angel. Detailed eschatology with Mahdi, Dajjal, and Yawm al-Qiyamah. Dual-phase accountability (grave + final).',tags:['Iblis','Qiyamah','Jinn']},
+  {col:'Religions',title:'Hinduism',meta:'~1500 BCE | ~1.2B followers',body:'Cyclical Yugas. No Satan equivalent. Asuras and Rakshasas are part of divine order. Pralaya is cosmic reset, not judgment.',tags:['Cyclical','Asuras','Pralaya']},
+  {col:'Religions',title:'Buddhism',meta:'~500 BCE | ~520M followers',body:'No soul, no final judgment. Mara as psychological tempter. Cyclic dissolution (Mappō) until Maitreya restores Dharma. 7 Suns Sutra.',tags:['Mara','Cyclic','Maitreya']},
+  {col:'Religions',title:'Norse',meta:'Prehistoric | Revival',body:'Ragnarök: Fimbulvetr, gods die, world burns. Linear destruction with cyclical rebirth. Fenrir and Jörmungandr destroy the cosmos.',tags:['Ragnarök','Fimbulvetr','Rebirth']},
+  {col:'Entities',title:'Ahriman',meta:'Zoroastrianism',body:'Co-eternal evil principle. EQUAL to God. Source of all evil and demons. True cosmic dualism.',tags:['Co-eternal','Equal','Origin']},
+  {col:'Entities',title:'Ha-Satan',meta:'Judaism',body:'Divine prosecutor in God\'s court. Title, not proper name. Tests faith (Job). Fully obedient to God.',tags:['Accuser','Title','Subordinate']},
+  {col:'Entities',title:'Satan / Lucifer',meta:'Christianity',body:'Fallen angel. Cosmic rebel with own kingdom (Hell). Immense power but ultimately defeated by Christ.',tags:['Rebel','Fallen','Hell']},
+  {col:'Entities',title:'Iblis',meta:'Islam',body:'Fallen Jinn made of smokeless fire. Refused to bow to Adam. Whispers evil (waswās) into hearts. Limited by God\'s permission.',tags:['Jinn','Fire','Whisperer']},
+  {col:'Entities',title:'Māra',meta:'Buddhism',body:'Tempter who tried to prevent Buddha\'s enlightenment. More psychological than cosmic. Personification of attachment.',tags:['Tempter','Psychological','Attachment']},
+  {col:'Entities',title:'Ravana',meta:'Hinduism',body:'10-headed Asura king of Lanka. Scholar, devotee of Shiva, kidnapper of Sita. Complex moral figure.',tags:['Asura','10-headed','Complex']},
+  {col:'Entities',title:'Asuras',meta:'Hinduism',body:'Anti-gods born of Kashyapa. Not always evil — King Mahabali is a virtuous asura. Blur good/evil binary.',tags:['Anti-gods','Kashyapa','Virtuous']},
+  {col:'Entities',title:'Rakshasas',meta:'Hinduism',body:'Night-dwelling shape-shifters. Detest sacrifices and prayer. Dispelled by sunrise. Cannibalistic in epics.',tags:['Night','Shape-shifter','Ritual']},
+  {col:'Entities',title:'Jinn',meta:'Islam',body:'Created from smokeless fire. Parallel realm. Free will. Can be Muslim, Christian, Jewish, or pagan. Precede humans in existence.',tags:['Fire','Free Will','Unseen']},
+  {col:'Entities',title:'Ifrit',meta:'Islamic Folklore',body:'Powerful fire subclass of Jinn. Mentioned once in Qur\'an. Associated with ruins, cemeteries, and violent death. Grants wishes with hidden costs.',tags:['Fire','Powerful','Folklore']},
+  {col:'Entities',title:'Marid',meta:'Islamic Folklore',body:'Most powerful sea jinn. Rebellious. Associated with water and wish-granting. Think Aladdin\'s genie.',tags:['Sea','Rebellious','Wish']},
+  {col:'Entities',title:'Ghul',meta:'Islamic Folklore',body:'Shape-shifting graveyard demon that eats the dead. Origin of the English word "ghoul."',tags:['Graveyard','Eater','Shape-shifter']},
+  {col:'Entities',title:'Si\'lat',meta:'Islamic Folklore',body:'Female jinn that takes human form. Seductive and deceptive. Preys on lonely travelers.',tags:['Female','Seductive','Deceptive']},
+  {col:'Entities',title:'Lilith',meta:'Jewish Folklore',body:'Adam\'s rebellious first wife. Refused subservience. Associated with infant mortality and sexual autonomy.',tags:['First Wife','Rebellious','Night']},
+  {col:'Entities',title:'Asmodai',meta:'Jewish Demonology',body:'King of demons. Book of Tobit. Associated with lust and gambling. Sometimes bound by Solomon.',tags:['King','Lust','Tobit']},
+  {col:'Entities',title:'Dybbuk',meta:'Jewish Folklore',body:'Possessing spirit of a dead person that enters the living and speaks through them. Requires exorcism.',tags:['Possession','Dead','Speech']},
+  {col:'Entities',title:'Shedim',meta:'Jewish Demonology',body:'General term for demons. Often neutral but capricious. Can be placated with offerings.',tags:['General','Capricious','Neutral']},
+  {col:'Entities',title:'Azazel',meta:'Jewish Demonology',body:'Scapegoat demon. Leviticus 16. Sins of the people symbolically laid upon him and sent to wilderness.',tags:['Scapegoat','Leviticus','Wilderness']},
+  {col:'Entities',title:'Mazzikim',meta:'Jewish Folklore',body:'"Harmers" — invisible spirits that cause injury, illness, and mischief without reason.',tags:['Invisible','Harm','Illness']},
+  {col:'End Times',title:'Frashokereti',meta:'Zoroastrianism',body:'Final renovation of the universe. Molten metal river purifies righteous. Resurrection of dead. Saoshyant arrives.',tags:['Renovation','Metal','Saoshyant']},
+  {col:'End Times',title:'Yawm al-Qiyamah',meta:'Islam',body:'Day of Resurrection. Trumpet of Israfil. Bridge (Sirat) over Hell. Scales (Mizan) weigh deeds. Jannah or Jahannam.',tags:['Trumpet','Bridge','Scales']},
+  {col:'End Times',title:'Last Judgment',meta:'Christianity',body:'Second Coming (Parousia). Resurrection of dead. Book of Life opened. Lake of Fire for damned. New Heaven and New Earth.',tags:['Parousia','Book','Lake of Fire']},
+  {col:'End Times',title:'Pralaya',meta:'Hinduism',body:'Cosmic dissolution at end of Kali Yuga. Not moral judgment. Universe destroyed and re-created. Brahma\'s day/night cycle.',tags:['Dissolution','Cyclic','Brahma']},
+  {col:'End Times',title:'Ragnarök',meta:'Norse',body:'Fimbulvetr (3-year winter). Fenrir breaks chains. Gods die. World burns. Reborn green. Linear destruction, cyclical rebirth.',tags:['Winter','Gods Die','Rebirth']},
+  {col:'Folklore',title:'Banshee',meta:'Celtic / Irish',body:'Wailing female spirit foretelling a family death. Hearing the scream is an omen of imminent demise.',tags:['Wail','Omen','Death']},
+  {col:'Folklore',title:'Strigoi',meta:'Romanian',body:'Undead/vampire spirit that returns from the grave to harm the living. Precursor to modern vampire mythology.',tags:['Undead','Vampire','Grave']},
+  {col:'Folklore',title:'Wendigo',meta:'Algonquian',body:'Cannibal spirit born of winter starvation. Personifies greed and excess. Those who eat human flesh become Wendigo.',tags:['Cannibal','Winter','Greed']},
+  {col:'Folklore',title:'Churel',meta:'South Asian',body:'Vengeful female ghost of a woman who died in childbirth. Seduces and drains men. Associated with trees and crossroads.',tags:['Vengeful','Childbirth','Drain']},
+  {col:'Folklore',title:'Pichal Peri',meta:'South Asian',body:'Backward-footed forest spirit that lures travelers into the woods. Identified by reversed feet.',tags:['Forest','Backward','Lure']},
+  {col:'Folklore',title:'Naga',meta:'Hindu / Buddhist',body:'Serpent deities, often ambiguous. Guard treasures, control water, can be wrathful or benevolent.',tags:['Serpent','Water','Treasure']},
+  {col:'Folklore',title:'Yokai',meta:'Japan',body:'Vast category of supernatural spirits, demons, and monsters. Includes Oni, Kappa, Tengu, and countless others.',tags:['Japanese','Vast','Supernatural']},
+  {col:'Folklore',title:'Oni',meta:'Japan',body:'Ogre-demons with horns and clubs. Often guard Buddhist hell. Can be converted to Buddhism and become protective.',tags:['Ogre','Horns','Hell']},
+  {col:'Folklore',title:'Gui',meta:'China',body:'Ghosts of the deceased. Hungry ghosts (egui) have tiny throats and huge bellies — symbolize unfulfilled craving.',tags:['Ghost','Hungry','Craving']},
+  {col:'Folklore',title:'Mami Wata',meta:'West Africa',body:'Beautiful water spirit with snake-like features. Seductive, associated with wealth and healing, but also danger.',tags:['Water','Seductive','Snake']},
+  {col:'Folklore',title:'Tokoloshe',meta:'Zulu',body:'Mischievous dwarf-like spirit created by witch-doctors. Causes illness, paralysis, and havoc in households.',tags:['Dwarf','Illness','Mischief']},
+  {col:'Folklore',title:'Aluxob',meta:'Mayan',body:'Small, tricky forest spirits associated with maize fields. Can be helpful if respected, destructive if angered.',tags:['Small','Forest','Maize']},
+  {col:'Science',title:'Sleep Paralysis',meta:'Neuroscience',body:'REM atonia persists into wakefulness. Explains incubus, Old Hag, Jinn attacks, and Pisacha. Cross-cultural consistency.',tags:['REM','Atonia','Universal']},
+  {col:'Science',title:'HADD',meta:'Cognitive Science',body:'Hyperactive Agency Detection Device. Rustling bush = tiger/demon. False positives favored by evolution. Root of spirit belief.',tags:['Agency','Evolution','Bias']},
+  {col:'Science',title:'Temporal Lobe',meta:'Neurotheology',body:'Persinger\'s "God Helmet" stimulates temporal lobes to induce "presence" sensations. Explains angel/demon visions.',tags:['God Helmet','Presence','fMRI']},
+  {col:'Science',title:'Terror Management',meta:'Psychology',body:'Death anxiety drives afterlife belief. Eschatology functions as a buffer against mortality salience. Social cohesion side-effect.',tags:['Death','Anxiety','Afterlife']},
+  {col:'Science',title:'The Undecidability',meta:'Philosophy of Science',body:'Science describes neural mechanisms but cannot determine if those mechanisms are designed to perceive real entities or generate illusions.',tags:['Mechanism','Gap','Metaphysics']},
+  {col:'Science',title:'Pre-Scientific Mapping',meta:'Anthropology',body:'Epilepsy → possession; schizophrenia → jinn whispers; sleep paralysis → night demons; infection → curses. Muhammad forbade striking epileptics.',tags:['Epilepsy','Psychosis','Empathy']},
 ];
 
-// Mind map tree data
 const MINDMAP_DATA = {
   label: "The Supernatural\nAcross Religions",
   color: "#d4a853",
@@ -1141,8 +1017,9 @@ const MINDMAP_DATA = {
         { label: "Islamic", color: "#4ade80", children: [
           { label: "Jinn\n(smokeless fire)", color: "#4ade80" },
           { label: "Ifrit\n(fire demon)", color: "#4ade80" },
-          { label: "Shayatin\n(evil jinn)", color: "#4ade80" },
-          { label: "Ghul\n(graveyard shifter)", color: "#4ade80" }
+          { label: "Marid\n(sea jinn)", color: "#4ade80" },
+          { label: "Ghul\n(grave-eater)", color: "#4ade80" },
+          { label: "Shayatin\n(devils)", color: "#4ade80" }
         ]},
         { label: "Hindu", color: "#f0b04a", children: [
           { label: "Asuras\n(anti-gods)", color: "#f0b04a" },
@@ -1153,12 +1030,19 @@ const MINDMAP_DATA = {
         { label: "Christian", color: "#6b7fd7", children: [
           { label: "Fallen Angels\n(Grigori / Nephilim)", color: "#6b7fd7" },
           { label: "72 Demons\n(Ars Goetia)", color: "#6b7fd7" },
-          { label: "Beelzebub, Asmodeus...\n(7 princes)", color: "#6b7fd7" }
+          { label: "7 Princes\n(Deadly Sins)", color: "#6b7fd7" }
         ]},
         { label: "Jewish", color: "#4ecdc4", children: [
           { label: "Shedim\n(general demons)", color: "#4ecdc4" },
-          { label: "Lilith\n(Adam\'s first wife)", color: "#4ecdc4" },
+          { label: "Lilith\n(Adam's first wife)", color: "#4ecdc4" },
           { label: "Dybbuk\n(possessing spirit)", color: "#4ecdc4" }
+        ]},
+        { label: "Folklore", color: "#d4a853", children: [
+          { label: "European\nBanshee / Strigoi", color: "#d4a853" },
+          { label: "East Asian\nYokai / Oni / Gui", color: "#d4a853" },
+          { label: "South Asian\nChurel / Naga", color: "#d4a853" },
+          { label: "African\nMami Wata / Tokoloshe", color: "#d4a853" },
+          { label: "Americas\nWendigo / Aluxob", color: "#d4a853" }
         ]}
       ]
     },
@@ -1204,16 +1088,14 @@ const MINDMAP_DATA = {
 function switchView(viewName) {
   document.querySelectorAll('.view-btn').forEach(b => b.classList.remove('active'));
   document.querySelector(`[data-view="${viewName}"]`).classList.add('active');
-
-  document.getElementById('view-doc').classList.add('hidden');
-  document.getElementById('view-network').classList.add('hidden');
-  document.getElementById('view-board').classList.add('hidden');
-  document.getElementById('view-mindmap').classList.add('hidden');
-
+  ['doc','network','board','mindmap'].forEach(v => {
+    const el = document.getElementById('view-' + v);
+    el.classList.add('hidden');
+    el.classList.remove('animate-in');
+  });
   const target = document.getElementById('view-' + viewName);
   target.classList.remove('hidden');
   target.classList.add('animate-in');
-
   if (viewName === 'network') initNetwork();
   if (viewName === 'board') renderBoard();
   if (viewName === 'mindmap') renderMindMap();
@@ -1236,23 +1118,21 @@ function initNetwork() {
   ctx.scale(dpr, dpr);
   const W = rect.width, H = rect.height;
 
-  // Build nodes
   nodes = [];
   const addNode = (id, obj, type) => {
     const angle = Math.random() * Math.PI * 2;
-    const radius = Math.min(W, H) * 0.35 * (0.5 + Math.random() * 0.5);
+    const radius = Math.min(W, H) * 0.38 * (0.4 + Math.random() * 0.6);
     nodes.push({
       id, name: obj.name || id, type, x: W/2 + Math.cos(angle)*radius, y: H/2 + Math.sin(angle)*radius,
-      vx: 0, vy: 0, color: obj.color || '#d4a853', desc: obj.desc || '', radius: type === 'religion' ? 22 : 16
+      vx: 0, vy: 0, color: obj.color || '#d4a853', desc: obj.desc || '', radius: type === 'religion' ? 22 : (type==='concept'?18:14)
     });
   };
-  Object.entries(DATA.religions).forEach(([k,v]) => addNode(v.id, v, 'religion'));
+  Object.values(DATA.religions).forEach(v => addNode(v.id, v, 'religion'));
   DATA.concepts.forEach(c => addNode(c.id, c, 'concept'));
   DATA.entities.forEach(e => addNode(e.id, e, 'entity'));
   DATA.events.forEach(e => addNode(e.id, e, 'event'));
   nodes.forEach(n => nodeMap[n.id] = n);
 
-  // Build links
   links = [];
   CONNECTIONS.forEach(([s,t,label]) => {
     if (nodeMap[s] && nodeMap[t]) links.push({ source: nodeMap[s], target: nodeMap[t], label });
@@ -1261,32 +1141,29 @@ function initNetwork() {
   let dragged = null, hovered = null, selected = null;
 
   function updatePhysics() {
-    // Repulsion
     for (let i = 0; i < nodes.length; i++) {
       for (let j = i+1; j < nodes.length; j++) {
         const a = nodes[i], b = nodes[j];
         const dx = a.x - b.x, dy = a.y - b.y;
         let dist = Math.sqrt(dx*dx + dy*dy) || 1;
-        const force = 2000 / (dist * dist);
+        const force = 2500 / (dist * dist);
         const fx = (dx/dist) * force, fy = (dy/dist) * force;
         a.vx += fx; a.vy += fy;
         b.vx -= fx; b.vy -= fy;
       }
     }
-    // Attraction (links)
     links.forEach(l => {
       const dx = l.target.x - l.source.x, dy = l.target.y - l.source.y;
       const dist = Math.sqrt(dx*dx + dy*dy) || 1;
-      const force = (dist - 100) * 0.003;
+      const force = (dist - 90) * 0.003;
       const fx = (dx/dist) * force, fy = (dy/dist) * force;
       l.source.vx += fx; l.source.vy += fy;
       l.target.vx -= fx; l.target.vy -= fy;
     });
-    // Center gravity
     nodes.forEach(n => {
       n.vx += (W/2 - n.x) * 0.0005;
       n.vy += (H/2 - n.y) * 0.0005;
-      n.vx *= 0.9; n.vy *= 0.9;
+      n.vx *= 0.88; n.vy *= 0.88;
       n.x += n.vx; n.y += n.vy;
       n.x = Math.max(30, Math.min(W-30, n.x));
       n.y = Math.max(30, Math.min(H-30, n.y));
@@ -1295,16 +1172,15 @@ function initNetwork() {
 
   function draw() {
     ctx.clearRect(0,0,W,H);
-    // Links
     links.forEach(l => {
       ctx.beginPath();
       ctx.moveTo(l.source.x, l.source.y);
       ctx.lineTo(l.target.x, l.target.y);
-      ctx.strokeStyle = (selected && (l.source === selected || l.target === selected)) ? 'rgba(212,168,83,0.6)' : 'rgba(255,255,255,0.06)';
-      ctx.lineWidth = (selected && (l.source === selected || l.target === selected)) ? 2 : 1;
+      const isHL = selected && (l.source === selected || l.target === selected);
+      ctx.strokeStyle = isHL ? 'rgba(212,168,83,0.5)' : 'rgba(255,255,255,0.04)';
+      ctx.lineWidth = isHL ? 2 : 1;
       ctx.stroke();
     });
-    // Nodes
     nodes.forEach(n => {
       ctx.beginPath();
       ctx.arc(n.x, n.y, n.radius, 0, Math.PI*2);
@@ -1313,14 +1189,13 @@ function initNetwork() {
       ctx.shadowBlur = (hovered === n || selected === n) ? 20 : 0;
       ctx.fill();
       ctx.shadowBlur = 0;
-      ctx.strokeStyle = (selected === n) ? '#fff' : 'rgba(255,255,255,0.2)';
+      ctx.strokeStyle = (selected === n) ? '#fff' : 'rgba(255,255,255,0.15)';
       ctx.lineWidth = (selected === n) ? 2 : 1;
       ctx.stroke();
-      // Label
       ctx.fillStyle = '#e8e6e3';
-      ctx.font = `${n.type==='religion'?'600':'400'} 11px Inter, sans-serif`;
+      ctx.font = `${n.type==='religion'?'600':'400'} 10px Inter, sans-serif`;
       ctx.textAlign = 'center';
-      ctx.fillText(n.name, n.x, n.y + n.radius + 14);
+      ctx.fillText(n.name.length>12?n.name.slice(0,10)+'…':n.name, n.x, n.y + n.radius + 13);
     });
   }
 
@@ -1333,7 +1208,6 @@ function initNetwork() {
   }
   loop();
 
-  // Events
   canvas.addEventListener('mousedown', e => {
     const rect = canvas.getBoundingClientRect();
     const mx = (e.clientX - rect.left), my = (e.clientY - rect.top);
@@ -1372,19 +1246,13 @@ function initNetwork() {
 // ==========================
 function renderBoard() {
   const container = document.getElementById('view-board');
-  if (container.children.length > 0) return; // already rendered
-
+  if (container.children.length > 0) return;
   const cols = [...new Set(BOARD_CARDS.map(c => c.col))];
   cols.forEach(colName => {
     const col = document.createElement('div');
     col.className = 'board-column';
     const cards = BOARD_CARDS.filter(c => c.col === colName);
-    col.innerHTML = `
-      <div class="board-column-header">
-        <span>${colName}</span>
-        <span class="count">${cards.length}</span>
-      </div>
-    `;
+    col.innerHTML = `<div class="board-column-header"><span>${colName}</span><span class="count">${cards.length}</span></div>`;
     cards.forEach(card => {
       const c = document.createElement('div');
       c.className = 'board-card';
@@ -1405,84 +1273,58 @@ function renderBoard() {
 // ==========================
 function renderMindMap() {
   const svg = document.getElementById('mindmapSvg');
-  if (svg.innerHTML) return; // already rendered
-
-  const NODE_W = 160, NODE_H = 44, GAP_X = 60, GAP_Y = 16;
+  if (svg.innerHTML) return;
+  const NODE_W = 170, NODE_H = 48, GAP_X = 60, GAP_Y = 14;
   let idCounter = 0;
-
   function layoutTree(node, depth, yOffset) {
     const id = 'mm-' + (idCounter++);
-    node._id = id;
-    node._depth = depth;
+    node._id = id; node._depth = depth;
     if (!node.children || node.children.length === 0) {
       node._w = NODE_W; node._h = NODE_H; node._y = yOffset;
       return { height: NODE_H + GAP_Y, maxDepth: depth };
     }
-    let childY = yOffset;
-    let totalH = 0;
-    let maxDepth = depth;
+    let childY = yOffset, totalH = 0, maxDepth = depth;
     node.children.forEach(child => {
       const res = layoutTree(child, depth + 1, childY);
-      childY += res.height;
-      totalH += res.height;
+      childY += res.height; totalH += res.height;
       maxDepth = Math.max(maxDepth, res.maxDepth);
     });
     node._w = NODE_W; node._h = NODE_H;
     node._y = (yOffset + (totalH - GAP_Y) / 2) - NODE_H/2;
     return { height: totalH, maxDepth };
   }
-
   const treeInfo = layoutTree(MINDMAP_DATA, 0, 0);
-  const totalWidth = (treeInfo.maxDepth + 1) * (NODE_W + GAP_X) + 100;
-  const totalHeight = treeInfo.height + 40;
-  svg.setAttribute('viewBox', `0 0 ${totalWidth} ${totalHeight}`);
-  svg.style.minHeight = totalHeight + 'px';
-
+  const totalW = (treeInfo.maxDepth + 1) * (NODE_W + GAP_X) + 80;
+  const totalH = treeInfo.height + 40;
+  svg.setAttribute('viewBox', `0 0 ${totalW} ${totalH}`);
+  svg.style.minHeight = totalH + 'px';
   function drawNode(node) {
     const x = 40 + node._depth * (NODE_W + GAP_X);
     const y = node._y + 20;
     const g = document.createElementNS('http://www.w3.org/2000/svg', 'g');
     g.setAttribute('class', 'mm-node');
     g.setAttribute('transform', `translate(${x},${y})`);
-
     const rect = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
-    rect.setAttribute('width', NODE_W);
-    rect.setAttribute('height', NODE_H);
-    rect.setAttribute('rx', 8);
-    rect.setAttribute('fill', 'rgba(22,22,32,0.9)');
-    rect.setAttribute('stroke', node.color || '#d4a853');
-    rect.setAttribute('stroke-width', 1.5);
+    rect.setAttribute('width', NODE_W); rect.setAttribute('height', NODE_H); rect.setAttribute('rx', 8);
+    rect.setAttribute('fill', 'rgba(22,22,32,0.92)'); rect.setAttribute('stroke', node.color || '#d4a853'); rect.setAttribute('stroke-width', 1.5);
     g.appendChild(rect);
-
     const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
-    text.setAttribute('x', NODE_W/2);
-    text.setAttribute('y', NODE_H/2);
-    text.setAttribute('text-anchor', 'middle');
-    text.setAttribute('dominant-baseline', 'middle');
-    text.setAttribute('class', 'mm-text');
-    text.setAttribute('fill', '#e8e6e3');
+    text.setAttribute('x', NODE_W/2); text.setAttribute('y', NODE_H/2);
+    text.setAttribute('text-anchor', 'middle'); text.setAttribute('dominant-baseline', 'middle'); text.setAttribute('class', 'mm-text'); text.setAttribute('fill', '#e8e6e3');
     node.label.split('\n').forEach((line, i) => {
       const tspan = document.createElementNS('http://www.w3.org/2000/svg', 'tspan');
-      tspan.setAttribute('x', NODE_W/2);
-      tspan.setAttribute('dy', i === 0 ? '-0.3em' : '1.2em');
-      tspan.textContent = line;
+      tspan.setAttribute('x', NODE_W/2); tspan.setAttribute('dy', i === 0 ? '-0.3em' : '1.2em'); tspan.textContent = line;
       text.appendChild(tspan);
     });
-    g.appendChild(text);
-    svg.appendChild(g);
-
+    g.appendChild(text); svg.appendChild(g);
     if (node.children) {
       node.children.forEach(child => {
-        const cx = 40 + child._depth * (NODE_W + GAP_X);
-        const cy = child._y + 20 + NODE_H/2;
-        const px = x + NODE_W;
-        const py = y + NODE_H/2;
-
+        const cx = 40 + child._depth * (NODE_W + GAP_X), cy = child._y + 20 + NODE_H/2;
+        const px = x + NODE_W, py = y + NODE_H/2;
         const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
         path.setAttribute('d', `M${px},${py} C${px+30},${py} ${cx-30},${cy} ${cx},${cy}`);
         path.setAttribute('class', 'mm-link');
         svg.insertBefore(path, svg.firstChild);
-
         drawNode(child);
       });
     }
@@ -1496,7 +1338,6 @@ function renderMindMap() {
 window.addEventListener('DOMContentLoaded', () => {
   switchView('doc');
 });
-
 </script>
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a0e2481d4e3c8826',t:'MTc4MTg2OTQ2NQ=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</body>
 </html>
